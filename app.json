@@ -1,0 +1,16 @@
+{
+  "name": "Django",
+  "description": "A template for getting started with the popular Django framework.",
+  "website": "https://www.djangoproject.com",
+  "success_url": "/welcome",
+  "addons": ["heroku-postgresql:hobby-dev", "getsentry"],
+  "env": {
+    "SECRET_KEY": {
+            "description": "The secret key used in production (automatic).",
+            "generator": "secret"
+    }
+  },
+  "scripts": {
+    "postdeploy": "python manage.py syncdb"
+  }
+}
