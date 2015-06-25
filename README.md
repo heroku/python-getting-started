@@ -14,6 +14,7 @@ $ cd python-getting-started
 $ pip install -r requirements.txt
 $ createdb python_getting_started
 $ foreman run python manage.py migrate
+$ python manage.py collectstatic
 $ foreman start web
 ```
 
