@@ -1,4 +1,11 @@
-<h1>Page View Report</h1>
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+  <div class="container">
+
+
+<h2>Page View Report</h2>
 
 
 <ul>
@@ -8,3 +15,7 @@
 {% endfor %}
 
 </ul>
+
+</div>
+
+{% endblock %}
