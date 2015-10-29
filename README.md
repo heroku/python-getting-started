@@ -21,6 +21,7 @@ $ foreman start web
 Your app should now be running on [localhost:5000](http://localhost:5000/).
 
 ## Deploying to Heroku
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/borja/python-getting-started/tree/master)
 
 ```sh
 $ heroku create
