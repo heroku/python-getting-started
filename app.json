@@ -1,4 +1,8 @@
 {
-  "name": "Getting Started with Python on Heroku",
-  "description": "A barebones Python app, which can easily be deployed to Heroku."
+  "name": "Python on Heroku example",
+  "description": "A barebones Python app, which can easily be deployed to Heroku.",
+  "image": "https://photos-1.dropbox.com/t/2/AABCmL8w0GvyYBEjfGa49LRXCNIVv7jQ2yg_0J5qnv93HQ/12/1636974/png/32x32/1/1446253200/0/2/heroku-logo-stroke-purple.png/EN6UqwEYpKq3MyAHKAc/j4JHowjJ5xrFapcyO-1V_jJ_lR_4spjZEfBvaPPArTs?size_mode=2&size=1280x960",
+  "repository": "https://github.com/heroku/python-getting-started",
+  "keywords": ["python", "django" ],
+  "addons": [ "heroku-postgresql" ]
 }
