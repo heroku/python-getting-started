@@ -1,7 +1,5 @@
 # python-getting-started
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
 A barebones Python app, which can easily be deployed to Heroku.
 
 This application support the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
@@ -15,9 +13,9 @@ $ git clone git@github.com:heroku/python-getting-started.git
 $ cd python-getting-started
 $ pip install -r requirements.txt
 $ createdb python_getting_started
-$ foreman run python manage.py migrate
+$ heroku local:run python manage.py migrate
 $ python manage.py collectstatic
-$ foreman start web
+$ heroku local
 ```
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
@@ -30,6 +28,9 @@ $ git push heroku master
 $ heroku run python manage.py migrate
 $ heroku open
 ```
+or
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 ## Documentation
 
