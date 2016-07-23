@@ -2,10 +2,15 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from people.models import Person
 
 @login_required
 def index(request):
-    return render(request, 'app/home.html')
+    people = Person.objects.all()
+    context = {
+        'people':people,
+    }
+    return render(request, 'app/home.html', context)
 
 def login_user(request):
     #logout(request)
@@ -29,7 +34,7 @@ def login_view(request):
     except:
         context = {}
 
-    return render(request, 'app/login2.html',context)
+    return render(request, 'app/login.html',context)
 
 def signup(request):
     return render(request, 'app/signup.html')
