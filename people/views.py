@@ -1,6 +1,13 @@
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from people.models import Person
 
-# Create your views here.
+@login_required
 def index(request):
-	return HttpResponse("Hello world")
+    people = Person.objects.all()
+    context = {
+        'people':people,
+    }
+    return render(request, 'people/home.html', context)

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+  <h1>Your people</h1>
+</div>
+
+<div class="container">
+  <div class="row">
+
+  {% for person in people %}
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <img class= "img-responsive" src="{{person.photo_url}}" alt="{{person.fullname}}">
+        <div class="caption">
+          <h3>{{ person.fullname }}</h3>
+          {% for membership in person.membership_set.all %}
+          <h4>{{membership}}</h4>
+          {% endfor %}
+          <p>{{ person.bio|slice:":200" }}</p>
+          <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+        </div>
+      </div>
+    </div>
+    {% if forloop.counter|divisibleby:3 %}
+      </div><!-- End Row-->
+      <div class="row"><!-- new row -->
+    {% endif %}
+  {% endfor %}
+
+  </div>
+</div>
+
+
+
+{% endblock %}
