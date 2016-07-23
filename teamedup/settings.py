@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'homepage',
     'app',
     'people',
+    'recruit',
+    'gigs',
     #leave at bottom otherwise some functionality like logout redirect breaks
     'django.contrib.admin',
 )

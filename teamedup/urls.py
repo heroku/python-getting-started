@@ -13,6 +13,8 @@ import homepage.views
 urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
     url(r'^app/', include('app.urls')),
+    url(r'^gigs/', include('gigs.urls')),
+    url(r'^recruit/', include('recruit.urls')),
     url(r'^$', homepage.views.index, name='index'),
     url(r'^db', homepage.views.db, name='db'),
     url(r'^admin/', include(admin.site.urls)),
