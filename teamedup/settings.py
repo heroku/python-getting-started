@@ -31,13 +31,15 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'homepage'
+    'homepage',
+    'app',
+    #leave at bottom otherwise some functionality like logout redirect breaks
+    'django.contrib.admin',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -136,3 +138,5 @@ STATICFILES_DIRS = (
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
+LOGIN_URL = '/app/login/'
+LOGIN_REDIRECT_URL = '/app/login/'
