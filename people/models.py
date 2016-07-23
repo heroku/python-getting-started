@@ -5,7 +5,7 @@ from django.db import models
 # Create your models here.
 class Person(models.Model):
 	fullname=models.CharField(max_length=100)
-	bio=models.CharField(max_length=1000)
+	bio=models.TextField()
 	photo_url=models.CharField(max_length=800)
 
 	def __str__(self):
