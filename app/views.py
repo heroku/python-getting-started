@@ -15,16 +15,11 @@ def login_user(request):
         username = request.POST['username']
         password = request.POST['password']
 
-        next = request.POST['next']
-
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
                 login(request, user)
-                if next:
-                    return HttpResponseRedirect(next)
-                else:
-                    return HttpResponseRedirect('/app')
+                return HttpResponseRedirect('/app')
     return HttpResponse("You're authenticated.")
 
 def login_view(request):
@@ -34,7 +29,7 @@ def login_view(request):
     except:
         context = {}
 
-    return render(request, 'app/login.html',context)
+    return render(request, 'app/login2.html',context)
 
 def signup(request):
     return render(request, 'app/signup.html')
