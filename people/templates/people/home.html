@@ -11,7 +11,7 @@
   {% for person in people %}
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
-        <img class= "img-responsive" src="{{person.photo_url}}" alt="{{person.fullname}}">
+        <img class= "img-responsive" height="250px" src="{{person.photo_url}}" alt="{{person.fullname}}">
         <div class="caption">
           <h3>{{ person.fullname }}</h3>
           {% for membership in person.membership_set.all %}
