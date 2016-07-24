@@ -25,7 +25,10 @@ def login_user(request):
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect('/app')
-    return HttpResponse("You're authenticated.")
+            else:
+                return HttpResponse("Please check your username or password and try again.")
+        else:
+            return HttpResponse("Please check your username or password and try again.")
 
 def login_view(request):
     try:

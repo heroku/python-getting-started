@@ -13,8 +13,12 @@ def index(request):
     return render(request, 'people/home.html', context)
 
 @login_required
-def profile_view(request):
-    return render(request, 'people/profile.html')
+def profile_view(request, profile_id):
+	person = Person.objects.get(pk=profile_id)
+	context = {
+		'person': person,
+		}
+	return render(request, 'people/profile.html', context)
 
 @login_required
 def timekittest(request):

@@ -75,6 +75,8 @@ TEMPLATES = [
     },
 ]
 
+
+
 WSGI_APPLICATION = 'teamedup.wsgi.application'
 
 
