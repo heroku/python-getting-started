@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+  <h1>Kaj Lofgren</h1>
+  <p>Kaj (pronounced Kai) is the Director of The School of Life (TSOL) Australia, which includes branches in Melbourne, Sydney and Perth. TSOL is a secular organisation that is devoted to developing emotio...</p>
+</div>
+
+<div class="container">
+  <div class="row">
+      <div id="bookingjs">
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script type="text/javascript" src="//cdn.timekit.io/booking-js/v1/booking.min.js" defer></script>
+        <script type="text/javascript">
+          window.timekitBookingConfig = {
+            email:    'nick@teamedup.com',
+            apiToken: 'wnh8L37VmgqDaXQiTMleMOnCdVCyhlIe',
+            calendar: '2f711d97-7069-49b2-8c90-296bd6052f50',
+            name:     'Kaj Lofgren',
+            avatar:   'http://www.theschooloflife.com/silverstripe-multi/assets/Uploads/Melbourne-Assets/Faculty-and-Staff/_resampled/croppedimage250250-Kaj-photo.jpg'
+          };
+        </script>
+      </div>
+
+  </div>
+</div>
+
+{% endblock %}

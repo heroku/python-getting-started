@@ -11,3 +11,11 @@ def index(request):
         'people':people,
     }
     return render(request, 'people/home.html', context)
+
+@login_required
+def profile_view(request):
+    return render(request, 'people/profile.html')
+
+@login_required
+def timekittest(request):
+    return render(request, 'people/timekit-test.html')
