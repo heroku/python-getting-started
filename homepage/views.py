@@ -1,12 +1,15 @@
 import requests
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from .models import Greeting
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/app')
+	else:
+		return render(request, 'index.html')
 
 
 def db(request):
