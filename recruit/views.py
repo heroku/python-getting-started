@@ -7,3 +7,6 @@ from django.contrib.auth import authenticate, login, logout
 @login_required
 def index(request):
     return render(request, 'recruit/home.html')
+
+def new_search(request):
+	return render(request, 'recruit/talent_search.html')

@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'people',
     'recruit',
     'gigs',
+    'waffle',
     #leave at bottom otherwise some functionality like logout redirect breaks
     'django.contrib.admin',
 )
@@ -54,6 +55,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'waffle.middleware.WaffleMiddleware',
 )
 
 ROOT_URLCONF = 'teamedup.urls'
