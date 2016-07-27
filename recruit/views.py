@@ -10,3 +10,6 @@ def index(request):
 
 def new_search(request):
 	return render(request, 'recruit/talent_search.html')
+
+def campaign_detail(request):
+	return render(request, 'recruit/campaign_detail.html')
