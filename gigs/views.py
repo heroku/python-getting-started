@@ -7,3 +7,6 @@ from people.models import Person
 @login_required
 def index(request):
     return render(request, 'gigs/home.html')
+
+def gig_detail(request):
+	return render(request, 'gigs/gig_detail.html')
