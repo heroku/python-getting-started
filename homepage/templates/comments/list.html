@@ -8,11 +8,11 @@
       <img src="/images/avatar/small/joe.jpg">
     </a>-->
  {% for comment in comment_list %}
-  <div class="content">
-    <h6><a href="#">{{ comment.user_name }}</a> on {{ comment.submit_date }}</h6>
-  </div>
   <div class="text">
     {{comment.comment}}
+  </div>
+  <div class="content">
+    <h6><a href="#">{{ comment.user_name }}</a> on {{ comment.submit_date }}</h6>
   </div>
 </div>
 {% endfor %}
