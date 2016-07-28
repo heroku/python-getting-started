@@ -3,39 +3,20 @@
 
 
 <div class="container">
-  <div class="row" style="padding-top:20px">
+  {% for gig in gigs %}
+    {% if forloop.counter == 1 %}
+      <div class="row" style="padding-top:20px">
+    {% else %}
+      <div class="row">
+    {% endif %}
     <div class="panel panel-default">
   		<div class="panel-body">
-    		<h3><a href="detail/">A super cool consulting gig with a leading bank</a></h3>
-    		<p>Posted by <a href="/people/profile/1/">Kaj Lofgren</a> on 21 July, 2016</p>
+    		<h3><a href="detail/">{{gig.title}}</a></h3>
+    		<p>Posted by <a href="/people/profile/1/">Kaj Lofgren</a> on {{gig.created}}</p>
   		</div>
 	</div>
   </div>
-  <div class="row">
-    <div class="panel panel-default">
-  		<div class="panel-body">
-    		<h3>A super cool consulting gig with a leading bank</h3>
-    		<p>Posted by <a href="/people/profile/1/">Kaj Lofgren</a> on 21 July, 2016</p>
-  		</div>
-	</div>
-  </div>
-  <div class="row">
-    <div class="panel panel-default">
-  		<div class="panel-body">
-    		<h3>A super cool consulting gig with a leading bank</h3>
-    		<p>Posted by <a href="/people/profile/1/">Kaj Lofgren</a> on 21 July, 2016</p>
-  		</div>
-	</div>
-  </div>
-  <div class="row">
-    <div class="panel panel-default">
-  		<div class="panel-body">
-    		<h3>A super cool consulting gig with a leading bank</h3>
-    		<p>Posted by <a href="/people/profile/1/">Kaj Lofgren</a> on 21 July, 2016</p>
-  		</div>
-	</div>
-  </div>
-
+  {% endfor %}
 </div>
 
 

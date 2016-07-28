@@ -3,10 +3,15 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from people.models import Person
+from gigs.models import Gig
 
 @login_required
 def index(request):
-    return render(request, 'gigs/home.html')
+	gigs = Gig.objects.all()
+	context = {
+		'gigs':gigs,
+	}
+	return render(request, 'gigs/home.html', context)
 
 def gig_detail(request):
 	return render(request, 'gigs/gig_detail.html')
