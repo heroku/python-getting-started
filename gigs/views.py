@@ -13,5 +13,9 @@ def index(request):
 	}
 	return render(request, 'gigs/home.html', context)
 
-def gig_detail(request):
-	return render(request, 'gigs/gig_detail.html')
+def gig_detail(request, gig_id):
+	gig = Gig.objects.get(pk=gig_id)
+	context = {
+		'gig':gig,
+	}
+	return render(request, 'gigs/gig_detail.html', context)

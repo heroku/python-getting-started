@@ -1,6 +1,7 @@
 argh==0.26.2
 dj-database-url==0.4.0
 Django==1.9.2
+django-contrib-comments==1.7.1
 django-waffle==0.11.1
 gunicorn==19.4.5
 injector==0.9.1

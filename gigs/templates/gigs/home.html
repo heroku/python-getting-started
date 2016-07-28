@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{% load comments %}
 
 <div class="container">
   {% for gig in gigs %}
@@ -11,10 +11,13 @@
     {% endif %}
     <div class="panel panel-default">
   		<div class="panel-body">
-    		<h3><a href="detail/">{{gig.title}}</a></h3>
-    		<p>Posted by <a href="/people/profile/1/">Kaj Lofgren</a> on {{gig.created}}</p>
+    		<h3><a href="detail/{{gig.pk}}">{{gig.title}}</a></h3>
+        <p></p>
+    		<h5>Posted by <a href="/people/profile/1/">Kaj Lofgren</a> on {{gig.created}}</h5>
+        {% get_comment_count for gig as comment_count %}
+        <h6>{{ comment_count }} comments</h6>
   		</div>
-	</div>
+	   </div>
   </div>
   {% endfor %}
 </div>

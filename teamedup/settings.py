@@ -44,7 +44,12 @@ INSTALLED_APPS = (
     'waffle',
     #leave at bottom otherwise some functionality like logout redirect breaks
     'django.contrib.admin',
+    'django.contrib.sites',
+    'django_comments',
 )
+
+#SITE_ID for django.contrib.comments
+SITE_ID = 1
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
