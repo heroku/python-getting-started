@@ -13,8 +13,11 @@ fields, timestamps and security hashes -->
       {% else %}{% ifequal field.name "email" %}
       {% else %}{% ifequal field.name "url" %}
       {% else %}{% ifequal field.name "honeypot" %}
+      {% else %}{% ifequal field.name "comment" %}
+      <textarea class="form-control" id="comment" name="comment" rows="5" placeholder="description"></textarea>
       {% else %}
         {{ field }}
+      {% endifequal %}
       {% endifequal %}
       {% endifequal %}
       {% endifequal %}

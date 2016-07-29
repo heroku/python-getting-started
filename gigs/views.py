@@ -26,10 +26,8 @@ def new_gig(request):
 	if request.method == "POST":
 		form = GigForm(request.POST)
 		if form.is_valid():
-			
 			post = form.save(commit=False)
 			post.owner = request.user
-
 			post.save()
 			return redirect('/gigs')
 	else:
