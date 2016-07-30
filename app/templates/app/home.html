@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 
+{% if alert %}
+<div class="row" style="padding-top:20px">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h4>{{alert.message}}</h4>
+    </div>
+   </div>
+</div>
+{% endif %}
+
 <div class="row">
   <h1>Application dashboard</h1>
 </div>
@@ -16,7 +26,8 @@
     <p>Current list of to-do's<p>
     	<ul>
     		<li>[100%] Enable gigs MVP</li>
-        <li>[0%] Allow users to update their profile information</li>
+        <li>[90%] Allow users to update their profile information</li>
+        <li>[0%] When user updates profile information, add validation (e.g. that existing username doesnt already exist) & appropriate error handling on edit profile view</li>
     		<li>[0%] Enable contractors to nominate themselves for a Gig</li>
         <li>[0%] Enable gig owners to screen and select contractors for a Gig</li>
         <li>[0%] Allow user signup workflow (linked to request beta access)</li>
