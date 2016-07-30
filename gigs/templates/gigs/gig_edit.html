@@ -25,7 +25,11 @@
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-default">Save & submit</button>
-            <a href="/gigs/detail/{{gig.pk}}" class="btn btn-default">Cancel</a>
+            {% if gig.pk != None %}
+              <a href="/gigs/detail/{{gig.pk}}" class="btn btn-default">Cancel</a>
+            {% else %}
+              <a href="/gigs" class="btn btn-default">Cancel</a>
+            {% endif %}
           </div>
         </div>
       </form>

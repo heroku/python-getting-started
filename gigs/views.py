@@ -16,11 +16,14 @@ def index(request):
 	return render(request, 'gigs/home.html', context)
 
 def gig_detail(request, gig_id):
-	gig = Gig.objects.get(pk=gig_id)
-	context = {
-		'gig':gig,
-	}
-	return render(request, 'gigs/gig_detail.html', context)
+	try:
+		gig = Gig.objects.get(pk=gig_id)
+		context = {
+			'gig':gig,
+		}
+		return render(request, 'gigs/gig_detail.html', context)
+	except:
+		return redirect('index')
 
 def new_gig(request):
 	if request.method == "POST":
