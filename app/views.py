@@ -39,5 +39,12 @@ def login_view(request):
 
     return render(request, 'app/login.html',context)
 
+def profile_view(request):
+    user = request.user
+    context={
+        'user':user,
+    }
+    return render(request, 'app/profile.html', context)
+
 def signup(request):
     return render(request, 'app/signup.html')

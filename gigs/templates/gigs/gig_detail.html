@@ -8,7 +8,10 @@
     <div class="panel panel-default">
   		<div class="panel-body">
     		<h3><a href="#">{{gig.title}}</a></h3>
-    		<p>Posted by <a href="/people/profile/1/">Kaj Lofgren</a> on {{gig.created}}</p>
+    		<p>Posted by <a href="/people/profile/1/">{{gig.owner}}</a> on {{gig.created}}</p>
+        {% if request.user == gig.owner %}
+          <p><a href="/gigs/{{gig.pk}}/edit">Edit</a></p>
+        {% endif %}
         <hr>
         {% if gig.description != None %}
           <p>{{gig.description}}</p>

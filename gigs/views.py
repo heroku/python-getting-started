@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from people.models import Person
@@ -33,3 +33,21 @@ def new_gig(request):
 	else:
 		form = GigForm()
 		return render(request, 'gigs/gig_edit.html', {'form': form})
+
+def edit_gig(request, pk):
+	gig = get_object_or_404(Gig, pk=pk)
+
+	#Need to make sure those who are not post owners cannot edit
+	if request.user == gig.owner:
+		if request.method == "POST":
+			form=GigForm(request.POST, instance=gig)
+			if form.is_valid():
+				gig=form.save(commit=False)
+				gig.owner=request.user
+				gig.save()
+				return redirect('gig_detail', gig_id=gig.pk)
+		else:
+				form=GigForm(instance=gig)
+		return render(request, 'gigs/gig_edit.html', {'form': form})
+	else:
+		return redirect('gig_detail', gig_id=gig.pk)
