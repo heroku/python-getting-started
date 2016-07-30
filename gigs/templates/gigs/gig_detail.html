@@ -7,7 +7,7 @@
   <div class="row" style="padding-top:20px">
     <div class="panel panel-default">
   		<div class="panel-body">
-    		<h3><a href="#">{{gig.title}}</a></h3>
+    		<h3>{{gig.title}}</h3>
     		<p>Posted by <a href="/people/profile/1/">{{gig.owner}}</a> on {{gig.created}}</p>
         {% if request.user == gig.owner %}
           <p><a href="/gigs/{{gig.pk}}/edit">Edit</a></p>

@@ -48,6 +48,10 @@ def edit_gig(request, pk):
 				return redirect('gig_detail', gig_id=gig.pk)
 		else:
 				form=GigForm(instance=gig)
-		return render(request, 'gigs/gig_edit.html', {'form': form})
+				context = {
+					'form':form,
+					'gig':gig,
+				}
+		return render(request, 'gigs/gig_edit.html', context)
 	else:
 		return redirect('gig_detail', gig_id=gig.pk)
