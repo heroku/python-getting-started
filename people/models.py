@@ -5,7 +5,7 @@ from django.db import models
 
 # Create your models here.
 class Person(models.Model):
-	user=models.ForeignKey('auth.User', null=True)
+	user=models.OneToOneField(User, on_delete=models.CASCADE, null=True)
 	fullname=models.CharField(max_length=100)
 	bio=models.TextField()
 	photo_url=models.CharField(max_length=800)

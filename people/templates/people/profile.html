@@ -4,11 +4,48 @@
 <div class="container">
   <div class="row">
     <h2>{{person.fullname}}</h2>
-    <ul>
-      <li>Todo: iterate along all gigs owned by this user</li>
-      <li>Todo: users can also be 'members' of gigs, acknowledging their membership or participation in the gig. This will need to be presented here, too</li>
-    </ul>
+    <h4>{{person.user.email}}</h4>
   </div>
+  <div class="row">
+    <h4>Bio</h4>
+    <p>{{person.bio}}</p>
+  </div>
+
+<!-- GIGS THAT THE PERSON IS A TEAM MEMBER OF -->
+    <div class="row">
+      <h4>{{person.fullname}} is a team member of:</h4>
+    </div>
+    {% for team in person.gig_set.all %}
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h3><a href="detail/{{gig.pk}}">{{team.title}}</a></h3>
+          <p></p>
+          <h5>Created on {{team.created}}</h5>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+<!-- GIGS THAT THE PERSON IS THE OWNER / LEAD -->
+  {% if gigs_lead.count != 0 %}
+    <div class="row">
+      <h4>{{person.fullname}} is leading:</h4>
+    </div>
+    {% for gig in gigs_lead %}
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h3><a href="detail/{{gig.pk}}">{{gig.title}}</a></h3>
+          <p></p>
+          <h5>Created on {{gig.created}}</h5>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  {% endif %}
 </div>
+<!-- -->
+
 
 {% endblock %}
