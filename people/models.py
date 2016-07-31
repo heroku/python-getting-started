@@ -1,9 +1,11 @@
 from __future__ import unicode_literals
+from django.contrib.auth.models import User
 
 from django.db import models
 
 # Create your models here.
 class Person(models.Model):
+	user=models.ForeignKey('auth.User', null=True)
 	fullname=models.CharField(max_length=100)
 	bio=models.TextField()
 	photo_url=models.CharField(max_length=800)

@@ -3,20 +3,11 @@
 
 <div class="container">
   <div class="row">
-      <div id="bookingjs">
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script type="text/javascript" src="//cdn.timekit.io/booking-js/v1/booking.min.js" defer></script>
-        <script type="text/javascript">
-          window.timekitBookingConfig = {
-            email:    'nick@teamedup.com',
-            apiToken: 'wnh8L37VmgqDaXQiTMleMOnCdVCyhlIe',
-            calendar: '2f711d97-7069-49b2-8c90-296bd6052f50',
-            name:     '{{ person.fullname }}',
-            avatar:   '{{ person.photo_url }}'
-          };
-        </script>
-      </div>
-
+    <h2>{{person.fullname}}</h2>
+    <ul>
+      <li>Todo: iterate along all gigs owned by this user</li>
+      <li>Todo: users can also be 'members' of gigs, acknowledging their membership or participation in the gig. This will need to be presented here, too</li>
+    </ul>
   </div>
 </div>
 
