@@ -1,5 +1,5 @@
 from django.conf.urls import include, url
-
+from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.contrib import admin
 admin.autodiscover()
@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^logout/$', 'django.contrib.auth.views.logout',
                           {'next_page': '/'}),
     url(r'^comments/', include('django_comments.urls')),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT,}),
 ]

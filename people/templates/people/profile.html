@@ -3,12 +3,13 @@
 
 <div class="container">
   <div class="row">
-    <h2>{{person.fullname}}</h2>
-    <h4>{{person.user.email}}</h4>
-  </div>
-  <div class="row">
-    <h4>Bio</h4>
-    <p>{{person.bio}}</p>
+      {% if person.picture != None %}
+        <img width='150px' class="img-circle" style="padding-top:20px" src="/media/{{person.picture}}" \>
+      {% endif %}
+      <h2>{{person.fullname}}</h2>
+      <h4>{{person.user.email}}</h4>
+      <h4>Bio</h4>
+      <p>{{person.bio}}</p>
   </div>
 
   <hr>
