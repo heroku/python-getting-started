@@ -6,6 +6,8 @@ from django.db import models
 # Create your models here.
 class Person(models.Model):
 	user=models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+	#ImageField depends on Pillow (pip install pillow)
+	#picture=models.ImageField()
 	fullname=models.CharField(max_length=100)
 	bio=models.TextField()
 	photo_url=models.CharField(max_length=800)
