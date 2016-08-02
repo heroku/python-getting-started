@@ -18,8 +18,10 @@ def index(request):
 def gig_detail(request, gig_id):
 	try:
 		gig = Gig.objects.get(pk=gig_id)
+		gig_admin = gig.admin.all()
 		context = {
 			'gig':gig,
+			'gig_admin': gig_admin,
 		}
 		return render(request, 'gigs/gig_detail.html', context)
 	except:
@@ -30,8 +32,9 @@ def new_gig(request):
 		form = GigForm(request.POST)
 		if form.is_valid():
 			post = form.save(commit=False)
-			post.owner = request.user
 			post.save()
+			post.admin.add(request.user)
+			post.team.add(request.user)
 			return redirect('/gigs')
 	else:
 		form = GigForm()
@@ -41,12 +44,12 @@ def edit_gig(request, pk):
 	gig = get_object_or_404(Gig, pk=pk)
 
 	#Need to make sure those who are not post owners cannot edit
-	if request.user == gig.owner:
+	if gig.admin.filter(username=request.user.username):
 		if request.method == "POST":
 			form=GigForm(request.POST, instance=gig)
 			if form.is_valid():
 				gig=form.save(commit=False)
-				gig.owner=request.user
+				#gig.admin=request.user
 				gig.save()
 				return redirect('gig_detail', gig_id=gig.pk)
 		else:

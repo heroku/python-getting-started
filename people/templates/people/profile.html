@@ -29,35 +29,8 @@
     </div>
     {% endfor %}
 
-<!-- GIGS THAT THE PERSON IS THE OWNER / LEAD -->
-<hr>
-  {% if gigs_lead.count != 0 %}
-    <div class="row">
-      <h3>{{person.fullname}} manages:</h3>
-    </div>
-    <div class="row">
-    {% for gig in gigs_lead %}
-      <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">
-        <img class= "img-responsive" height="250px" src="" alt="">
-          <div class="caption">
-            <h3>{{ gig.title }}</h3>
-            <p>{{ gig.description|slice:":200" }}</p>
-            <p><!--<a href="#" class="btn btn-primary" role="button">Book</a>--><a href="/gigs/detail/{{ gig.pk }}" class="btn btn-default" role="button">Learn more</a></p>
-          </div>
-        </div>
-      </div>
-      {% if forloop.counter|divisibleby:3 %}
-      </div><!-- End Row-->
-      <div class="row"><!-- new row -->
-      {% endif %}
-    {% endfor %}
-  {% endif %}
-</div>
-<!-- -->
 
-
-  </div>
 </div>
+
 
 {% endblock %}

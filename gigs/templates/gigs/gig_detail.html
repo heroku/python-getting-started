@@ -8,8 +8,13 @@
     <div class="panel panel-default">
   		<div class="panel-body">
     		<h3>{{gig.title}}</h3>
-    		<p>Posted by <a href="/people/profile/1/">{{gig.owner}}</a> on {{gig.created}}</p>
-        {% if request.user == gig.owner %}
+    		<p>Posted on {{gig.created}}</p>
+        <p>Admins: 
+          {% for admin in gig_admin %}
+            {{admin.username}}
+          {% endfor %}
+        </p>
+        {% if request.user in gig_admin %}
           <p><a href="/gigs/{{gig.pk}}/edit">Edit</a></p>
         {% endif %}
         <hr>

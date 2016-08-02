@@ -17,7 +17,7 @@ List Gig</a>
   		<div class="panel-body">
     		<h3><a href="detail/{{gig.pk}}">{{gig.title}}</a></h3>
         <p></p>
-    		<h5>Posted by <a href="/people/profile/1/">{{gig.owner.username}}</a> on {{gig.created}}</h5>
+    		<h5>Posted by <a href="/people/profile/1/">{{gig.admin.username}}</a> on {{gig.created}}</h5>
         {% get_comment_count for gig as comment_count %}
         <h6>{{ comment_count }} comments</h6>
   		</div>
