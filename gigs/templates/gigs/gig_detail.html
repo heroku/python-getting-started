@@ -11,7 +11,7 @@
     		<p>Posted on {{gig.created}}</p>
         <p>Admins: 
           {% for admin in gig_admin %}
-            {{admin.username}}
+            {{admin.person.username}}
           {% endfor %}
         </p>
         {% if request.user in gig_admin %}

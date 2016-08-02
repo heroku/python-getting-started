@@ -7,9 +7,6 @@ from datetime import datetime
 class Gig(models.Model):
 	title=models.CharField(max_length=55)
 	description=models.TextField(null=True)
-	admin=models.ManyToManyField('auth.User')
-
-	team=models.ManyToManyField('auth.User', related_name='gig_team')
 
 	start_date=models.DateTimeField(null=True)
 	end_date=models.DateTimeField(null=True)
@@ -19,3 +16,17 @@ class Gig(models.Model):
 
 	def __str__(self):
 		return self.title
+
+class Role(models.Model):
+	role=models.CharField(max_length=50)
+
+	def __str__(self):
+		return self.role
+
+class Team(models.Model):
+	person=models.ForeignKey(User, on_delete=models.CASCADE)
+	gig=models.ForeignKey(Gig, on_delete=models.CASCADE)
+	role=models.ForeignKey(Role, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return "%s, of %s (%s)" % (self.person, self.gig, self.role)

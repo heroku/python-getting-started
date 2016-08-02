@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from people.models import Person
-from gigs.models import Gig
+from gigs.models import Gig, Role, Team
 from .forms import GigForm
 from django.shortcuts import redirect
 
@@ -18,7 +18,8 @@ def index(request):
 def gig_detail(request, gig_id):
 	try:
 		gig = Gig.objects.get(pk=gig_id)
-		gig_admin = gig.admin.all()
+		role = Role.objects.get(role='admin')
+		gig_admin = Team.objects.filter(role=role).filter(gig=gig)
 		context = {
 			'gig':gig,
 			'gig_admin': gig_admin,
@@ -33,8 +34,11 @@ def new_gig(request):
 		if form.is_valid():
 			post = form.save(commit=False)
 			post.save()
-			post.admin.add(request.user)
-			post.team.add(request.user)
+			new_gig = Gig.objects.get(pk=post.pk)
+			user = request.user
+			role = Role.objects.get(role='admin')
+			new_team_membership = Team.objects.create(person=user, gig=new_gig, role=role)
+			#return HttpResponse(post.pk)
 			return redirect('/gigs')
 	else:
 		form = GigForm()
