@@ -14,7 +14,7 @@
         {% if person.picture != None %}
           <img class= "img-responsive" style="height:250px" src="/media/{{person.picture}}" alt="{{person.fullname}}">
         {% else %}
-          <img class= "img-responsive" style="height:250px" src="{{person.photo_url}}" alt="{{person.fullname}}">
+          <img class= "img-responsive" style="height:250px" src="http://eadb.org/wp-content/uploads/2015/08/profile-placeholder.jpg" alt="{{person.fullname}}">
         {% endif %}
         <div class="caption">
           <h3>{{ person.fullname }}</h3>
