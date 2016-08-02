@@ -53,7 +53,7 @@ def edit_profile(request):
     if request.method == "POST":
         form=UserForm(request.POST, instance=user)
         if form.is_valid():
-            person_form=PersonForm(request.POST, instance=person)
+            person_form=PersonForm(request.POST, request.FILES, instance=person)
             if person_form.is_valid():
                 user=form.save(commit=False)
                 person=person_form.save(commit=False)

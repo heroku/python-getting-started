@@ -7,7 +7,7 @@
   <div class="row" style="padding-top:20px">
     <div class="panel panel-default">
       <div class="panel-body">
-      <form method="POST" class="form-horizontal">
+      <form enctype="multipart/form-data" method="POST" class="form-horizontal">
         {% csrf_token %}
         {{ form.non_field_errors }}
         <div class="form-group">
