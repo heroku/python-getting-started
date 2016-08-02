@@ -17,10 +17,11 @@ def index(request):
 def profile_view(request, profile_id):
     person = Person.objects.get(pk=profile_id)
     gigs_lead = Gig.objects.filter(admin__username=person.profile.username)
-    
+    user = request.user
     context = {
 		'person': person,
         'gigs_lead': gigs_lead,
+        'user': user,
 		}
 	
     return render(request, 'people/profile.html', context)
