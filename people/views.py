@@ -16,7 +16,7 @@ def index(request):
 @login_required
 def profile_view(request, profile_id):
     person = Person.objects.get(pk=profile_id)
-    gigs_lead = Gig.objects.filter(owner__username=person.user.username)
+    gigs_lead = Gig.objects.filter(owner__username=person.profile.username)
     
     context = {
 		'person': person,
