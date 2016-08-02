@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from people.models import Person
 from .models import Alert
 from .forms import UserForm
+from people.forms import PersonForm
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 
@@ -48,15 +49,21 @@ def login_view(request):
 
 def edit_profile(request):
     user = request.user
+    person = Person.objects.get(profile=user)
     if request.method == "POST":
         form=UserForm(request.POST, instance=user)
         if form.is_valid():
-            user=form.save(commit=False)
-            user.save()
-            return redirect('/app/?alert=profile_update')
+            person_form=PersonForm(request.POST, instance=person)
+            if person_form.is_valid():
+                user=form.save(commit=False)
+                person=person_form.save(commit=False)
+                user.save()
+                person.save()
+                return redirect('/app/?alert=profile_update')
     else:
             form=UserForm(instance=user)
-    return render(request, 'app/profile_edit.html', {'form': form})
+            person_form=PersonForm(instance=person)
+    return render(request, 'app/profile_edit.html', {'form': form, 'person_form': person_form})
 
 def signup(request):
     return render(request, 'app/signup.html')
