@@ -70,24 +70,32 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right m-r-0 hidden-xs">
+          <!--
           <li >
             <a class="app-notifications" href="notifications/index.html">
               <span class="icon icon-bell"></span>
             </a>
           </li>
           <li>
+          -->
             <button class="btn btn-default navbar-btn navbar-btn-avitar" data-toggle="popover">
-              <img class="img-circle" src="{% static 'assets/img/avatar-dhg.png' %}">
+            {% if person.picture != None %}
+              <img class= "img-circle" src="/media/{{person.picture}}">
+            {% else %}
+              <img class= "img-circle" src="http://www.csuniv.edu/_resources/images/faculty-placeholder.png">
+            {% endif %}
             </button>
           </li>
         </ul>
 
+        <!--
         <form class="navbar-form navbar-right app-search" role="search">
           <div class="form-group">
             <input type="text" class="form-control" data-action="grow" placeholder="Search">
           </div>
         </form>
-
+        -->
+        
         <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
           <li><a href="/">Home</a></li>
           <li><a href="/gigs/">Gigs</a></li>

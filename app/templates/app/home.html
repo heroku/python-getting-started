@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% if alert %}
-<div class="row" style="padding-top:20px">
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <h4>{{alert.message}}</h4>
-    </div>
-   </div>
-</div>
-{% endif %}
-
 <div class="container">
+
+  {% if alert %}
+  <div class="row" style="padding-top:20px">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h4>{{alert.message}}</h4>
+      </div>
+     </div>
+  </div>
+  {% endif %}
 
   <div class="row">
     <h1>Application dashboard</h1>
