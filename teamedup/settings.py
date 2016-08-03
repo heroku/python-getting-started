@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 import dj_database_url
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -46,6 +45,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.sites',
     'django_comments',
+    'storages',
 )
 
 #SITE_ID for django.contrib.comments
@@ -141,10 +141,10 @@ ALLOWED_HOSTS = ['*']
 ENV_PATH = os.path.abspath(os.path.dirname(__file__))
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-STATIC_URL = '/static/'
+#STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
-MEDIA_URL = '/media/'
+MEDIA_ROOT = '' #os.path.join(ENV_PATH, 'media/')
+#MEDIA_URL = '/media/'
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
@@ -157,3 +157,29 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 LOGIN_URL = '/app/login/'
 LOGIN_REDIRECT_URL = '/app/login/'
+
+
+#Static and media file caching setting
+AWS_HEADERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'Cache-Control': 'max-age=94608000',
+}
+
+#AWS S3 BUCKET DETAILS
+AWS_STORAGE_BUCKET_NAME='teamedup'
+AWS_ACCESS_KEY_ID='AKIAJEHOEVOIQ2LZDEMQ'
+AWS_SECRET_ACCESS_KEY='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'
+
+# Tell django-storages that when coming up with the URL for an item in S3 storage, keep
+# it simple - just use this domain plus the path. (If this isn't set, things get complicated).
+# This controls how the `static` template tag from `staticfiles` gets expanded, if you're using it.
+# We also use it in the next setting.
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+# This is used by the `static` template tag from `static`, if you're using that. Or if anything else
+# refers directly to STATIC_URL. So it's safest to always set it.
+STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+MEDIA_URL = STATIC_URL
+# Tell the staticfiles app to use S3Boto storage when writing the collected static files (when
+# you run `collectstatic`).
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
