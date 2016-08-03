@@ -45,7 +45,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.sites',
     'django_comments',
-    'storages',
 )
 
 #SITE_ID for django.contrib.comments
@@ -141,10 +140,10 @@ ALLOWED_HOSTS = ['*']
 ENV_PATH = os.path.abspath(os.path.dirname(__file__))
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-#STATIC_URL = '/static/'
+STATIC_URL = '/static/'
 
-MEDIA_ROOT = '' #os.path.join(ENV_PATH, 'media/')
-#MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
+MEDIA_URL = '/media/'
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
@@ -158,7 +157,7 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 LOGIN_URL = '/app/login/'
 LOGIN_REDIRECT_URL = '/app/login/'
 
-
+'''
 #Static and media file caching setting
 AWS_HEADERS = {
     'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
@@ -183,3 +182,4 @@ MEDIA_URL = STATIC_URL
 # Tell the staticfiles app to use S3Boto storage when writing the collected static files (when
 # you run `collectstatic`).
 STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+'''
