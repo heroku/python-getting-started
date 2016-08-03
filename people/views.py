@@ -16,8 +16,7 @@ def index(request):
 @login_required
 def profile_view(request, profile_id):
     person = Person.objects.get(pk=profile_id)
-    
-    user = request.user
+    user = person.profile
     context = {
 		'person': person,
         'user': user,
