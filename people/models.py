@@ -7,7 +7,7 @@ from django.db import models
 class Person(models.Model):
 	profile=models.OneToOneField(User, on_delete=models.CASCADE, null=True)
 	#ImageField depends on Pillow (pip install pillow)
-	picture=models.ImageField(null=True, upload_to="profile_pics/%Y/%m/%d")
+	picture=models.ImageField(null=True, upload_to="media/profile_pics/%Y/%m/%d")
 	fullname=models.CharField(max_length=100)
 	bio=models.TextField()
 	photo_url=models.CharField(max_length=800)
