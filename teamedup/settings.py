@@ -159,14 +159,14 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 LOGIN_URL = '/app/login/'
 LOGIN_REDIRECT_URL = '/app/login/'
 
-'''
+
 #Static and media file caching setting
 AWS_HEADERS = {
     'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
     'Cache-Control': 'max-age=94608000',
 }
 
-'''
+
 #AWS S3 BUCKET DETAILS
 AWS_STORAGE_BUCKET_NAME='teamedup'
 AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
