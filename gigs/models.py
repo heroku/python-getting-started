@@ -28,5 +28,15 @@ class Team(models.Model):
 	gig=models.ForeignKey(Gig, on_delete=models.CASCADE)
 	role=models.ForeignKey(Role, on_delete=models.CASCADE)
 
+	approved=models.NullBooleanField()
+
+	def approval(self):
+		if self.approved:
+			return 'approved'
+		elif self.approved==None:
+			return 'pending'
+		else:
+			return 'rejected'
+
 	def __str__(self):
-		return "%s, of %s (%s)" % (self.person, self.gig, self.role)
+		return "%s, of %s [%s, %s]" % (self.person, self.gig, self.role, self.approval())

@@ -6,10 +6,25 @@ from people.models import Person
 from gigs.models import Gig, Role, Team
 from .forms import GigForm
 from django.shortcuts import redirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required
 def index(request):
-	gigs = Gig.objects.all().order_by('-modified')
+	#need to implement pagination into the template at some point
+
+	gig_list = Gig.objects.all().order_by('-modified')
+	paginator = Paginator(gig_list, 100) #show 100 gigs per page
+
+	page = request.GET.get('page')
+	try:
+		gigs=paginator.page(page)
+	except PageNotAnInteger:
+		#if page not integer deliver first page
+		gigs=paginator.page(1)
+	except EmptyPage:
+		#page out of range to go to last page
+		gigs=paginator.page(paginator.num_pages)
+
 	context = {
 		'gigs':gigs,
 	}
@@ -20,9 +35,18 @@ def gig_detail(request, gig_id):
 		gig = Gig.objects.get(pk=gig_id)
 		role = Role.objects.get(role='admin')
 		gig_admin = Team.objects.filter(role=role).filter(gig=gig)
+		
+		try:
+			membership = Team.objects.filter(person=request.user).filter(gig=gig)
+
+			membership_status = membership[len(membership)-1].approved
+		except:
+			membership_status = 'Request to join'
+
 		context = {
 			'gig':gig,
 			'gig_admin': gig_admin,
+			'membership_status': membership_status,
 		}
 		return render(request, 'gigs/gig_detail.html', context)
 	except:
@@ -43,6 +67,15 @@ def new_gig(request):
 	else:
 		form = GigForm()
 		return render(request, 'gigs/gig_edit.html', {'form': form})
+
+def team_request(request, gig_id):
+	person=request.user
+	gig=Gig.objects.get(pk=gig_id)
+	role=Role.objects.get(role='member')
+
+	new_team_membership = Team.objects.create(person=person, gig=gig, role=role)
+
+	return redirect('gig_detail', gig_id)
 
 def edit_gig(request, pk):
 	gig = get_object_or_404(Gig, pk=pk)
