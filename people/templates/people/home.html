@@ -10,7 +10,7 @@
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
         {% if person.picture != None %}
-          <img class= "img-responsive" style="height:250px" src="{{media_url}}{{person.picture}}" alt="{{person.fullname}}">
+          <img class= "img-responsive" style="height:250px" src="{{person.picture.url}}" alt="{{person.fullname}}">
         {% else %}
           <img class= "img-responsive" style="height:250px" src="http://eadb.org/wp-content/uploads/2015/08/profile-placeholder.jpg" alt="{{person.fullname}}">
         {% endif %}
