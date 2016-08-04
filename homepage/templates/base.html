@@ -79,8 +79,8 @@
           <li>
           -->
             <button class="btn btn-default navbar-btn navbar-btn-avitar" data-toggle="popover">
-            {% if person.picture != None %}
-              <img class= "img-circle" src="/media/{{person.picture}}">
+            {% if request.user.person.picture.url != None %}
+              <img class= "img-circle" src="{{request.user.person.picture.url}}">
             {% else %}
               <img class= "img-circle" src="http://www.csuniv.edu/_resources/images/faculty-placeholder.png">
             {% endif %}
