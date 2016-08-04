@@ -10,7 +10,6 @@ class Person(models.Model):
 	picture=models.ImageField(null=True, upload_to="media/profile_pics/%Y/%m/%d")
 	fullname=models.CharField(max_length=100)
 	bio=models.TextField()
-	photo_url=models.CharField(max_length=800)
 
 	def __str__(self):
 		return self.fullname
