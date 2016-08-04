@@ -143,7 +143,7 @@ ENV_PATH = os.path.abspath(os.path.dirname(__file__))
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
+MEDIA_ROOT = '/var/media/'
 #MEDIA_URL = '/media/'
 
 # Extra places for collectstatic to find static files.
