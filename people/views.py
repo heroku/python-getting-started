@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from people.models import Person
-from gigs.models import Gig
+from gigs.models import Gig, Team
 
 @login_required
 def index(request):
@@ -17,9 +17,13 @@ def index(request):
 def profile_view(request, profile_id):
     person = Person.objects.get(pk=profile_id)
     user = person.profile
+
+    teams = Team.objects.filter(person=user).filter(approved=True)
+
     context = {
 		'person': person,
         'user': user,
+        'teams': teams,
 		}
 	
     return render(request, 'people/profile.html', context)

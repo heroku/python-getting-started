@@ -58,12 +58,14 @@ def new_gig(request):
 		if form.is_valid():
 			post = form.save(commit=False)
 			post.save()
+			gig_id = post.pk
 			new_gig = Gig.objects.get(pk=post.pk)
+
 			user = request.user
 			role = Role.objects.get(role='admin')
-			new_team_membership = Team.objects.create(person=user, gig=new_gig, role=role)
+			new_team_membership = Team.objects.create(person=user, gig=new_gig, role=role, approved=True)
 			#return HttpResponse(post.pk)
-			return redirect('/gigs')
+			return redirect('gig_detail', gig_id)
 	else:
 		form = GigForm()
 		return render(request, 'gigs/gig_edit.html', {'form': form})

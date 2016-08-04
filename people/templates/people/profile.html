@@ -3,8 +3,8 @@
 
 <div class="container">
   <div class="row">
-      {% if person.picture != None %}
-        <img width='150px' class="img-circle" style="padding-top:20px" src="/media/{{person.picture}}" \>
+      {% if person.picture.url != None %}
+        <img width='150px' class="img-circle" style="padding-top:20px" src="{{person.picture.url}}" \>
       {% endif %}
       <h2>{{person.fullname}}</h2>
       <h4>{{person.user.email}}</h4>
@@ -17,17 +17,18 @@
     <div class="row">
       <h3>Teams</h3>
     </div>
-    <!-- code to present team memberships 
     <div class="row">
+      {% for team in teams %}
       <div class="panel panel-default">
         <div class="panel-body">
-          <h3><a href="detail/{{gig.pk}}">{{team.title}}</a></h3>
+          <h3><a href="/gigs/detail/{{team.gig.pk}}">{{team.gig.title}}</a></h3>
           <p></p>
-          <h5>Created on {{team.created}}</h5>
+          <h5>Created on {{team.gig.created}}</h5>
         </div>
       </div>
+      {% endfor %}
     </div>
-    // end code -->
+    
     
 
 
