@@ -14,7 +14,7 @@
             {{admin.person.username}}
           {% endfor %}
         </p>
-        {% if request.user in gig_admin %}
+        {% if admin %}
           <p><a href="/gigs/{{gig.pk}}/edit">Edit</a></p>
         {% endif %}
         <hr>

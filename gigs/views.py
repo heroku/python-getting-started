@@ -36,9 +36,12 @@ def gig_detail(request, gig_id):
 		role = Role.objects.get(role='admin')
 		gig_admin = Team.objects.filter(role=role).filter(gig=gig)
 		
+		user_role = Team.objects.filter(gig=gig).filter(person=request.user)
+		length=len(user_role)-1
+		admin = user_role[length].approved
+
 		try:
 			membership = Team.objects.filter(person=request.user).filter(gig=gig)
-
 			membership_status = membership[len(membership)-1].approved
 		except:
 			membership_status = 'Request to join'
@@ -46,6 +49,7 @@ def gig_detail(request, gig_id):
 		context = {
 			'gig':gig,
 			'gig_admin': gig_admin,
+			'admin': admin,
 			'membership_status': membership_status,
 		}
 		return render(request, 'gigs/gig_detail.html', context)
@@ -81,9 +85,12 @@ def team_request(request, gig_id):
 
 def edit_gig(request, pk):
 	gig = get_object_or_404(Gig, pk=pk)
-
+	user_role = Team.objects.filter(gig=gig).filter(person=request.user)
+	length=len(user_role)-1
+	admin = user_role[length].approved
+	
 	#Need to make sure those who are not post owners cannot edit
-	if gig.admin.filter(username=request.user.username):
+	if admin:
 		if request.method == "POST":
 			form=GigForm(request.POST, instance=gig)
 			if form.is_valid():
