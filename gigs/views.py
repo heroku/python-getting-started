@@ -37,7 +37,6 @@ def gig_detail(request, gig_id):
 		gig_admin = Team.objects.filter(role=role).filter(gig=gig)
 		
 		try:
-			role = Role.objects.get(role='admin')
 			user_role = Team.objects.filter(gig=gig).filter(person=request.user).filter(role=role)
 			length=len(user_role)-1
 			admin = user_role[length].approved

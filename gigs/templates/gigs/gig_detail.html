@@ -54,15 +54,13 @@
             <div class="panel-body">
               <p>Admin: {{admin}}</p>
                 <ul class="avatar-list">
+                  {% for admin in gig_admin %}
                   <li class="avatar-list-item">
-                    <img class="img-circle" src="{{request.user.person.picture.url}}">
+                    {% if admin.person.person.picture.url != None %}
+                    <img class="img-circle" src="{{admin.person.person.picture.url}}">
+                    {% endif %}
                   </li>
-                  <li class="avatar-list-item">
-                    <img class="img-circle" src="{{request.user.person.picture.url}}">
-                  </li>
-                  <li class="avatar-list-item">
-                    <img class="img-circle" src="{{request.user.person.picture.url}}">
-                  </li>
+                  {% endfor %}
                 </ul>
               <p>Team</p>
               <ul class="avatar-list">
