@@ -36,9 +36,13 @@ def gig_detail(request, gig_id):
 		role = Role.objects.get(role='admin')
 		gig_admin = Team.objects.filter(role=role).filter(gig=gig)
 		
-		user_role = Team.objects.filter(gig=gig).filter(person=request.user)
-		length=len(user_role)-1
-		admin = user_role[length].approved
+		try:
+			role = Role.objects.get(role='admin')
+			user_role = Team.objects.filter(gig=gig).filter(person=request.user).filter(role=role)
+			length=len(user_role)-1
+			admin = user_role[length].approved
+		except:
+			admin = False
 
 		try:
 			membership = Team.objects.filter(person=request.user).filter(gig=gig)

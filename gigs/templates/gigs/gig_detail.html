@@ -4,47 +4,106 @@
 {% get_comment_list for gig as comment_list %}
 
 <div class="container">
-  <div class="row" style="padding-top:20px">
-    <div class="panel panel-default">
-  		<div class="panel-body">
-    		<h3>{{gig.title}}</h3>
-    		<p>Posted on {{gig.created}}</p>
-        <p>Admins: 
-          {% for admin in gig_admin %}
-            {{admin.person.username}}
-          {% endfor %}
-        </p>
+  <div class="row">
+      <div class="col-md-8">
+        <div class="row" style="padding-top:20px; padding-left:10px; padding-right:10px">
+          <div class="panel panel-default">
+        		<div class="panel-body">
+          		<h3>{{gig.title}}</h3>
+          		<p>Posted on {{gig.created}}</p>
+              <p>Admins: 
+                {% for admin in gig_admin %}
+                  {{admin.person.username}}
+                {% endfor %}
+              </p>
+              {% if admin %}
+                <p><a href="/gigs/{{gig.pk}}/edit">Edit</a></p>
+              {% endif %}
+              <hr>
+              {% if gig.description != None %}
+                <p>{{gig.description}}</p>
+              {% endif %}
+
+
+              {% if membership_status == None %}
+                <a href="/gigs/team_request/{{gig.pk}}" disabled='disabled' class="btn btn-default">Request pending</a>
+              {% elif membership_status == True %}
+                <!-- Should add functionality to allow users to leave gig's at some point, too-->
+                <a href="#" class="btn btn-default" disabled='disabled'>You're a member!</a>
+              {% else %}
+                <a href="/gigs/team_request/{{gig.pk}}" class="btn btn-default">Request to join</a>
+              {% endif %}
+                
+        		</div>
+      	   </div>
+        </div>
+
+        <div class="row" style="padding-top:20px; padding-left:10px; padding-right:10px">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              {% render_comment_form for gig %}
+              {% render_comment_list for gig %}
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+      <div class="col-md-4">
+        <div class="row" style="padding-top:20px; padding-left:10px; padding-right:10px"> 
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <p>Admin: {{admin}}</p>
+                <ul class="avatar-list">
+                  <li class="avatar-list-item">
+                    <img class="img-circle" src="{{request.user.person.picture.url}}">
+                  </li>
+                  <li class="avatar-list-item">
+                    <img class="img-circle" src="{{request.user.person.picture.url}}">
+                  </li>
+                  <li class="avatar-list-item">
+                    <img class="img-circle" src="{{request.user.person.picture.url}}">
+                  </li>
+                </ul>
+              <p>Team</p>
+              <ul class="avatar-list">
+                <li class="avatar-list-item">
+                  <a href="/people/profile/{{request.user.person.pk}}"><img class="img-circle" src="{{request.user.person.picture.url}}" alt="Nick Byrne"></a>
+                </li>
+                <li class="avatar-list-item">
+                  <img class="img-circle" src="{{request.user.person.picture.url}}">
+                </li>
+                <li class="avatar-list-item">
+                  <img class="img-circle" src="{{request.user.person.picture.url}}">
+                </li>
+              </ul>
+            </div>
+           </div>
+        </div>
+        <!-- Start profile block-->  
         {% if admin %}
-          <p><a href="/gigs/{{gig.pk}}/edit">Edit</a></p>
-        {% endif %}
-        <hr>
-        {% if gig.description != None %}
-          <p>{{gig.description}}</p>
-        {% endif %}
+        <div class="m-t">
 
-
-        {% if membership_status == None %}
-          <a href="/gigs/team_request/{{gig.pk}}" disabled='disabled' class="btn btn-default">Request pending</a>
-        {% elif membership_status == True %}
-          <!-- Should add functionality to allow users to leave gig's at some point, too-->
-          <a href="#" class="btn btn-default" disabled='disabled'>You're a member!</a>
-        {% else %}
-          <a href="/gigs/team_request/{{gig.pk}}" class="btn btn-default">Request to join</a>
+          <div class="row" style="padding-top:20px">
+            <div class="col-md-12">
+              <div class="panel panel-default panel-profile">
+                <div class="panel-body text-center">
+                  <img class="panel-profile-img" src="{{request.user.person.picture.url}}">
+                  <h5 class="panel-title">{{request.user.username}} has requested to join your gig!</h5>
+                  <p class="m-b-md">{{request.user.person.bio}}</p>
+                  <button class="btn btn-primary-outline btn-sm">
+                    <span class="icon icon-add-user"></span> Accept
+                  </button>
+                  <button class="btn btn-primary-outline btn-sm">
+                    <span class="icon icon-cross"></span> Reject
+                  </button>                
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         {% endif %}
-          
-  		</div>
-	   </div>
-  </div>
-
-  <div class="row" style="padding-top:20px">
-    <h3>Comment</h3>
-    <div class="panel panel-default">
-      <div class="panel-body">
-        {% render_comment_form for gig %}
-        {% render_comment_list for gig %}
-      </div>
-     </div>
-  </div>
+        <!-- End profile block -->
+    </div>
 </div>
 
 
