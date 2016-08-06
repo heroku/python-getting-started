@@ -31,33 +31,32 @@ def index(request):
 	return render(request, 'gigs/home.html', context)
 
 def gig_detail(request, gig_id):
+	gig = Gig.objects.get(pk=gig_id)
+	role = Role.objects.get(role='admin')
+	gig_admin = Team.objects.filter(role=role).filter(gig=gig)
+	
 	try:
-		gig = Gig.objects.get(pk=gig_id)
-		role = Role.objects.get(role='admin')
-		gig_admin = Team.objects.filter(role=role).filter(gig=gig)
-		
-		try:
-			user_role = Team.objects.filter(gig=gig).filter(person=request.user).filter(role=role)
-			length=len(user_role)-1
-			admin = user_role[length].approved
-		except:
-			admin = False
-
-		try:
-			membership = Team.objects.filter(person=request.user).filter(gig=gig)
-			membership_status = membership[len(membership)-1].approved
-		except:
-			membership_status = 'Request to join'
-
-		context = {
-			'gig':gig,
-			'gig_admin': gig_admin,
-			'admin': admin,
-			'membership_status': membership_status,
-		}
-		return render(request, 'gigs/gig_detail.html', context)
+		user_role = Team.objects.filter(gig=gig).filter(person=request.user).filter(role=role)
+		length=len(user_role)-1
+		admin = user_role[length].approved
 	except:
-		return redirect('index')
+		admin = False
+
+	try:
+		membership = Team.objects.filter(person=request.user).filter(gig=gig)
+		team = Team.objects.filter(gig=gig)
+		membership_status = membership[len(membership)-1].approved
+	except:
+		membership_status = 'Request to join'
+
+	context = {
+		'gig':gig,
+		'gig_admin': gig_admin,
+		'admin': admin,
+		'team': team,
+		'membership_status': membership_status,
+	}
+	return render(request, 'gigs/gig_detail.html', context)
 
 def new_gig(request):
 	if request.method == "POST":
