@@ -71,7 +71,7 @@
               <p>Team</p>
               <ul class="avatar-list">
                 {% for member in team %}
-                <li class="avatar-list-item">
+                 <li class="avatar-list-item">
                   {% if member.person.person.picture %}
                   <a href="/people/profile/{{member.person.person.pk}}"><img class="img-circle" src="{{member.person.person.picture.url}}" alt="{{member.person.person.fullname}}"></a>
                   {% else %}
@@ -85,14 +85,18 @@
         </div>
         <!-- Start profile block-->  
         {% if admin %}
+        
         <div class="m-t">
 
           <div class="row" style="padding-top:20px">
             <div class="col-md-12">
+
+              {% for request in membership_requests %}
+
               <div class="panel panel-default panel-profile">
                 <div class="panel-body text-center">
                   <img class="panel-profile-img" src="{{request.user.person.picture.url}}">
-                  <h5 class="panel-title">{{request.user.username}} has requested to join your gig!</h5>
+                  <h5 class="panel-title">{{request.user.person.username}} has requested to join your gig!</h5>
                   <p class="m-b-md">{{request.user.person.bio}}</p>
                   <button class="btn btn-primary-outline btn-sm">
                     <span class="icon icon-add-user"></span> Accept
@@ -102,9 +106,13 @@
                   </button>                
                 </div>
               </div>
+
+              {% endfor %}
+
             </div>
           </div>
         </div>
+        
         {% endif %}
         <!-- End profile block -->
     </div>

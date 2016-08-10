@@ -44,10 +44,15 @@ def gig_detail(request, gig_id):
 
 	try:
 		membership = Team.objects.filter(person=request.user).filter(gig=gig)
-		team = Team.objects.filter(gig=gig)
+		team = Team.objects.filter(gig=gig).filter(approved=True)
 		membership_status = membership[len(membership)-1].approved
 	except:
 		membership_status = 'Request to join'
+
+	if admin == True:
+		membership_requests = Team.objects.filter(gig=gig).filter(approved=None)
+	else:
+		membership_requests = None
 
 	context = {
 		'gig':gig,
@@ -55,6 +60,7 @@ def gig_detail(request, gig_id):
 		'admin': admin,
 		'team': team,
 		'membership_status': membership_status,
+		'membership_requests': membership_requests,
 	}
 	return render(request, 'gigs/gig_detail.html', context)
 
