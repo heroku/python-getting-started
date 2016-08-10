@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django_comments',
     'storages',
+    'message',
 )
 
 #SITE_ID for django.contrib.comments
