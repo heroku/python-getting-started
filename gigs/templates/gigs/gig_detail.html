@@ -5,7 +5,7 @@
 
 <div class="container">
   <div class="row">
-      <div class="col-md-8">
+    <div class="col-md-8">
         <div class="row" style="padding-top:20px; padding-left:10px; padding-right:10px">
           <div class="panel panel-default">
         		<div class="panel-body">
@@ -20,6 +20,9 @@
                 <p><a href="/gigs/{{gig.pk}}/edit">Edit</a></p>
               {% endif %}
               <hr>
+              <p>Starts on: {{gig.start_date.day}} / {{gig.start_date.month}} / {{gig.start_date.year}}</p>
+              <p>End on: {{gig.end_date}}</p>
+              <hr>
               {% if gig.description != None %}
                 <p>{{gig.description}}</p>
               {% endif %}
@@ -32,24 +35,25 @@
                 <a href="#" class="btn btn-default" disabled='disabled'>You're a member!</a>
               {% else %}
                 <a href="/gigs/team_request/{{gig.pk}}" class="btn btn-default">Request to join</a>
-              {% endif %}
-                
+              {% endif %}   
         		</div>
-      	   </div>
+      	  </div>
         </div>
 
         <div class="row" style="padding-top:20px; padding-left:10px; padding-right:10px">
+          
           <div class="panel panel-default">
             <div class="panel-body">
               {% render_comment_form for gig %}
               {% render_comment_list for gig %}
+              </div>
             </div>
-          </div>
+          
         </div>
     </div>
-  </div>
-      <div class="col-md-4">
+    <div class="col-md-4">
         <div class="row" style="padding-top:20px; padding-left:10px; padding-right:10px"> 
+
           <div class="panel panel-default">
             <div class="panel-body">
               <p>Admin:</p>
@@ -104,6 +108,7 @@
         {% endif %}
         <!-- End profile block -->
     </div>
+  </div>
 </div>
 
 
