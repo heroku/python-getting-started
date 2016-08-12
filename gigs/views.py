@@ -11,11 +11,11 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 @login_required
 def index(request):
 	#need to implement pagination into the template at some point
-
 	gig_list = Gig.objects.all().order_by('-modified')
-	paginator = Paginator(gig_list, 100) #show 100 gigs per page
 
+	paginator = Paginator(gig_list, 100) #show 100 gigs per page
 	page = request.GET.get('page')
+
 	try:
 		gigs=paginator.page(page)
 	except PageNotAnInteger:
