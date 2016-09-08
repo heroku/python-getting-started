@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,7 +14,7 @@
     <title>Login to TeamedUp</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/foundation.min.css' %}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/signin.css' %}" rel="stylesheet">
@@ -22,24 +22,72 @@
   </head>
 
   <body>
+    <div class="masthead">
+        <h3 class="masthead-brand">TeamedUp</h3>
+        <nav>
+        <ul class="masthead-nav menu align-right">
+            <li> <a href="#">Register</a></li>
+            <li> <a href="/app/login/?next=/app/">Login</a></li>
+            <li> <a href="#">Contact</a></li>
+            <li> <a href="#">Pricing</a></li>
+            <li> <a href="#">Features</a></li>
+            
+        </ul>
+        </nav>
+    </div>
 
-    <div class="container">
+    <div class="mastcontent">
       <form class="form-signin" method="POST" action="/app/login_user/">
         {% csrf_token %}
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="username" class="sr-only">Username</label>
-        <input type="text" name="username" id="username" class="form-control" placeholder="Username" required autofocus>
-        <label for="password" class="sr-only">Password</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-        <!--<div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>-->
-        <button class="btn btn-lg btn-primary btn-block" type="submit" value="login">Sign in</button>
+        <div class="row">
+            <h2 class="form-signin-heading">Login</h2>
+            <label for="email*" class="sr-only">Email</label>
+            <input style ="width:100%" type="text*" name="username" id="email" class="form-control" placeholder="Enter email" required autofocus>
+        </div>
+        <div class="row">
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required>
+        </div>
+        <div class="row">
+            <p>Forgotten Password? <a> Recover Password </a> </p>
+            <button class="button" type="submit" value="login">Login</button>
+        </div>
       </form>
-
     </div> <!-- /container -->
+    <div class="mastfoot">
+        <div class="mast-mainfoot">
+            <div class="row">
+                <div class="large-4 columns">
+                    <h3>TeamedUp</h3>
+                </div>
+                <div class="small-6 large-2 columns" style="text-align:left">
+                    <h3>@TeamedUp</h3>
+                    <p>Features</p>
+                    <p>Pricing</p>
+                    <p>Contact</p>
+                    <p>Register</p>
+                    <p>Login</p>
+                    <p>FAQ</p>
 
+                </div>
+                <div class="small-6 large-2 columns" style="text-align:left">
+                    <h3>Contact</h3>
+                    <p>About Us</p>
+                    <p>Jobs</p>
+                    <p>Support</p>
+                    <p>Contact Us</p>
+                </div>
+                <div class="large-4 columns">
+                    <h3>Follow Us</h3>
+                </div>
+            </div>
+        </div>
+        <div class="mast-copyright">
+            Copyright &copy; TeamedUp. All rights reserved.
+        </div>
+    </div>
+
+    <script src="{% static 'js/foundation.min.js' %}" ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   </body>
 </html>
