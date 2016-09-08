@@ -26,53 +26,82 @@
   </head>
 
   <body>
-
-    <div class="site-wrapper">
-
-      <div class="site-wrapper-inner">
-
-        <div class="cover-container">
-
-          <div class="masthead clearfix">
-            <div class="inner">
-              <h3 class="masthead-brand">TeamedUp</h3>
-              <nav>
-                <ul class="nav masthead-nav">
-                  <!--<li class="active"><a href="#">Home</a></li>
-                  <li><a href="#">Features</a></li>
-                  <li><a href="#">Contact</a></li>-->
-                  <li><a href="/app/login/?next=/app/">Login</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-
-          <div class="inner cover">
-            <h1 class="cover-heading">Helping you find & manage a flexible workforce</h1>
-            <p class="lead">TeamedUp is a web application and service that helps you build out a reliable network of freelancers and contractors who you can draw on for your next project.</p>
-            <p class="lead">
-              <a href="mailto:nick@thinkactlive.com" class="btn btn-lg btn-default">Request beta access</a>
-            </p>
-          </div>
-
-          <div class="mastfoot">
-            <div class="inner">
-              <p>Created by <a href = "http://www.twitter.com/byrnenick">Nick Byrne</a> and friends</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
+    <div class="masthead">
+        <h3 class="masthead-brand">TeamedUp</h3>
+        <nav>
+        <ul class="masthead-nav menu align-right">
+            <li> <a href="#">Register</a></li>
+            <li> <a href="/app/login/?next=/app/">Login</a></li>
+            <li> <a href="#">Contact</a></li>
+            <li> <a href="#">Pricing</a></li>
+            <li> <a href="#">Features</a></li>
+            
+        </ul>
+        </nav>
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <div class="mastcontent">
+        <div class="mastsignup" >
+            <div class="row">
+                <div class="small-12 large-12 columns">
+                    <h1 class="cover-heading">We connect people to the work</h1>
+                    <h1 class="cover-heading">opportunities within their organisation.</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 large-12 columns">
+                    <span>
+                        WATCH OVERVIEW
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-6 columns">
+                    <input type="text" placeholder="Organization Name">
+                </div>
+                <div class="large-6 columns">
+                    <a href="#features" style="width:100%" class="button">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Latest compiled and minified JavaScript -->
+    <div class="mastfoot">
+        <div class="mast-mainfoot">
+            <div class="row">
+                <div class="large-4 columns">
+                    <h3>TeamedUp</h3>
+                </div>
+                <div class="small-6 large-2 columns" style="text-align:left">
+                    <h3>@TeamedUp</h3>
+                    <p>Features</p>
+                    <p>Pricing</p>
+                    <p>Contact</p>
+                    <p>Register</p>
+                    <p>Login</p>
+                    <p>FAQ</p>
+
+                </div>
+                <div class="small-6 large-2 columns" style="text-align:left">
+                    <h3>Contact</h3>
+                    <p>About Us</p>
+                    <p>Jobs</p>
+                    <p>Support</p>
+                    <p>Contact Us</p>
+                </div>
+                <div class="large-4 columns">
+                    <h3>Follow Us</h3>
+                </div>
+            </div>
+        </div>
+        <div class="mast-copyright">
+            Copyright &copy; TeamedUp. All rights reserved.
+        </div>
+    </div>
+      
+
+
     <script src="{% static 'js/foundation.min.js' %}" ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   </body>
 </html>
