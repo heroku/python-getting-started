@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -16,68 +16,94 @@
 
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="{% static 'css/foundation.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}" >
+  
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{% static 'cover.css' %}" rel="stylesheet">
   </head>
 
   <body>
-
-    <div class="site-wrapper">
-
-      <div class="site-wrapper-inner">
-
-        <div class="cover-container">
-
-          <div class="masthead clearfix">
-            <div class="inner">
-              <h3 class="masthead-brand">TeamedUp</h3>
-              <nav>
-                <ul class="nav masthead-nav">
-                  <!--<li class="active"><a href="#">Home</a></li>
-                  <li><a href="#">Features</a></li>
-                  <li><a href="#">Contact</a></li>-->
-                  <li><a href="/app/login/?next=/app/">Login</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-
-          <div class="inner cover">
-            <h1 class="cover-heading">Helping you find & manage a flexible workforce</h1>
-            <p class="lead">TeamedUp is a web application and service that helps you build out a reliable network of freelancers and contractors who you can draw on for your next project.</p>
-            <p class="lead">
-              <a href="mailto:nick@thinkactlive.com" class="btn btn-lg btn-default">Request beta access</a>
-            </p>
-          </div>
-
-
-
-          <div class="mastfoot">
-            <div class="inner">
-              <p>Created by <a href = "http://www.twitter.com/byrnenick">Nick Byrne</a> and friends</p>
-            </div>
-          </div>
-
+    <div class="mastcontent">
+        <div class="masthead">
+            <h4 class="masthead-brand">teamed</h4>
+            <nav>
+            <ul class="masthead-nav menu align-right">
+                <li> <a href="#">Register</a></li>
+                <li> <a href="/app/login/?next=/app/">Login</a></li>
+                <li> <a href="#">Contact</a></li>
+                <li> <a href="#">Pricing</a></li>
+                <li> <a href="#">Features</a></li>
+            </ul>
+            </nav>
         </div>
-
-      </div>
-
+        <div class="mastsignup" >
+            <div class="row">
+                <div class="small-12 large-12 columns">
+                    <h1 class="cover-heading">We connect people to the work</h1>
+                    <h1 class="cover-heading">opportunities within their organisation.</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 large-12 columns">
+                    <span>
+                        WATCH OVERVIEW
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-6 columns">
+                    <input type="text" placeholder="Organization Name">
+                </div>
+                <div class="large-6 columns">
+                    <a href="#features" style="width:100%" class="button">Sign Up</a>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <div class="mastfoot">
+        <div class="mast-mainfoot">
+            <div class="row">
+                <div class="large-4 columns">
+                    <h3>teamed</h3>
+                </div>
+                <div class="small-6 large-2 columns" style="text-align:left">
+                    <h3>@TeamedUp</h3>
+                    <p>Features</p>
+                    <p>Pricing</p>
+                    <p>Contact</p>
+                    <p>Register</p>
+                    <p>Login</p>
+                    <p>FAQ</p>
 
+                </div>
+                <div class="small-6 large-2 columns" style="text-align:left">
+                    <h3>Contact</h3>
+                    <p>About Us</p>
+                    <p>Jobs</p>
+                    <p>Support</p>
+                    <p>Contact Us</p>
+                </div>
+                <div class="large-4 columns">
+                    <h3>Follow Us</h3>
+                    <div style="color: rgb(144 , 104 , 190)">
+                    <i class="fa fa-facebook-square fa-2x" aria-hidden="true"> </i>
+                    <i class="fa fa-twitter-square fa-2x" aria-hidden="true"> </i>
+                    <i class="fa fa-linkedin-square fa-2x" aria-hidden="true"> </i>
+                    <i class="fa fa-google-plus-square fa-2x" aria-hidden="true"> </i>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+                </div>
+            </div>
+        </div>
+        <div class="mast-copyright">
+            Copyright &copy; TeamedUp. All rights reserved.
+        </div>
+    </div>
+      
+    <script src="{% static 'js/foundation.min.js' %}" ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   </body>
 </html>
