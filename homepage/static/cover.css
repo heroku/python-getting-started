@@ -48,7 +48,7 @@ body {
  */
 
 .mastcontent {
-    background-image : url("homepage-desktop.jpg");
+    /*background-image : url("homepage-desktop.jpg");*/
     background-size : 100% 100%;
     min-height : 900px;
 }
