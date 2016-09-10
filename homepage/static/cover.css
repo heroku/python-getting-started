@@ -77,3 +77,19 @@ body {
   line-height: 75px;
   background-color: #6ED3CF
 }
+
+/*
+ * Media Queries for mobile responsive design
+ */
+
+@media screen and (max-width: 63.9375em) {
+    .masthead {
+        background : rgb(255,255,255);
+    }
+    .mastcontent {
+           background-image : url("homepage_mobile.jpg");
+    }
+    .masthead-nav {
+        display : none;
+    }
+}
