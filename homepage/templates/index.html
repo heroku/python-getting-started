@@ -28,38 +28,43 @@
   <body>
     <div class="mastcontent">
         <div class="masthead">
-            <h4 class="masthead-brand">teamed</h4>
-            <nav>
-            <ul class="masthead-nav menu align-right">
-                <li> <a href="#">Register</a></li>
+            <div class="masthead-brand">
+                <img class="masthead-whitelogo" src="{% static 'logo.png' %}">
+                <img class="masthead-blacklogo" src="{% static 'logo1.png' %}">
+            </div>
+                <img class="masthead-menu" src="{% static 'menu-icon.png' %}">
+            <ul class="masthead-nav">
+                <li> <a href="#" class="masthead-navregbtn" style=" padding: 14px 60px 14px 60px; ">Register</a></li>
                 <li> <a href="/app/login/?next=/app/">Login</a></li>
                 <li> <a href="#">Contact</a></li>
                 <li> <a href="#">Pricing</a></li>
                 <li> <a href="#">Features</a></li>
             </ul>
-            </nav>
         </div>
         <div class="mastsignup" >
-            <div class="row">
-                <div class="small-12 large-12 columns">
+            <div class="row mastsignup-heading align-center" >
+                <div class="columns">
                     <h1 class="cover-heading">We connect people to the work</h1>
                     <h1 class="cover-heading">opportunities within their organisation.</h1>
                 </div>
             </div>
-            <div class="row">
+            <div class="row mastsignup-play" style="display:table">
                 <div class="small-12 large-12 columns">
-                    <i class="fa fa-play-circle fa-2x" aria-hidden="true"> </i>
-                    <span>
+                    <span style="display:table-cell">
+                        <i class="fa fa-play-circle fa-2x" aria-hidden="true"> </i>
+                    </span> 
+                    
+                    <span style="vertical-align: middle;display:table-cell;padding-left: 25px;">
                         WATCH OVERVIEW
                     </span>
                 </div>
             </div>
-            <div class="row">
-                <div class="large-6 columns">
-                    <input type="text" placeholder="Organization Name">
+            <div class="row" style="display:table; width: 80%">
+                <div class="small-12 large-6 columns" id="mastsignup-orgwrap" style="display:table-cell">
+                    <input type="text" class="mastsignup-orgname" placeholder="Organization Name" >
                 </div>
-                <div class="large-6 columns">
-                    <a href="#features" style="width:100%;background-color:rgb(230,39,57)" class="button">Sign Up</a>
+                <div class="small-12 large-6 columns" id="mastsignup-btnwrap" style="display:table-cell">
+                    <a href="#features" class="button mastsignup-button">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -67,36 +72,41 @@
 
     <div class="mastfoot">
         <div class="mast-mainfoot">
-            <div class="row">
-                <div class="large-4 columns">
-                    <h3>teamed</h3>
+            <div class="row align-middle mast-mainfoot-row" >
+                <div class="small-12 large-4 columns mast-mainfoot-logo">
+                    <img src="{% static 'logo1.png' %}">
                 </div>
-                <div class="small-6 large-2 columns" style="text-align:left">
-                    <h3>@TeamedUp</h3>
-                    <p>Features</p>
-                    <p>Pricing</p>
-                    <p>Contact</p>
-                    <p>Register</p>
-                    <p>Login</p>
-                    <p>FAQ</p>
-
-                </div>
-                <div class="small-6 large-2 columns" style="text-align:left">
-                    <h3>Contact</h3>
-                    <p>About Us</p>
-                    <p>Jobs</p>
-                    <p>Support</p>
-                    <p>Contact Us</p>
-                </div>
-                <div class="large-4 columns">
-                    <h3>Follow Us</h3>
-                    <div style="color: rgb(144 , 104 , 190)">
-                        <i class="fa fa-facebook-square fa-2x" aria-hidden="true"> </i>
-                        <i class="fa fa-twitter-square fa-2x" aria-hidden="true"> </i>
-                        <i class="fa fa-linkedin-square fa-2x" aria-hidden="true"> </i>
-                        <i class="fa fa-google-plus-square fa-2x" aria-hidden="true"> </i>
+                <div class="small-12 large-8 columns">
+                    <div class="row align-top">
+                    <div class="small-6 large-4 columns mast-mainfoot-col1" style="text-align:left">
+                        <p style="color: black;">@TeamedUp</p>
+                        <p>Features</p>
+                        <p>Pricing</p>
+                        <p>Contact</p>
+                        <p>Register</p>
+                        <p>Login</p>
+                        <p>FAQ</p>
                     </div>
-                    <p>Follow us on those social networks</p>
+                    <div class="small-6 large-4 mast-mainfoot-col2" style="text-align:left">
+                        <p style="color: black;">Contact</p>
+                        <p>About Us</p>
+                        <p>Jobs</p>
+                        <p>Support</p>
+                        <p>Contact Us</p>
+                    </div>
+                    <div class="small-12 large-4 columns mast-mainfoot-sociallinks">
+                        <p style="color: black;">Follow Us</p>
+                        <p>
+                            <div style="color: rgb(144 , 104 , 190)">
+                                <i class="fa fa-facebook-square fa-2x" style="margin-right:20px;" aria-hidden="true"> </i>
+                                <i class="fa fa-twitter-square fa-2x" style="margin-right:20px;" aria-hidden="true"> </i>
+                                <i class="fa fa-linkedin-square fa-2x" style="margin-right:20px;" aria-hidden="true"> </i>
+                                <i class="fa fa-google-plus-square fa-2x" aria-hidden="true"> </i>
+                            </div>
+                        </p>
+                        <p>Follow us on those social networks</p>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
