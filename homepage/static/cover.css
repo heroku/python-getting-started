@@ -48,7 +48,6 @@ body {
  */
 
 .mastcontent {
-    background-image : url("homepage-desktop.jpg");
     background-size : 100% 100%;
     min-height : 900px;
 }
@@ -86,10 +85,8 @@ body {
     .masthead {
         background : rgb(255,255,255);
     }
-    .mastcontent {
-           background-image : url("homepage_mobile.jpg");
-    }
     .masthead-nav {
         display : none;
     }
 }
+

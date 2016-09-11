@@ -26,7 +26,15 @@
   </head>
 
   <body>
-    <div class="mastcontent">
+    <div class="mastcontent" style="background-image: url('{% static 'homepage-desktop.jpg' %}')">
+    
+    <style>
+        @media screen and (max-width: 63.9375em){
+          .mastcontent {
+            background-image : url("homepage_desktop.jpg");
+          }
+        }
+    </style>
         <div class="masthead">
             <h4 class="masthead-brand">teamed</h4>
             <nav>
