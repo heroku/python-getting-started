@@ -27,6 +27,10 @@ body {
  * Header
  */
 
+.show {
+    display : table !important;
+}
+
 .masthead {
     height: 100px; 
 }
@@ -44,6 +48,16 @@ body {
 
 .masthead-menu {
     display : none;
+}
+
+.masthead_dropnav {
+    display : none;
+    position: absolute;
+    height : 500px;
+    width : 100%;
+    text-align: center;
+    color : black;
+    background-color: #ffffff;
 }
 
 .masthead-nav {
@@ -68,6 +82,12 @@ body {
     border-radius : 30px; 
     margin-right: 40px;
     margin-left : 40px;
+}
+
+.masthead-dropnav-icon {
+    position: absolute;
+    top : 20px;
+    right : 20px;
 }
 
 /*
@@ -141,6 +161,13 @@ body {
 /*
  * Media Queries for mobile responsive design
  */
+
+@media screen and (min-width: 64em)
+{
+    .masthead_dropnav {
+        display : none !important ;
+    }
+}
 
 @media screen and (max-width: 63.9375em) {
     .masthead {

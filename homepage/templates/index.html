@@ -23,10 +23,12 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'cover.css' %}" rel="stylesheet">
+    <script src="{% static 'app.js' %}"> </script>
   </head>
 
   <body>
-    <div class="mastcontent" style="background-image: url('{% static 'homepage-desktop.jpg' %}')">
+    <div class="mastcontent" style="background: url('{% static 'homepage-desktop.jpg' %}') no-repeat center center fixed;background-size: cover; \
+         -o-background-size : cover; -moz-background-size: cover; -webkit-background-size: cover;">
     
     <style>
         @media screen and (max-width: 63.9375em){
@@ -40,11 +42,25 @@
         }
     </style>
         <div class="masthead">
+            <div class="masthead_dropnav" id="masthead_dropnav" >
+                <div style="display: table-cell; vertical-align: middle">
+                    <p> <a href="#"> Features </a> </p>
+                    <p> <a href="#"> Pricing </a> </p>
+                    <p> <a href="#"> Contact </a> </p>
+                    <p> <a href="/app/login/?next=/app/"> Login </a> </p>
+                    <p> <a href="#" class="masthead-navregbtn" style="color: white;background:red;padding: 14px 60px 14px 60px; ">Register</a> </p>
+                </div>
+                <button class="masthead-dropnav-icon" onclick="pulldownMenu();">
+                    <i class="fa fa-times" aria-hidden="true"> </i>
+                </button> 
+            </div>
             <div class="masthead-brand">
                 <img class="masthead-whitelogo" src="{% static 'logo.png' %}">
                 <img class="masthead-blacklogo" src="{% static 'logo1.png' %}">
             </div>
-                <img class="masthead-menu" src="{% static 'menu-icon.png' %}">
+                <button class="masthead-menu" onclick="pulldownMenu()">
+                    <img  src="{% static 'menu-icon.png' %}">
+                </button>
             <ul class="masthead-nav">
                 <li> <a href="#" class="masthead-navregbtn" style=" padding: 14px 60px 14px 60px; ">Register</a></li>
                 <li> <a href="/app/login/?next=/app/">Login</a></li>
