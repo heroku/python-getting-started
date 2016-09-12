@@ -35,21 +35,20 @@
                     <p> <a href="#"> Pricing </a> </p>
                     <p> <a href="#"> Contact </a> </p>
                     <p> <a href="/app/login/?next=/app/"> Login </a> </p>
-                    <p> <a href="#" class="masthead-navregbtn" style="color: white;background:red;padding: 14px 60px 14px 60px; ">Register</a> </p>
+                    <p> <a href="/app/signup" class="masthead-navregbtn" style="border-color:red;color: white;background:red;padding: 14px 60px 14px 60px; ">Register</a> </p>
                 </div>
                 <button class="masthead-dropnav-icon" onclick="pulldownMenu();">
                     <i class="fa fa-times" aria-hidden="true"> </i>
                 </button> 
             </div>
             <div class="masthead-brand">
-                <!-- <img class="masthead-whitelogo" src="{% static 'logo.png' %}"> -->
                 <img class="masthead-blacklogo" src="{% static 'logo1.png' %}">
             </div>
                 <button class="masthead-menu" onclick="pulldownMenu()">
                     <img  src="{% static 'menu-icon.png' %}">
                 </button>
             <ul class="masthead-nav">
-                <li> <a href="#" class="masthead-navregbtn" style=" padding: 14px 60px 14px 60px; ">Register</a></li>
+                <li> <a href="/app/signup" class="masthead-navregbtn" style=" padding: 14px 60px 14px 60px; ">Register</a></li>
                 <li> <a href="/app/login/?next=/app/">Login</a></li>
                 <li> <a href="#">Contact</a></li>
                 <li> <a href="#">Pricing</a></li>
@@ -57,18 +56,18 @@
             </ul>
         </div>
         <div class="mast-signin row align-middle">
-          <form class="form-signin" method="POST" action="/app/login_user/">
+          <form class="form-signin" style="text-align: left; margin: 0 auto;" method="POST" action="/app/login_user/">
             {% csrf_token %}
             <div class="row">
                 <div class="columns">
                     <h2 class="form-signin-heading">Login</h2>
-                    <label for="email">Email</label>
+                    <label for="email">Email*</label>
                     <input style ="width:100%" type="text" name="username" id="email" class="form-control" placeholder="Enter email" required autofocus>
                 </div>
             </div>
             <div class="row">
                 <div class="columns">
-                    <label for="password" >Password</label>
+                    <label for="password" >Password*</label>
                     <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required>
                 </div>
             </div>
@@ -81,6 +80,7 @@
           </form>
         </div> <!-- /container -->
     </div>
+
     <div class="mastfoot">
         <div class="mast-mainfoot">
             <div class="row align-middle mast-mainfoot-row" >
@@ -126,6 +126,8 @@
         </div>
     </div>
       
+
+
     <script src="{% static 'js/foundation.min.js' %}" ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   </body>

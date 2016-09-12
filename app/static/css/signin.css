@@ -1,4 +1,4 @@
-/*
+//*
  * Globals
  */
 
@@ -42,8 +42,6 @@ body {
   display : inline;
 }
 
-.masthead-blacklogo {
-}
 
 .masthead-menu {
     display : none;
@@ -94,20 +92,36 @@ body {
  */
 
 .mastcontent {
-    min-height : 900px;
     background : white;
+    min-height : 900px;
+    color : black;
 }
 
 .mast-signin {
-    min-height: 800px;
-    color: black;
-    text-align : left;
-    margin : 0 auto;
+    padding-top : 200px;
 }
 
-#mast-signin-btn {
-    background-color : red;
+.mastsignup-heading {
+    padding-top : 100px;
+    padding-bottom : 50px;
 }
+
+.mastsignup-play {
+    padding-bottom : 80px;
+    display : table;
+}
+
+.mastsignup-orgname {
+    width: 320px;
+    float : right;
+}
+
+.mastsignup-button {
+    width: 180px;
+    float : left;
+    background-color:rgb(230,39,57);
+}
+
 
 
 .cover-heading {
@@ -127,6 +141,10 @@ body {
     background : #FAFAFA;
 }
 
+#mast-signin-btn{
+    width: 50%;
+    background: red;
+}
 
 .mast-mainfoot-sociallinks {
     text-align:left;
@@ -160,18 +178,14 @@ body {
     .masthead {
         background : rgb(255,255,255);
     }
-    .masthead-whitelogo {
-        display : none;
-    }
-    .masthead-blacklogo {
-        display : block;
-
-    }
     .masthead-menu {
         display : block;
         float : right;
         margin-top: 20px;
         margin-right: 30px;
+    }
+    .mastcontent {
+           background-image : url("homepage_mobile.jpg");
     }
     .masthead-nav {
         display : none;
@@ -216,15 +230,10 @@ body {
     .mast-mainfoot-row {
         height : 800px;
     }
-
+    #mast-signin-btn {
+        width: 100%;
+    }
 }
-
-
-.form-signin {
-  padding: 15px;
-  margin: 0 auto;
-}
-
 /*
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
