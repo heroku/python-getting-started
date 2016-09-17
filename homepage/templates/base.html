@@ -1,74 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {% load staticfiles %}
-    {% load waffle_tags %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
+
+    {% load staticfiles %}
+
     <link rel="icon" href="../../favicon.ico">
 
-    <title>TeamedUp - Find and manage your workforce</title>
+    <title>TeamedUp - Compose your new organisation</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static 'css/foundation.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}" >
+  
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}" >
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{% static 'css/starter-template.css' %}" rel="stylesheet">
-
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+    <script src="{% static 'js/app.js' %}"> </script>
   </head>
 
   <body>
-
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/app">TeamedUp</a>
+    <div class="mastcontent">
+        <div class="masthead">
+            <div class="masthead_dropnav" id="masthead_dropnav" >
+                <div style="display: table-cell; vertical-align: middle">
+                    <p> <a href="#"> Features </a> </p>
+                    <p> <a href="#"> Pricing </a> </p>
+                    <p> <a href="#"> Contact </a> </p>
+                    <p> <a href="/app/login/?next=/app/"> Login </a> </p>
+                    <p> <a href="/app/signup" class="masthead-navregbtn" style="border-color:red;color: white;background:red;padding: 14px 60px 14px 60px; ">Register</a> </p>
+                </div>
+                <button class="masthead-dropnav-icon" onclick="pulldownMenu();">
+                    <i class="fa fa-times" aria-hidden="true"> </i>
+                </button> 
+            </div>
+            <div class="masthead-brand">
+                <img class="masthead-blacklogo" src="{% static 'logo1.png' %}">
+            </div>
+                <button class="masthead-menu" onclick="pulldownMenu()">
+                    <img  src="{% static 'menu-icon.png' %}">
+                </button>
+            <ul class="masthead-nav">
+                <li> <a href="/app/signup" class="masthead-navregbtn" style=" padding: 14px 60px 14px 60px; ">Register</a></li>
+                <li> <a href="/app/login/?next=/app/">Login</a></li>
+                <li> <a href="#">Contact</a></li>
+                <li> <a href="#">Pricing</a></li>
+                <li> <a href="#">Features</a></li>
+            </ul>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            {% switch 'gigs_app' %}
-            <li><a href="/gigs">Gigs</a></li>
-            {% endswitch %}
-            {% switch 'people_app' %}
-            <li><a href="/people">People</a></li>
-            {% endswitch %}
-            <li><a href="/recruit">Recruit</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Profile</a></li>
-                <li><a href="/logout/?next=/">Logout</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
 
-    <div class="container">
-
-      {% block content %}
-      {% endblock %}
-
-    </div><!-- /.container -->
+        {% block content %}
+        {% endblock %}
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    <div class="mastfoot">
+        <div class="mast-mainfoot">
+            <div class="row align-middle mast-mainfoot-row" >
+                <div class="small-12 large-4 columns mast-mainfoot-logo">
+                    <img src="{% static 'logo1.png' %}">
+                </div>
+                <div class="small-12 large-8 columns">
+                    <div class="row align-top">
+                    <div class="small-6 large-4 columns mast-mainfoot-col1" style="text-align:left">
+                        <p style="color: black;">@TeamedUp</p>
+                        <p>Features</p>
+                        <p>Pricing</p>
+                        <p>Contact</p>
+                        <p>Register</p>
+                        <p>Login</p>
+                        <p>FAQ</p>
+                    </div>
+                    <div class="small-6 large-4 mast-mainfoot-col2" style="text-align:left">
+                        <p style="color: black;">Contact</p>
+                        <p>About Us</p>
+                        <p>Jobs</p>
+                        <p>Support</p>
+                        <p>Contact Us</p>
+                    </div>
+                    <div class="small-12 large-4 columns mast-mainfoot-sociallinks">
+                        <p style="color: black;">Follow Us</p>
+                        <p>
+                            <div style="color: rgb(144 , 104 , 190)">
+                                <i class="fa fa-facebook-square fa-2x" style="margin-right:20px;" aria-hidden="true"> </i>
+                                <i class="fa fa-twitter-square fa-2x" style="margin-right:20px;" aria-hidden="true"> </i>
+                                <i class="fa fa-linkedin-square fa-2x" style="margin-right:20px;" aria-hidden="true"> </i>
+                                <i class="fa fa-google-plus-square fa-2x" aria-hidden="true"> </i>
+                            </div>
+                        </p>
+                        <p>Follow us on those social networks</p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mast-copyright">
+            Copyright &copy; TeamedUp. All rights reserved.
+        </div>
+    </div>
+      
+
+
+    <script src="{% static 'js/foundation.min.js' %}" ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
   </body>
 </html>

@@ -1,29 +1,53 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="row">
-  <h1>Application dashboard</h1>
-</div>
+{% load staticfiles %}
 
-<div class="container">
+<div class="container">  
+
   <div class="row">
-    <p>This is still very much in development (obviously!)</p>
-    <p>Currently available for demo:</p>
-    <ul>
-    	<li><a href="/people">People, profiles and availability calendars</a></li>
-      <li><a href="/recruit">Automated / AI driven head hunting service</a></li>
-    </ul>
-    <p>Current list of to-do's<p>
-    	<ul>
-        <li>[50%] Enable recruit feature (people can post a position they're hiring for, and candidates 'automagically' appear for selection</li>
-    		<li>[60%] Finish hooking up basic calendar functionality in profies</li>
-    		<li>[0%] Enable gigs MVP</li>
-    		<li>[0%] Enable people to book people within the application</li>
-    		<li>[10%] Build out the dashboard (this page)</li>
-    	</ul>
+    <p class="lead">Your Teams</p>
+    <p class="subheader">ACTIVE TEAMS / PROJECTS</p>
   </div>
 
-  <p>Last updated: 27 July 2016</p>
+  <div class="row small-up-1 medium-up-2 large-up-4">
+    <div class="column">
+      <div class="callout no-border">
+        <p><img src="{% static 'img/dashboard_template_image.png' %}" alt="image of a planet called Pegasi B"></p>
+        <p class="lead">Development Team</p>
+        <p class="subheader">Here is a team tagline. An exert if you will.</p>
+      </div>
+    </div>
+    <div class="column">
+      <div class="callout no-border">
+        <p><img src="{% static 'img/dashboard_template_image.png' %}" alt="image of a planet called Pegasi B"></p>
+        <p class="lead">Development Team</p>
+        <p class="subheader">Here is a team tagline. An exert if you will.</p>
+      </div>
+    </div>
+    <div class="column">
+      <div class="callout no-border">
+        <p><img src="{% static 'img/dashboard_template_image.png' %}" alt="image of a planet called Pegasi B"></p>
+        <p class="lead">Development Team</p>
+        <p class="subheader">Here is a team tagline. An exert if you will.</p>
+      </div>
+    </div>
+    <div class="column">
+      <div class="callout no-border">
+        <p><img src="{% static 'img/dashboard_template_image.png' %}" alt="image of a planet called Pegasi B"></p>
+        <p class="lead">Development Team</p>
+        <p class="subheader">Here is a team tagline. An exert if you will.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <p class="lead">Other Teams</p>
+    <p class="subheader">SEARCH FOR TEAMS / PROJECTS</p>
+  </div>
+
+
+
 </div>
 
 
