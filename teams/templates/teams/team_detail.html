@@ -8,7 +8,7 @@
   <div class="row" style="padding-top: 75px">
 
     <div class="medium-4 grid-block">    
-      <p><img style="background: url(/media/{{team.image}}); background-size:cover; background-repeat:no-repeat;width:250px; height:250px;"></p>
+      <p><img style="background: url({{MEDIA_URL}}{{team.image}}); background-size:cover; background-repeat:no-repeat;width:250px; height:250px;"></p>
       {% if request.user = team.owner %}
         <a href="delete/"><p>delete</p></a>
       {% endif %}
