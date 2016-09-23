@@ -1,0 +1,12 @@
+.no-border {
+	border: none;
+}
+
+.circular {
+	-moz-border-radius: 180px;
+	border-radius: 180px;
+}
+
+.masthead-blacklogo{
+	max-width: 75%;
+}

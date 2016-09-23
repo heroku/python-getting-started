@@ -4,21 +4,22 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from people.models import Person
 from .models import Alert
-from .forms import UserForm
 from people.forms import PersonForm
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
+from teams.models import Team
+
 
 @login_required
 def index(request):
-    try:
-        alert=get_object_or_404(Alert, name=request.GET['alert'])
-        context = {
-            'alert': alert,
-        }
-        return render(request, 'app/home.html', context)
-    except:
-        return render(request, 'app/home.html')
+    people = Person.objects.all()
+    teams = Team.objects.all()
+    context = {
+        'people':people,
+        'teams':teams,
+    }
+    return render(request, 'app/home.html', context)
+
 
 def login_user(request):
     #logout(request)

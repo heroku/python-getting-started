@@ -39,7 +39,7 @@ INSTALLED_APPS = (
     'app',
     'people',
     'recruit',
-    'gigs',
+    'teams',
     'waffle',
     #leave at bottom otherwise some functionality like logout redirect breaks
     'django.contrib.admin',
@@ -160,7 +160,6 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 LOGIN_URL = '/app/login/'
 LOGIN_REDIRECT_URL = '/app/login/'
 
-
 #Static and media file caching setting
 AWS_HEADERS = {
     'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
@@ -186,3 +185,7 @@ MEDIA_URL = 'https://%s/media/' % AWS_S3_CUSTOM_DOMAIN
 # Tell the staticfiles app to use S3Boto storage when writing the collected static files (when
 # you run `collectstatic`).
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+#LOCAL SETTINGS THAT WE NEED TO CONFIGURE ENVIRONMENT LOGIC TO HANDLE CORRECTLY
+#MEDIA_ROOT = '/Users/nbyrne/Projects/teamedup/media/'
+#MEDIA_URL = 'media/'

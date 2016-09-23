@@ -1,53 +1,53 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container">
+{% load staticfiles %}
 
-  {% if alert %}
-  <div class="row" style="padding-top:20px">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <h4>{{alert.message}}</h4>
+<div class="container">  
+
+  <p style="display:block; padding-top: 75px" class="lead">Your Teams</p>
+  <p class="subheader">ACTIVE TEAMS / PROJECTS</p>
+
+  <div class="row">
+    <a href="#" class="button" id="myModalButton">Create new team</a>
+  </div>
+
+{% include "app/new_team_modal.html" %}
+
+  <div class="row small-up-1 medium-up-2 large-up-4">
+  {% for team in teams %}
+
+    <div class="column">
+      <div class="callout no-border">
+        <p><a href="/teams/detail/{{team.pk}}"><img style="background: url(/media/{{team.image}}); background-size:cover; background-repeat:no-repeat;width:100%; height:200px;"></a></p> 
+        <p class="lead"><a href="/teams/detail">{{team.title}}</a></p>
+        {% if request.user == team.owner %}
+        <span>[owner]</span>
+        {% endif %}
+        <p class="subheader">{{ team.description|slice:":45" }}</p>
+        
       </div>
-     </div>
-  </div>
-  {% endif %}
-
-  <div class="row">
-    <h1>Application dashboard</h1>
+    </div>
+  {% endfor %}
   </div>
 
   <div class="row">
-    <p>This is still very much in development (obviously!)</p>
-    <p>Currently available for demo:</p>
-    <ul>
-    	<li><a href="/people">People, profiles and availability calendars</a></li>
-      <li><a href="/recruit">Automated / AI driven head hunting service</a></li>
-    </ul>
-    <p>Current list of to-do's<p>
-    	<ul>
-    		<li>[100%] Update Person to User relation from ForeignKey to OneToOne</li>
-        <li>[100%] Enable gigs MVP</li>
-        <li>[100%] Allow users to update their profile information</li>
-        <li>[60%] When user updates profile information, add validation (e.g. that existing username doesnt already exist) & appropriate error handling on edit profile view</li>
-        <li>[0%] Add start/end date selector to new gig workflow + view</li>
-    		<li>[0%] Enable contractors to nominate themselves for a Gig</li>
-        <li>[0%] Enable gig owners to screen and select contractors for a Gig</li>
-        <li>[0%] Allow user signup workflow (linked to request beta access)</li>
-    		<li>[20%] Build out the dashboard (this page)</li>
-        <li>[60%] [Deprioritized] Enable recruit feature (people can post a position they're hiring for</li>
-        <li>[5%] [Deprioritized] Finish hooking up basic calendar functionality in profies</li>
-    	</ul>
-
-    <p>Resolved issues:</p>
-      <ul>
-        <li>Profile picture upload is not currently working from profile edit form</li>
-      </ul>
+    <a href="/teams" class="button">Find new teams</a>
   </div>
 
-  <p>Last updated: 30 July 2016</p>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+$( document ).ready(function() {
+  
+  $('.close-reveal-modal').click(function(){
+    jQuery('#myModal').foundation('close');
+  });
 
-
-
+  $('#myModalButton').click(function(event){
+    event.preventDefault();
+    jQuery('#myModal').foundation('open');
+  });
+});
+</script>
 {% endblock %}

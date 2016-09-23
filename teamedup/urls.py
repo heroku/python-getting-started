@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^app/', include('app.urls')),
     url(r'^message/', include('message.urls')),
     url(r'^people/', include('people.urls')),
-    url(r'^gigs/', include('gigs.urls')),
+    url(r'^teams/', include('teams.urls')),
     url(r'^recruit/', include('recruit.urls')),
     url(r'^$', homepage.views.index, name='index'),
     url(r'^db', homepage.views.db, name='db'),
@@ -24,4 +24,5 @@ urlpatterns = [
                           {'next_page': '/'}),
     url(r'^comments/', include('django_comments.urls')),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT,}),
+        }),
 ]

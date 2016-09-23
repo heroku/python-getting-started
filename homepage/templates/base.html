@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     {% load staticfiles %}
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,131 +10,113 @@
     <meta name="keywords" content="">
     <meta name="author" content="">
 
-    <title>
-      
-        Home &middot; 
-      
-    </title>
+    {% load staticfiles %}
 
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
-    <link href="{% static 'assets/css/toolkit.css' %}" rel="stylesheet">
-    
-    <link href="{% static 'assets/css/application.css' %}" rel="stylesheet">
+    <link rel="icon" href="../../favicon.ico">
 
-    <style>
-      /* note: this is a hack for ios iframe for bootstrap themes shopify page */
-      /* this chunk of css is not part of the toolkit :) */
-      body {
-        width: 1px;
-        min-width: 100%;
-        *width: 100%;
-      }
-    </style>
+    <title>TeamedUp - Compose your new organisation</title>
 
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static 'css/foundation.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}" >
+  
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}" >
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+    <!--<script src="{% static 'js/app.js' %}"> </script>-->
   </head>
 
+  <body>
+    <div class="mastcontent">
+        <div class="masthead">
+            <div class="masthead_dropnav" id="masthead_dropnav" >
+                <div style="display: table-cell; vertical-align: middle">
+                    <p> <a href="#"> Features </a> </p>
+                    <p> <a href="#"> Pricing </a> </p>
+                    <p> <a href="#"> Contact </a> </p>
+                    <p> <a href="/app/login/?next=/app/"> Login </a> </p>
+                    <p> <a href="/app/signup">Register</a> </p>
+                </div>
+                <button class="masthead-dropnav-icon" onclick="pulldownMenu();">
+                    <i class="fa fa-times" aria-hidden="true"> </i>
+                </button> 
+            </div>
+            <div class="masthead-brand">
+                <a href="/"><img class="masthead-blacklogo" src="{% static 'logo1.png' %}"></a>
+            </div>
+                <button class="masthead-menu" onclick="pulldownMenu()">
+                    <img  src="{% static 'menu-icon.png' %}">
+                </button>
+            <ul class="masthead-nav">
+                <li> <a href="/app/signup">Register</a></li>
+                <li> <a href="/app/login/?next=/app/">Login</a></li>
+                <li> <a href="#">Contact</a></li>
+                <li> <a href="#">Pricing</a></li>
+                <li> <a href="#">Features</a></li>
+            </ul>
+        </div>
 
-<body class="with-top-navbar">
-  
+        {% block content %}
+        {% endblock %}
 
 
-<div class="growl" id="app-growl"></div>
-
-<nav class="navbar navbar-inverse navbar-fixed-top app-navbar">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-main">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <!--<a class="navbar-brand" href="/">
-        <img src="{% static 'assets/img/brand-white.png' %}" alt="brand">
-      </a>-->
+    <div class="mastfoot">
+        <div class="mast-mainfoot">
+            <div class="row align-middle mast-mainfoot-row" >
+                <div class="small-12 large-4 columns mast-mainfoot-logo">
+                    <img src="{% static 'logo1.png' %}">
+                </div>
+                <div class="small-12 large-8 columns">
+                    <div class="row align-top">
+                    <div class="small-6 large-4 columns mast-mainfoot-col1" style="text-align:left">
+                        <p style="color: black;">@TeamedUp</p>
+                        <p>Features</p>
+                        <p>Pricing</p>
+                        <p>Contact</p>
+                        <p>Register</p>
+                        <p>Login</p>
+                        <p>FAQ</p>
+                    </div>
+                    <div class="small-6 large-4 mast-mainfoot-col2" style="text-align:left">
+                        <p style="color: black;">Contact</p>
+                        <p>About Us</p>
+                        <p>Jobs</p>
+                        <p>Support</p>
+                        <p>Contact Us</p>
+                    </div>
+                    <div class="small-12 large-4 columns mast-mainfoot-sociallinks">
+                        <p style="color: black;">Follow Us</p>
+                        <p>
+                            <div style="color: rgb(144 , 104 , 190)">
+                                <i class="fa fa-facebook-square fa-2x" style="margin-right:20px;" aria-hidden="true"> </i>
+                                <i class="fa fa-twitter-square fa-2x" style="margin-right:20px;" aria-hidden="true"> </i>
+                                <i class="fa fa-linkedin-square fa-2x" style="margin-right:20px;" aria-hidden="true"> </i>
+                                <i class="fa fa-google-plus-square fa-2x" aria-hidden="true"> </i>
+                            </div>
+                        </p>
+                        <p>Follow us on those social networks</p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mast-copyright">
+            Copyright &copy; TeamedUp. All rights reserved.
+        </div>
     </div>
-    <div class="navbar-collapse collapse" id="navbar-collapse-main">
+      
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{% static 'js/foundation.min.js' %}" ></script>
 
-        <ul class="nav navbar-nav hidden-xs">
-          <li class="active">
-            <a href="/">Home</a>
-          </li>
-          <!--<li>
-            <a href="/message">Messages</a>
-          </li>-->
-          <li>
-            <a href="/gigs/">Gigs</a>
-          </li>
-          <li>
-            <a data-toggle="modal" href="/people/">People</a>
-          </li>
-          <li>
-            <a href="/recruit/">Recruit</a>
-          </li>
-        </ul>
+  <script>
+    $(document).foundation();
+  </script>
 
-        <ul class="nav navbar-nav navbar-right m-r-0 hidden-xs">
-          <!--
-          <li >
-            <a class="app-notifications" href="notifications/index.html">
-              <span class="icon icon-bell"></span>
-            </a>
-          </li>
-          <li>
-          -->
-            <button class="btn btn-default navbar-btn navbar-btn-avitar" data-toggle="popover">
-            {% if request.user.person.picture.url != None %}
-              <img class= "img-circle" src="{{request.user.person.picture.url}}">
-            {% else %}
-              <img class= "img-circle" src="http://www.csuniv.edu/_resources/images/faculty-placeholder.png">
-            {% endif %}
-            </button>
-          </li>
-        </ul>
-
-        <!--
-        <form class="navbar-form navbar-right app-search" role="search">
-          <div class="form-group">
-            <input type="text" class="form-control" data-action="grow" placeholder="Search">
-          </div>
-        </form>
-        -->
-        
-        <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
-          <li><a href="/">Home</a></li>
-          <!--<li><a href="/message">Messages</a></li>-->
-          <li><a href="/gigs/">Gigs</a></li>
-          <li><a href="/people/">People</a></li>
-          <li><a href="/recruit/">Recruit</a></li>
-          <li><a href="/app/profile">Profile</a></li>
-          <li><a href="/logout/?next=/">Logout</a></li>
-        </ul>
-
-        <ul class="nav navbar-nav hidden">
-          <li><a href="/app/profile">Profile</a></li>
-          <li><a href="/logout/?next=/">Logout</a></li>
-        </ul>
-      </div>
-  </div>
-</nav>
-
-
-  {% block content %}
-  {% endblock %}
-
-
-    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
-    <script src="{% static 'assets/js/chart.js' %}"></script>
-    <script src="{% static 'assets/js/toolkit.js' %}"></script>
-    <script src="{% static 'assets/js/application.js' %}"></script>
-    <script>
-      // execute/clear BS loaders for docs
-      $(function(){
-        if (window.BS&&window.BS.loader&&window.BS.loader.length) {
-          while(BS.loader.length){(BS.loader.pop())()}
-        }
-      })
-    </script>
+>>>>>>> develop
   </body>
 </html>
 
