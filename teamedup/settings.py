@@ -143,9 +143,6 @@ ENV_PATH = os.path.abspath(os.path.dirname(__file__))
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = '/var/media/'
-#MEDIA_URL = '/media/'
-
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
@@ -179,7 +176,9 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 # This is used by the `static` template tag from `static`, if you're using that. Or if anything else
 # refers directly to STATIC_URL. So it's safest to always set it.
 
-MEDIA_URL = 'https://%s/media/' % AWS_S3_CUSTOM_DOMAIN
+
+MEDIA_ROOT = '/var/media/'
+MEDIA_URL = 'https://%s/' % AWS_S3_CUSTOM_DOMAIN
 # Tell the staticfiles app to use S3Boto storage when writing the collected static files (when
 # you run `collectstatic`).
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
