@@ -2,9 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from people.models import Person
 from .models import Alert
-from people.forms import PersonForm
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from teams.models import Team
@@ -12,10 +10,8 @@ from teams.models import Team
 
 @login_required
 def index(request):
-    people = Person.objects.all()
     teams = Team.objects.all()
     context = {
-        'people':people,
         'teams':teams,
     }
     return render(request, 'app/home.html', context)

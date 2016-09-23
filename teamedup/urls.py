@@ -13,8 +13,6 @@ import homepage.views
 urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
     url(r'^app/', include('app.urls')),
-    url(r'^message/', include('message.urls')),
-    url(r'^people/', include('people.urls')),
     url(r'^teams/', include('teams.urls')),
     url(r'^recruit/', include('recruit.urls')),
     url(r'^$', homepage.views.index, name='index'),
@@ -24,5 +22,4 @@ urlpatterns = [
                           {'next_page': '/'}),
     url(r'^comments/', include('django_comments.urls')),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT,}),
-        }),
 ]

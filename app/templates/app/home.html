@@ -19,7 +19,7 @@
 
     <div class="column">
       <div class="callout no-border">
-        <p><a href="/teams/detail/{{team.pk}}"><img style="background: url(/media/{{team.image}}); background-size:cover; background-repeat:no-repeat;width:100%; height:200px;"></a></p> 
+        <p><a href="/teams/detail/{{team.pk}}"><img style="background: url(/{{team.image}}); background-size:cover; background-repeat:no-repeat;width:100%; height:200px;"></a></p> 
         <p class="lead"><a href="/teams/detail">{{team.title}}</a></p>
         {% if request.user == team.owner %}
         <span>[owner]</span>
