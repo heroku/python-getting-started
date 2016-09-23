@@ -25,7 +25,7 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/signin.css' %}" rel="stylesheet">
-    <script src="{% static 'js/app.js' %}"> </script>
+    <!--<script src="{% static 'js/app.js' %}"> </script>-->
   </head>
 
   <body>
@@ -37,20 +37,20 @@
                     <p> <a href="#"> Pricing </a> </p>
                     <p> <a href="#"> Contact </a> </p>
                     <p> <a href="/app/login/?next=/app/"> Login </a> </p>
-                    <p> <a href="/app/signup" class="masthead-navregbtn" style="border-color:red;color: white;background:red;padding: 14px 60px 14px 60px; ">Register</a> </p>
+                    <p> <a href="/app/signup">Register</a> </p>
                 </div>
                 <button class="masthead-dropnav-icon" onclick="pulldownMenu();">
                     <i class="fa fa-times" aria-hidden="true"> </i>
                 </button> 
             </div>
             <div class="masthead-brand">
-                <img class="masthead-blacklogo" src="{% static 'logo1.png' %}">
+                <a href="/"><img class="masthead-blacklogo" src="{% static 'logo1.png' %}"></a>
             </div>
                 <button class="masthead-menu" onclick="pulldownMenu()">
                     <img  src="{% static 'menu-icon.png' %}">
                 </button>
             <ul class="masthead-nav">
-                <li> <a href="/app/signup" class="masthead-navregbtn" style=" padding: 14px 60px 14px 60px; ">Register</a></li>
+                <li> <a href="/app/signup">Register</a></li>
                 <li> <a href="/app/login/?next=/app/">Login</a></li>
                 <li> <a href="#">Contact</a></li>
                 <li> <a href="#">Pricing</a></li>
@@ -107,9 +107,12 @@
         </div>
     </div>
       
-
-
-    <script src="{% static 'js/foundation.min.js' %}" ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{% static 'js/foundation.min.js' %}" ></script>
+
+  <script>
+    $(document).foundation();
+  </script>
+
   </body>
 </html>

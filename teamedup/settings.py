@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'app',
     'people',
     'recruit',
-    'gigs',
+    'teams',
     'waffle',
     #leave at bottom otherwise some functionality like logout redirect breaks
     'django.contrib.admin',
@@ -147,3 +147,7 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 LOGIN_URL = '/app/login/'
 LOGIN_REDIRECT_URL = '/app/login/'
+
+MEDIA_ROOT = '/Users/nbyrne/Projects/teamedup/media/'
+MEDIA_URL = 'media/'
+

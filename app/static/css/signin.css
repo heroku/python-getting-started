@@ -32,12 +32,12 @@ body {
 }
 
 .masthead {
-    height: 100px; 
+    background: #e1e8f0;
+    height: 70px; 
 }
 .masthead-brand {
-
   float : left;
-  margin-top: 40px;
+  margin-top: 15px;
   margin-left: 40px;
   display : inline;
 }
@@ -60,7 +60,7 @@ body {
 .masthead-nav {
   list-style-type : none;
   margin: 0;
-  padding-top : 40px;
+  padding-top : 10px;
 }
 
 .masthead-nav li {
@@ -176,7 +176,7 @@ body {
 
 @media screen and (max-width: 63.9375em) {
     .masthead {
-        background : rgb(255,255,255);
+        background : #e1e8f0;
     }
     .masthead-menu {
         display : block;

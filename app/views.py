@@ -3,12 +3,15 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from people.models import Person
+from teams.models import Team
 
 @login_required
 def index(request):
     people = Person.objects.all()
+    teams = Team.objects.all()
     context = {
         'people':people,
+        'teams':teams,
     }
     return render(request, 'app/home.html', context)
 
