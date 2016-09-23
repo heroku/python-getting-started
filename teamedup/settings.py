@@ -164,8 +164,8 @@ AWS_HEADERS = {
 
 #AWS S3 BUCKET DETAILS
 AWS_STORAGE_BUCKET_NAME='teamedup'
-AWS_ACCESS_KEY_ID = 'AKIAJEHOEVOIQ2LZDEMQ' #os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = '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' #os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 
 # Tell django-storages that when coming up with the URL for an item in S3 storage, keep
 # it simple - just use this domain plus the path. (If this isn't set, things get complicated).
