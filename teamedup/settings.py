@@ -155,34 +155,39 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 LOGIN_URL = '/app/login/'
 LOGIN_REDIRECT_URL = '/app/login/'
 
-#Static and media file caching setting
-AWS_HEADERS = {
-    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
-    'Cache-Control': 'max-age=94608000',
-}
 
-
-#AWS S3 BUCKET DETAILS
-AWS_STORAGE_BUCKET_NAME='teamedup'
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-
-# Tell django-storages that when coming up with the URL for an item in S3 storage, keep
-# it simple - just use this domain plus the path. (If this isn't set, things get complicated).
-# This controls how the `static` template tag from `staticfiles` gets expanded, if you're using it.
-# We also use it in the next setting.
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 # This is used by the `static` template tag from `static`, if you're using that. Or if anything else
 # refers directly to STATIC_URL. So it's safest to always set it.
 
 
-MEDIA_ROOT = '/var/media/'
-MEDIA_URL = 'https://%s/' % AWS_S3_CUSTOM_DOMAIN
-# Tell the staticfiles app to use S3Boto storage when writing the collected static files (when
-# you run `collectstatic`).
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+if os.environ['ENVIRONMENT'] == 'local':
+    #DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+    #use local media serving settings
+    MEDIA_ROOT = '/Users/nbyrne/Projects/teamedup/'
+    MEDIA_URL = '/media/'
+else:
+    #we'll use production settings    
+    #Static and media file caching setting
+    AWS_HEADERS = {
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'Cache-Control': 'max-age=94608000',
+    }
+    #AWS S3 BUCKET DETAILS
+    AWS_STORAGE_BUCKET_NAME='teamedup'
+    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+    # Tell django-storages that when coming up with the URL for an item in S3 storage, keep
+    # it simple - just use this domain plus the path. (If this isn't set, things get complicated).
+    # This controls how the `static` template tag from `staticfiles` gets expanded, if you're using it.
+    # We also use it in the next setting.
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+    MEDIA_ROOT = '/var/media/'
+    MEDIA_URL = 'https://%s/' % AWS_S3_CUSTOM_DOMAIN
+
+    # Tell the staticfiles app to use S3Boto storage when writing the collected static files (when
+    # you run `collectstatic`).
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 #LOCAL SETTINGS THAT WE NEED TO CONFIGURE ENVIRONMENT LOGIC TO HANDLE CORRECTLY
-#MEDIA_ROOT = '/Users/nbyrne/Projects/teamedup/media/'
-#MEDIA_URL = 'media/'
+
