@@ -162,7 +162,7 @@ LOGIN_REDIRECT_URL = '/app/login/'
 
 
 try:
-    os.environ['ENVIRONMENT'] == 'local':
+    os.environ['ENVIRONMENT'] == 'local'
     #DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
     #use local media serving settings
     MEDIA_ROOT = '/Users/nbyrne/Projects/teamedup/'
