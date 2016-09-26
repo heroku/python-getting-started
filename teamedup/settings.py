@@ -161,12 +161,13 @@ LOGIN_REDIRECT_URL = '/app/login/'
 # refers directly to STATIC_URL. So it's safest to always set it.
 
 
-if os.environ['ENVIRONMENT'] == 'local':
+try:
+    os.environ['ENVIRONMENT'] == 'local':
     #DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
     #use local media serving settings
     MEDIA_ROOT = '/Users/nbyrne/Projects/teamedup/'
     MEDIA_URL = '/media/'
-else:
+except:
     #we'll use production settings    
     #Static and media file caching setting
     AWS_HEADERS = {
