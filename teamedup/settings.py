@@ -183,7 +183,8 @@ except:
     # This controls how the `static` template tag from `staticfiles` gets expanded, if you're using it.
     # We also use it in the next setting.
     AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-    MEDIA_ROOT = '/var/media/'
+    ENV_PATH = os.path.abspath(os.path.dirname(__file__))
+    MEDIA_ROOT = os.path.join(ENV_PATH, '/var/media/')  #'/var/media/'
     MEDIA_URL = 'https://%s/' % AWS_S3_CUSTOM_DOMAIN
 
     # Tell the staticfiles app to use S3Boto storage when writing the collected static files (when
