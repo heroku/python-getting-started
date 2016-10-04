@@ -165,7 +165,8 @@ try:
     os.environ['ENVIRONMENT'] == 'local'
     #DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
     #use local media serving settings
-    MEDIA_ROOT = '/Users/nbyrne/Projects/teamedup/'
+    #MEDIA_ROOT = '/Users/nbyrne/Projects/teamedup/'
+    MEDIA_ROOT = os.path.relpath('../')
     MEDIA_URL = '/media/'
 except:
     #we'll use production settings    
