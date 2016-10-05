@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from teams.models import Team
+from teams.models import Team, Role, Member
 
 
 @login_required
@@ -25,8 +25,9 @@ def team_detail(request, team_id):
 
 @login_required
 def team_delete(request, team_id):
+    # TODO: delete actions shouldn't be available as GET requests to prevent CSRF attacks
     team = Team.objects.get(pk=team_id)
-    if request.user == team.owner:
+    if request.user in team.owners:
         team.delete()
         return redirect('/app')
     else:
@@ -40,8 +41,9 @@ def create_new_team(request):
     description = request.POST['description']
     team_image = request.FILES['team_image']
 
-    new_team = Team(title=title, description=description, owner=request.user, image=team_image)
+    team = Team(title=title, description=description, image=team_image)
+    team.save()
 
-    new_team.save()
+    Member(user=request.user, is_owner=True, team=team).save()
 
     return redirect('/app/')

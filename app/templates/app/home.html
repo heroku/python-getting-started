@@ -23,7 +23,7 @@
                                 {{ MEDIA_URL }}{{ team.image }}); background-size:cover; background-repeat:no-repeat;width:100%; height:200px;"></a>
                         </p>
                         <p class="lead"><a href="/teams/detail/{{ team.id }}">{{ team.title }}</a></p>
-                        {% if request.user == team.owner %}
+                        {% if request.user in team.owners %}
                             <span>[owner]</span>
                         {% endif %}
                         <p class="subheader">{{ team.description|slice:":45" }}</p>
