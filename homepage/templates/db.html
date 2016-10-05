@@ -2,20 +2,20 @@
 {% load staticfiles %}
 
 {% block content %}
-  <div class="container">
+    <div class="container">
 
 
-<h2>Page View Report</h2>
+        <h2>Page View Report</h2>
 
 
-<ul>
+        <ul>
 
-{% for greeting in greetings %}
-    <li>{{ greeting.when }}</li>
-{% endfor %}
+            {% for greeting in greetings %}
+                <li>{{ greeting.when }}</li>
+            {% endfor %}
 
-</ul>
+        </ul>
 
-</div>
+    </div>
 
 {% endblock %}

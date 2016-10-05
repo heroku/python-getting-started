@@ -1,19 +1,19 @@
 {% load comments %}
 {% get_comment_list for gig as comment_list %}
 
- <div class="ui comments">
-  <hr>
-  <div class="comment">
-    <!--<a class="avatar">
-      <img src="/images/avatar/small/joe.jpg">
-    </a>-->
-   {% for comment in comment_list reversed %}
-    <div class="text">
-      {{comment.comment}}
+<div class="ui comments">
+    <hr>
+    <div class="comment">
+        <!--<a class="avatar">
+          <img src="/images/avatar/small/joe.jpg">
+        </a>-->
+        {% for comment in comment_list reversed %}
+            <div class="text">
+                {{ comment.comment }}
+            </div>
+            <div class="content">
+                <h6><a href="#">{{ comment.user_name }}</a> on {{ comment.submit_date }}</h6>
+            </div>
+        {% endfor %}
     </div>
-    <div class="content">
-      <h6><a href="#">{{ comment.user_name }}</a> on {{ comment.submit_date }}</h6>
-    </div>
-  {% endfor %}
-  </div>
 </div>

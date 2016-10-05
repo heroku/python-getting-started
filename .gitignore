@@ -5,3 +5,4 @@ staticfiles
 db.sqlite3
 *.sublime-workspace
 *.sublime-project
+.idea/

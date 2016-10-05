@@ -8,7 +8,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('teams', '0002_team_owner'),
     ]
@@ -17,11 +16,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='team',
             name='image',
-            field=models.ImageField(default='img/dashboard_template_image.png', upload_to='/media/images/', verbose_name='img'),
+            field=models.ImageField(default='img/dashboard_template_image.png', upload_to='/media/images/',
+                                    verbose_name='img'),
         ),
         migrations.AlterField(
             model_name='team',
             name='owner',
-            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE,
+                                    to=settings.AUTH_USER_MODEL),
         ),
     ]

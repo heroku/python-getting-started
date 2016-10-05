@@ -1,53 +1,55 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% load staticfiles %}
+    {% load staticfiles %}
 
-<div class="container">  
+    <div class="container">
 
-  <p style="display:block; padding-top: 75px" class="lead">Your Teams</p>
-  <p class="subheader">ACTIVE TEAMS / PROJECTS</p>
+        <p style="display:block; padding-top: 75px" class="lead">Your Teams</p>
+        <p class="subheader">ACTIVE TEAMS / PROJECTS</p>
 
-  <div class="row">
-    <a href="#" class="button" id="myModalButton">Create new team</a>
-  </div>
+        <div class="row">
+            <a href="#" class="button" id="myModalButton">Create new team</a>
+        </div>
 
-{% include "app/new_team_modal.html" %}
+        {% include "app/new_team_modal.html" %}
 
-  <div class="row small-up-1 medium-up-2 large-up-4">
-  {% for team in teams %}
+        <div class="row small-up-1 medium-up-2 large-up-4">
+            {% for team in teams %}
 
-    <div class="column">
-      <div class="callout no-border">
-        <p><a href="/teams/detail/{{team.pk}}"><img style="background: url({{MEDIA_URL}}{{team.image}}); background-size:cover; background-repeat:no-repeat;width:100%; height:200px;"></a></p> 
-        <p class="lead"><a href="/teams/detail/{{team.id}}">{{team.title}}</a></p>
-        {% if request.user == team.owner %}
-        <span>[owner]</span>
-        {% endif %}
-        <p class="subheader">{{ team.description|slice:":45" }}</p>
-        
-      </div>
+                <div class="column">
+                    <div class="callout no-border">
+                        <p><a href="/teams/detail/{{ team.pk }}"><img style="background: url(
+                                {{ MEDIA_URL }}{{ team.image }}); background-size:cover; background-repeat:no-repeat;width:100%; height:200px;"></a>
+                        </p>
+                        <p class="lead"><a href="/teams/detail/{{ team.id }}">{{ team.title }}</a></p>
+                        {% if request.user == team.owner %}
+                            <span>[owner]</span>
+                        {% endif %}
+                        <p class="subheader">{{ team.description|slice:":45" }}</p>
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <a href="/teams" class="button">Find new teams</a>
+        </div>
+
     </div>
-  {% endfor %}
-  </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
 
-  <div class="row">
-    <a href="/teams" class="button">Find new teams</a>
-  </div>
+            $('.close-reveal-modal').click(function () {
+                jQuery('#myModal').foundation('close');
+            });
 
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>
-$( document ).ready(function() {
-  
-  $('.close-reveal-modal').click(function(){
-    jQuery('#myModal').foundation('close');
-  });
-
-  $('#myModalButton').click(function(event){
-    event.preventDefault();
-    jQuery('#myModal').foundation('open');
-  });
-});
-</script>
+            $('#myModalButton').click(function (event) {
+                event.preventDefault();
+                jQuery('#myModal').foundation('open');
+            });
+        });
+    </script>
 {% endblock %}

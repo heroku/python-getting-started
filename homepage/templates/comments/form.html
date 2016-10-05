@@ -3,33 +3,34 @@
 <!-- A context variable called form is created with the necessary hidden
 fields, timestamps and security hashes -->
 {% if user.is_authenticated %}
-<form class="form-group" action="{% comment_form_target %}" method="post">
+    <form class="form-group" action="{% comment_form_target %}" method="post">
 
-  {% csrf_token %}
-  {% for field in form %}
-  {% ifequal field.name "name" %}
-  <div class="form-group">
-    <input name="name" type = "hidden" value = "{{user.username}}"\></p>
-      {% else %}{% ifequal field.name "email" %}
-      {% else %}{% ifequal field.name "url" %}
-      {% else %}{% ifequal field.name "honeypot" %}
-      {% else %}{% ifequal field.name "comment" %}
-      <textarea class="form-control" id="comment" name="comment" rows="5" placeholder="description"></textarea>
-      {% else %}
-        {{ field }}
-      {% endifequal %}
-      {% endifequal %}
-      {% endifequal %}
-      {% endifequal %}
-      {% endifequal %}
+    {% csrf_token %}
+    {% for field in form %}
+        {% ifequal field.name "name" %}
+            <div class="form-group">
+            <input name="name" type="hidden" value="{{ user.username }}" \></p>
+            {% else %}{% ifequal field.name "email" %}
+                {% else %}{% ifequal field.name "url" %}
+                    {% else %}{% ifequal field.name "honeypot" %}
+                        {% else %}{% ifequal field.name "comment" %}
+                            <textarea class="form-control" id="comment" name="comment" rows="5"
+                                      placeholder="description"></textarea>
+                        {% else %}
+                            {{ field }}
+                        {% endifequal %}
+                    {% endifequal %}
+                {% endifequal %}
+            {% endifequal %}
+        {% endifequal %}
     {% endfor %}
-    <input type="hidden" name="next" value="/gigs/detail/{{gig.pk}}" />
-    </div>
-           
+<input type="hidden" name="next" value="/gigs/detail/{{ gig.pk }}"/>
+</div>
+
     <div class="form-group">
-      <button type="submit" class="btn btn-default" type="submit" name="submit">Comment</button>
+        <button type="submit" class="btn btn-default" type="submit" name="submit">Comment</button>
     </div>
-    {% else %}
-      <p>Please <a href="/app/login?next=/gigs/detail/{{gig.pk}}">login</a> to comment.</p>
-    {% endif %}
-  </form>
+{% else %}
+    <p>Please <a href="/app/login?next=/gigs/detail/{{ gig.pk }}">login</a> to comment.</p>
+{% endif %}
+</form>

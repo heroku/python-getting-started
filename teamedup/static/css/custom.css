@@ -1,15 +1,15 @@
 .no-border {
-	border: none;
+    border: none;
 }
 
-.button{
-	background-color: #fc0017;
+.button {
+    background-color: #fc0017;
 }
 
-a{
-	color:#0a0a0a;
+a {
+    color: #0a0a0a;
 }
 
 .center-button {
-text-align: center;
+    text-align: center;
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     {% load staticfiles %}
     {% load waffle_tags %}
     <meta charset="utf-8">
@@ -19,52 +19,54 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'css/starter-template.css' %}" rel="stylesheet">
 
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/app">TeamedUp</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/app">TeamedUp</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="/gigs">Gigs</a></li>
-            <li><a href="/people">People</a></li>
-            <li><a href="/recruit">Recruit</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/app/profile">Profile</a></li>
-                <li><a href="/logout/?next=/">Logout</a></li>
-              </ul>
-            </li>
-          </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="/gigs">Gigs</a></li>
+                <li><a href="/people">People</a></li>
+                <li><a href="/recruit">Recruit</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Settings <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/app/profile">Profile</a></li>
+                        <li><a href="/logout/?next=/">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+    </div>
+</nav>
 
-    <div class="container">
+<div class="container">
 
-      {% block content %}
-      {% endblock %}
+    {% block content %}
+    {% endblock %}
 
-    </div><!-- /.container -->
+</div><!-- /.container -->
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-  </body>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
 </html>

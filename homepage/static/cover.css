@@ -4,92 +4,91 @@
 
 /* Links */
 
-
-
 /*
  * Base structure
  */
 
 html,
 body {
-  height: 100%;
-  background-color: #333;
-  font-family : 'Montserrat' , sans-serif; 
-}
-body {
-  color: #fff;
-  text-align: center;
-  /*text-shadow: 0 1px 3px rgba(0,0,0,.5);*/
+    height: 100%;
+    background-color: #333;
+    font-family: 'Montserrat', sans-serif;
 }
 
+body {
+    color: #fff;
+    text-align: center;
+    /*text-shadow: 0 1px 3px rgba(0,0,0,.5);*/
+}
 
 /*
  * Header
  */
 
 .show {
-    display : table !important;
+    display: table !important;
 }
 
 .masthead {
-    height: 100px; 
+    height: 100px;
 }
+
 .masthead-brand {
 
-  float : left;
-  margin-top: 40px;
-  margin-left: 40px;
-  display : inline;
+    float: left;
+    margin-top: 40px;
+    margin-left: 40px;
+    display: inline;
 }
 
 .masthead-blacklogo {
-    display : none;
+    display: none;
 }
 
 .masthead-menu {
-    display : none;
+    display: none;
 }
 
 .masthead_dropnav {
-    display : none;
+    display: none;
     position: absolute;
-    height : 500px;
-    width : 100%;
+    height: 500px;
+    width: 100%;
     text-align: center;
-    color : black;
+    color: black;
     background-color: #ffffff;
 }
 
 .masthead-nav {
-  list-style-type : none;
-  margin: 0;
-  padding-top : 40px;
+    list-style-type: none;
+    margin: 0;
+    padding-top: 40px;
 }
 
 .masthead-nav li {
-    float : right;
+    float: right;
 }
 
-.masthead-nav li a{
-    display : block;
-    color : white;
-    padding : 11px 16px;
-    overflow : hidden;
+.masthead-nav li a {
+    display: block;
+    color: white;
+    padding: 11px 16px;
+    overflow: hidden;
     font-size: 12px;
     font-weight: bold;
 }
 
 .masthead-navregbtn {
-    border : 3px solid white;
-    border-radius : 30px; 
+    border: 3px solid white;
+    border-radius: 30px;
     margin-right: 40px;
-    margin-left : 40px;
+    margin-left: 40px;
 }
 
 .masthead-dropnav-icon {
     position: absolute;
-    top : 20px;
-    right : 20px;
+    top: 20px;
+    right: 20px;
 }
 
 /*
@@ -97,37 +96,34 @@ body {
  */
 
 .mastcontent {
-    background-size : 100% 100%;
-    min-height : 900px;
+    background-size: 100% 100%;
+    min-height: 900px;
 }
 
 .mastsignup-heading {
-    padding-top : 100px;
-    padding-bottom : 50px;
+    padding-top: 100px;
+    padding-bottom: 50px;
 }
 
 .mastsignup-play {
-    padding-bottom : 80px;
-    display : table;
+    padding-bottom: 80px;
+    display: table;
 }
 
 .mastsignup-orgname {
     width: 320px;
-    float : right;
+    float: right;
 }
 
 .mastsignup-button {
     width: 180px;
-    float : left;
-    background-color:rgb(230,39,57);
+    float: left;
+    background-color: rgb(230, 39, 57);
 }
-
-
 
 .cover-heading {
-  font-family : 'Montserrat' , sans-serif; 
+    font-family: 'Montserrat', sans-serif;
 }
-
 
 /*
  * Footer
@@ -135,103 +131,114 @@ body {
 .mastfoot {
     /*height: 35%;*/
 }
+
 .mast-mainfoot {
     /*height: 80%;*/
-    color : #828282;
-    background : #FAFAFA;
+    color: #828282;
+    background: #FAFAFA;
 }
 
-
 .mast-mainfoot-sociallinks {
-    text-align:left;
+    text-align: left;
 }
 
 .mast-mainfoot-row {
     height: 400px;
 }
 
-
 .mast-copyright {
-  color: #FDFDFB; /* IE8 proofing */
-  color: rgb(253,253,251);
-  height: 75px;
-  line-height: 75px;
-  background-color: #6ED3CF
+    color: #FDFDFB; /* IE8 proofing */
+    color: rgb(253, 253, 251);
+    height: 75px;
+    line-height: 75px;
+    background-color: #6ED3CF
 }
 
 /*
  * Media Queries for mobile responsive design
  */
 
-@media screen and (min-width: 64em)
-{
+@media screen and (min-width: 64em) {
     .masthead_dropnav {
-        display : none !important ;
+        display: none !important;
     }
 }
 
 @media screen and (max-width: 63.9375em) {
     .masthead {
-        background : rgb(255,255,255);
+        background: rgb(255, 255, 255);
     }
+
     .masthead-whitelogo {
-        display : none;
+        display: none;
     }
+
     .masthead-blacklogo {
-        display : block;
+        display: block;
 
     }
+
     .masthead-menu {
-        display : block;
-        float : right;
+        display: block;
+        float: right;
         margin-top: 20px;
         margin-right: 30px;
     }
+
     .mastcontent {
-           background-image : url("homepage_mobile.jpg");
+        background-image: url("homepage_mobile.jpg");
     }
+
     .masthead-nav {
-        display : none;
+        display: none;
     }
+
     .mastsignup-orgname {
-        float : left;
+        float: left;
         border-radius: 5px;
-        display : block !important; 
+        display: block !important;
         width: 100%;
     }
+
     .mast-mainfoot-sociallinks {
         text-align: center;
     }
+
     .mastsignup-button {
-        float : left;
-        background-color:rgb(230,39,57);
+        float: left;
+        background-color: rgb(230, 39, 57);
         border-radius: 5px;
-        display : block !important;
+        display: block !important;
         width: 100%;
     }
+
     .mast-mainfoot {
-        height : auto;
-    }
-    .mast-mainfoot-logo {
-        margin-top : 100px;
-        margin-bottom : 150px;
+        height: auto;
     }
 
-   .mast-mainfoot-col1 {
-        padding-left  : 50px;
+    .mast-mainfoot-logo {
+        margin-top: 100px;
+        margin-bottom: 150px;
+    }
+
+    .mast-mainfoot-col1 {
+        padding-left: 50px;
     }
 
     .mast-mainfoot-col2 {
-        padding-left  : 50px;
+        padding-left: 50px;
     }
+
     #mastsignup-orgwrap {
-        display : block !important;
+        display: block !important;
     }
+
     #mastsignup-btnwrap {
-        display : block !important;
+        display: block !important;
     }
+
     .mast-mainfoot-row {
-        height : 800px;
+        height: 800px;
     }
 
 }
