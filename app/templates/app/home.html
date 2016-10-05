@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    {% load staticfiles %}
+
+    <div class="container">
+        <div class="row small-up-2" style="margin-top:75px;">
+            <div class="column text-left">
+                <div class="lead">Your Teams</div>
+                <div class="subheader">ACTIVE TEAMS / PROJECTS</div>
+            </div>
+            <div class="column text-right">
+                <a href="#" class="button" id="myModalButton"><i class="fa fa-plus" aria-hidden="true"></i> New Team</a>
+            </div>
+        </div>
+
+        {% include "app/new_team_modal.html" %}
+
+        <div class="row small-up-1 medium-up-2 large-up-4" style="margin-top:60px;">
+            {% for team in teams %}
+                {% if request.user == team.owner %}
+                    <div class="column">
+                        <a href="/teams/detail/{{ team.pk }}">
+                            <img src="{{ MEDIA_URL }}{{ team.image }}" style="width:100%;">
+                        </a>
+                        <div class="lead" style="margin-top:20px;"><a href="/teams/detail/{{ team.id }}">{{ team.title }}</a></div>
+                        <div class="subheader">{{ team.description|slice:":45" }}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="row text-center" style="margin-top:30px;">
+            <div class="small-12 text-center">
+                <a href="/teams" class="button">Find new teams</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('.close-reveal-modal').click(function () {
+                jQuery('#myModal').foundation('close');
+            });
+
+            $('#myModalButton').click(function (event) {
+                event.preventDefault();
+                jQuery('#myModal').foundation('open');
+            });
+        });
+    </script>
+{% endblock %}

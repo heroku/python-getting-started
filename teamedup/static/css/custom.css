@@ -1,0 +1,15 @@
+.no-border {
+    border: none;
+}
+
+.button {
+    background-color: #fc0017;
+}
+
+a {
+    color: #0a0a0a;
+}
+
+.center-button {
+    text-align: center;
+}

@@ -1,0 +1,85 @@
+{% load staticfiles %}
+<div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+
+    <div class="row">
+        <a class="close-reveal-modal" style="position:absolute; right:1%; top:1%;" aria-label="Close">&#215;</a>
+        <div class="large-6 columns">
+            <h2 id="modalTitle">Create New Team</h2>
+            <p class="lead">Fill out the fields below.</p>
+        </div>
+    </div>
+
+    <form action="/teams/create_new_team/" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="small-6 columns">
+                <img id="img_id" src="{% static 'img/upload-placeholder.png' %}" alt="your image" style="width:250px;"/>
+                <label>Team image
+                    <input type="file" name="team_image" onchange="upload_img(this);"/>
+                </label>
+            </div>
+            <div class="small-6 columns">
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label>Title
+                            <input type="text" name="title" placeholder="Enter team title"/>
+                        </label>
+                    </div>
+                    <div class="small-12 columns">
+                        <label>Description
+                            <textarea name="description" rows="4" placeholder="Enter team description"></textarea>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!--
+            <div class="large-6 large-offset-6 columns">
+              <label>Invite People
+                <textarea name="invited" placeholder="Enter user email address"></textarea>
+              </label>
+            </div>
+            -->
+
+            <div class="large-6 large-offset-6 columns">
+                <input type="submit" class="button" value="Create Team"/>
+                </label>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+
+<script type="text/javascript">
+    function upload_img(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#img_id').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+<style>
+    #myModal {
+        text-align: left;
+        background: white;
+        width: 75%;
+        color: black;
+        border: none;
+        position: absolute;
+        padding: 20px;
+        left: 12.5%;
+        top: 50%;
+    }
+
+
+</style>
