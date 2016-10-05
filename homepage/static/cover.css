@@ -73,8 +73,10 @@ body {
 .masthead-nav li a{
     display : block;
     color : white;
-    padding : 14px 16px;
+    padding : 11px 16px;
     overflow : hidden;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .masthead-navregbtn {
