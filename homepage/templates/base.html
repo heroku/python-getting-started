@@ -46,11 +46,7 @@
     <div class="masthead">
         <div class="masthead_dropnav" id="masthead_dropnav">
             <div style="display: table-cell; vertical-align: middle">
-                <p><a href="#"> Features </a></p>
-                <p><a href="#"> Pricing </a></p>
-                <p><a href="#"> Contact </a></p>
-                <p><a href="/app/login/?next=/app/"> Login </a></p>
-                <p><a href="/app/signup">Register</a></p>
+                <p><a href="#"> Settings </a></p>
             </div>
             <button class="masthead-dropnav-icon" onclick="pulldownMenu();">
                 <i class="fa fa-times" aria-hidden="true"> </i>
@@ -63,11 +59,7 @@
             <img src="{% static 'menu-icon.png' %}">
         </button>
         <ul class="masthead-nav">
-            <li><a href="/app/signup">Register</a></li>
-            <li><a href="/app/login/?next=/app/">Login</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Pricing</a></li>
-            <li><a href="#">Features</a></li>
+            <li><a href="#">Settings</a></li>
         </ul>
     </div>
 
@@ -131,7 +123,6 @@
     </script>
 
     {% block extra_footer %}{% endblock %}
-
 </body>
 </html>
 
