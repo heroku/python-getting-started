@@ -1,4 +1,79 @@
 {% extends 'base.html' %}
+
+{% block extra_header %}
+
+<style>
+    .event {
+        padding: 1rem 1rem 1rem 0;
+        display: table;
+    }
+
+    .event-date {
+        width: 6rem;
+        margin: 0 auto 1rem;
+        display: table-cell;
+        width: auto;
+    }
+
+    .event-date .event-month {
+        margin: 0;
+        background: #eee;
+        padding: 0.5rem 2rem;
+        text-align: center;
+    }
+
+    .event-date .event-day {
+        margin: 0;
+        border: 1px solid #eee;
+        padding: 0 2rem;
+        text-align: center;
+        font-size: 2rem;
+    }
+
+    .event-desc {
+        padding: 0 0 0 1rem;
+        text-align: left;
+        display: table-cell;
+        vertical-align: top;
+    }
+
+    .event-desc .event-desc-header {
+        margin: 0 0 0.5rem 0;
+        padding: 0;
+    }
+
+    .event-desc .event-desc-detail {
+        margin: 0 0 0.25rem;
+        padding: 0;
+    }
+
+    .event-desc .event-desc-time {
+        font-weight: bold;
+    }
+
+    .event-desc .rsvp.button {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        margin: 0;
+    }
+
+    .modal-box {
+        color: #333;
+        text-align: left;
+        margin: 0 50px;
+    }
+
+    @media screen and (min-width: 40em){
+        .reveal {
+            width: 800px;
+            max-width: 62rem;
+        }
+    }
+
+</style>
+
+{% endblock %}
+
 {% block content %}
 
     {% load staticfiles %}
@@ -53,6 +128,9 @@
                         <a href="http://bdconf.com/speakers/brandon-arnold/" class="rsvp button">RSVP &amp; Details</a>
                     </div>
                 </article>
+
+                <button class="success button" data-open="add_role_modal">Create New Role</button>
+
             </div>
             <div class="small-4 columns small-centered">
                 <p>(Some) Team members</p>
@@ -90,62 +168,15 @@
         </div>
 
 
-        <style>
-            .event {
-                padding: 1rem 1rem 1rem 0;
-                display: table;
-            }
+        <div class="reveal" id="add_role_modal" data-reveal>
+            <div class="modal-box">
+                <h3>Create New Role</h3>
 
-            .event-date {
-                width: 6rem;
-                margin: 0 auto 1rem;
-                display: table-cell;
-                width: auto;
-            }
-
-            .event-date .event-month {
-                margin: 0;
-                background: #eee;
-                padding: 0.5rem 2rem;
-                text-align: center;
-            }
-
-            .event-date .event-day {
-                margin: 0;
-                border: 1px solid #eee;
-                padding: 0 2rem;
-                text-align: center;
-                font-size: 2rem;
-            }
-
-            .event-desc {
-                padding: 0 0 0 1rem;
-                text-align: left;
-                display: table-cell;
-                vertical-align: top;
-            }
-
-            .event-desc .event-desc-header {
-                margin: 0 0 0.5rem 0;
-                padding: 0;
-            }
-
-            .event-desc .event-desc-detail {
-                margin: 0 0 0.25rem;
-                padding: 0;
-            }
-
-            .event-desc .event-desc-time {
-                font-weight: bold;
-            }
-
-            .event-desc .rsvp.button {
-                padding-top: 0.5rem;
-                padding-bottom: 0.5rem;
-                margin: 0;
-            }
-
-        </style>
+            </div>
+            <button class="close-button" data-close aria-label="Close modal" type="button">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
 
     </div>
 

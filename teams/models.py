@@ -12,7 +12,7 @@ class Team(models.Model):
 
     @property
     def owners(self):
-        return self.member_set.filter(is_owner=True)
+        return [member.user for member in self.member_set.filter(is_owner=True)]
 
     def __str__(self):
         return self.title
