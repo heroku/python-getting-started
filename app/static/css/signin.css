@@ -61,6 +61,8 @@ body {
   list-style-type : none;
   margin: 0;
   padding-top : 10px;
+  padding-right: 60px;
+  float: right;
 }
 
 .masthead-nav li {
@@ -72,6 +74,8 @@ body {
     color : black;
     padding : 14px 16px;
     overflow : hidden;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .masthead-navregbtn {
