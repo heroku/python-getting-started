@@ -50,7 +50,7 @@
 
         <div style="margin-top:60px;">
             {% for team in teams %}
-                {% if request.user != team.owner %}
+                {% if request.user not in team.owners %}
                     <div class="row team-row hide" data-title="{{team.title}}" data-description="{{team.description}}" style="margin-bottom:20px;">
                         <div class="small-4 medium-3 large-2 columns">
                             <a href="/teams/detail/{{ team.pk }}">
@@ -59,7 +59,9 @@
                         </div>
                         <div class="small-8 medium-9 large-10 columns text-left">
                             <div class="subheader" style="display:inline-block;">{{ team.title }}</div>
-                            <div style="background-color:#9068be; color:white; display:inline-block; padding:2px 5px; margin-left:10px; border-radius:2px;">{{ team.owner }}</div>
+                            {% for owner in team.owners %}
+                                <div style="background-color:#9068be; color:white; display:inline-block; padding:2px 5px; margin-left:10px; border-radius:2px;">{{ owner }}</div>
+                            {% endfor %}
                             <div style="word-break: break-all;">{{ team.description }}</div>
                         </div>
                     </div>
