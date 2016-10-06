@@ -1,6 +1,10 @@
-from django.shortcuts import render, redirect
+from django.http import Http404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+
 from teams.models import Team, Role, Member
+
+import datetime
 
 
 @login_required
@@ -38,7 +42,7 @@ def team_delete(request, team_id):
 def create_new_team(request):
     # TODO: additional validation required
     title = request.POST.get('title')
-    description = request.POST['description']
+    description = request.POST.get('description')
     team_image = request.FILES['team_image']
 
     team = Team(title=title, description=description, image=team_image)
@@ -46,4 +50,23 @@ def create_new_team(request):
 
     Member(user=request.user, is_owner=True, team=team).save()
 
+    return redirect('/app/')
+
+
+@login_required
+def roles(request, team_id):
+    # TODO: validation missing
+    team = get_object_or_404(Team, pk=team_id)
+    if request.method == 'POST':
+        return create_role(request, team_id)
+
+    raise Http404
+
+
+def create_role(request, team):
+    title = request.POST.get('role_title')
+    description = request.POST.get('role_description')
+    start_date = datetime.datetime.strptime(request.POST.get('start_date'), '%m-%d-%Y %H:%M')
+    end_date = datetime.datetime.strptime(request.POST.get('start_date'), '%m-%d-%Y %H:%M')
+    Role(team=team, title=title, description=description, start_date=start_date, end_date=end_date).save()
     return redirect('/app/')

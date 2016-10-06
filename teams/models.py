@@ -20,6 +20,9 @@ class Team(models.Model):
 
 class Role(models.Model):
     title = models.CharField(max_length=255, default='')
+    description = models.TextField(default='')
+    start_date = models.DateTimeField(default=None, blank=True, null=True)
+    end_date = models.DateTimeField(default=None, blank=True, null=True)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, default=None, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 

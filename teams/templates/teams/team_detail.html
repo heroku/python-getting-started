@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
-{% block extra_header %}
+{% load staticfiles %}
 
+
+{% block extra_header %}
+    <link rel="stylesheet" href="{% static 'css/foundation-datepicker.min.css' %}" />
 <style>
     .event {
         padding: 1rem 1rem 1rem 0;
@@ -93,10 +96,9 @@
             <div class="medium-6 grid-block">
                 <p class="lead" style="text-align: left;">{{ team.title }}</p>
                 <p class="subheader" style="text-align: left;">{{ team.description }}</p>
-
+                <p style="text-align: left;"><button class="success button" data-open="add_role_modal">Create New Role</button></p>
             </div>
         </div>
-
 
         <div class="row" style="padding-top: 100px">
             <div class="small-8 columns small-centered">
@@ -129,7 +131,7 @@
                     </div>
                 </article>
 
-                <button class="success button" data-open="add_role_modal">Create New Role</button>
+
 
             </div>
             <div class="small-4 columns small-centered">
@@ -170,15 +172,77 @@
 
         <div class="reveal" id="add_role_modal" data-reveal>
             <div class="modal-box">
-                <h3>Create New Role</h3>
-
+                <form action="{% url 'team_roles' team.pk %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="medium-11 small-10 columns">
+                            <h3>Create New Role</h3>
+                            <p>FILL OUT THE FIELDS BELOW</p>
+                        </div>
+                        <div class="medium-1 small-2 columns">
+                            <button class="close-button" data-close aria-label="Close modal" type="button">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="medium-6 small-12 columns">
+                            <label>
+                                Title*
+                                <input type="text" name="role_title" placeholder="Enter role title" required="required" />
+                            </label>
+                            <label>
+                                Description*
+                                <textarea name="role_description" placeholder="Enter role description" required="required"></textarea>
+                            </label>
+                        </div>
+                        <div class="medium-6 small-12 columns">
+                            <div class="row">
+                                <div class="columns">Start Date*</div>
+                            </div>
+                            <div class="row">
+                                <div class="columns">
+                                    <input type="text" name="start_date" placeholder="Insert Date" required="required">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="columns">End Date*</div>
+                            </div>
+                            <div class="row">
+                                <div class="columns">
+                                    <input type="text" name="end_date" placeholder="Insert Date" required="required">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="columns">
+                            <input type="submit" value="Create Role" class="button alert" />
+                        </div>
+                    </div>
+                </form>
             </div>
-            <button class="close-button" data-close aria-label="Close modal" type="button">
-                <i class="fa fa-times"></i>
-            </button>
         </div>
 
     </div>
 
 
+{% endblock %}
+
+{% block extra_footer %}
+    <script type="text/javascript" src="{% static 'js/foundation-datepicker.min.js' %}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('input[name="start_date"]').fdatepicker({
+                'pickTime': true,
+                'format': 'mm-dd-yyyy hh:ii',
+                'disableDblClickSelection': true
+            });
+            $('input[name="end_date"]').fdatepicker({
+                'pickTime': true,
+                'format': 'mm-dd-yyyy hh:ii',
+                'disableDblClickSelection': true
+            });
+        });
+    </script>
 {% endblock %}
