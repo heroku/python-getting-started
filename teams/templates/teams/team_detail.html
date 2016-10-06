@@ -63,10 +63,33 @@
     .modal-box {
         color: #333;
         text-align: left;
-        margin: 0 50px;
+        margin: 0 30px;
     }
 
-    @media screen and (min-width: 40em){
+    .modal-title {
+        padding-top: 15px;
+        margin-bottom: 0;
+    }
+
+    .modal-description {
+        color: grey;
+        font-weight: bold;
+        padding-bottom: 20px;
+        font-size: .875rem;
+    }
+
+    .modal-box label {
+        color: #333;
+        font-weight: bold;
+    }
+
+    .modal-box input, .modal-box textarea {
+        margin-top: 15px;
+        background-color: whitesmoke;
+        font-weight: normal;
+    }
+
+    @media screen and (min-width: 60em){
         .reveal {
             width: 800px;
             max-width: 62rem;
@@ -96,42 +119,36 @@
             <div class="medium-6 grid-block">
                 <p class="lead" style="text-align: left;">{{ team.title }}</p>
                 <p class="subheader" style="text-align: left;">{{ team.description }}</p>
-                <p style="text-align: left;"><button class="success button" data-open="add_role_modal">Create New Role</button></p>
             </div>
         </div>
 
         <div class="row" style="padding-top: 100px">
             <div class="small-8 columns small-centered">
-                <h1 class="lead" style="text-align: left;">Team roles</h1>
-                <article class="event">
-                    <div class="event-date">
-                        <img width="125px" src="{% static 'img/dashboard_template_image.png' %}"
-                             alt="image of a planet called Pegasi B">
-                    </div>
+                <h1 class="lead" style="text-align: left;">
+                    Team roles
+                    <a data-open="add_role_modal" style="color: #5da423; cursor: pointer;"><i class="fa fa-plus"></i></a>
+                </h1>
 
-                    <div class="event-desc">
-                        <h4 class="event-desc-header">Day in the Life of Foundation for Apps</h4>
-                        <p class="event-desc-detail"><span class="event-desc-time"></span>BDConf - Altlanta</p>
-                        <a href="http://bdconf.com/speakers/brandon-arnold/" class="rsvp button">RSVP &amp; Details</a>
-                    </div>
-                </article>
+                {% for role in team.role_set.all %}
+                    <article class="event">
+                        <div class="event-date">
+                            <img width="125" src="http://placehold.it/125x125&text=Role"
+                                 alt="image of a planet called Pegasi B">
+                        </div>
 
-                <hr>
+                        <div class="event-desc">
+                            <h4 class="event-desc-header">{{ role.title }}</h4>
+                            <p class="event-desc-detail"><span class="event-desc-time"></span>{{ role.description }}</p>
+                            <a href="http://bdconf.com/speakers/brandon-arnold/" class="rsvp button">RSVP &amp; Details</a>
+                        </div>
+                    </article>
 
-                <article class="event">
-                    <div class="event-date">
-                        <img width="125px" src="{% static 'img/dashboard_template_image.png' %}"
-                             alt="image of a planet called Pegasi B">
-                    </div>
+                    <hr>
+                {% empty %}
+                    No roles have been created yet
+                {% endfor %}
 
-                    <div class="event-desc">
-                        <h4 class="event-desc-header">Day in the Life of Foundation for Apps</h4>
-                        <p class="event-desc-detail"><span class="event-desc-time"></span>BDConf - Washington, DC</p>
-                        <a href="http://bdconf.com/speakers/brandon-arnold/" class="rsvp button">RSVP &amp; Details</a>
-                    </div>
-                </article>
-
-
+                <p style="text-align: left;"><button class="success button" data-open="add_role_modal">Create New Role</button></p>
 
             </div>
             <div class="small-4 columns small-centered">
@@ -176,8 +193,8 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="medium-11 small-10 columns">
-                            <h3>Create New Role</h3>
-                            <p>FILL OUT THE FIELDS BELOW</p>
+                            <h5 class="modal-title">Create New Role</h5>
+                            <p class="modal-description">FILL OUT THE FIELDS BELOW</p>
                         </div>
                         <div class="medium-1 small-2 columns">
                             <button class="close-button" data-close aria-label="Close modal" type="button">
@@ -186,7 +203,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="medium-6 small-12 columns">
+                        <div class="large-6 small-12 columns">
                             <label>
                                 Title*
                                 <input type="text" name="role_title" placeholder="Enter role title" required="required" />
@@ -196,23 +213,15 @@
                                 <textarea name="role_description" placeholder="Enter role description" required="required"></textarea>
                             </label>
                         </div>
-                        <div class="medium-6 small-12 columns">
-                            <div class="row">
-                                <div class="columns">Start Date*</div>
-                            </div>
-                            <div class="row">
-                                <div class="columns">
-                                    <input type="text" name="start_date" placeholder="Insert Date" required="required">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="columns">End Date*</div>
-                            </div>
-                            <div class="row">
-                                <div class="columns">
-                                    <input type="text" name="end_date" placeholder="Insert Date" required="required">
-                                </div>
-                            </div>
+                        <div class="large-6 small-12 columns">
+                            <label>
+                                Start Date*
+                                <input type="text" name="start_date" placeholder="Insert Date" required="required">
+                            </label>
+                            <label>
+                                End Date*
+                                <input type="text" name="end_date" placeholder="Insert Date" required="required">
+                            </label>
                         </div>
                     </div>
                     <div class="row">

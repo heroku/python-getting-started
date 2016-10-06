@@ -1,4 +1,5 @@
 from django.http import Http404
+from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
@@ -58,7 +59,7 @@ def roles(request, team_id):
     # TODO: validation missing
     team = get_object_or_404(Team, pk=team_id)
     if request.method == 'POST':
-        return create_role(request, team_id)
+        return create_role(request, team)
 
     raise Http404
 
@@ -69,4 +70,4 @@ def create_role(request, team):
     start_date = datetime.datetime.strptime(request.POST.get('start_date'), '%m-%d-%Y %H:%M')
     end_date = datetime.datetime.strptime(request.POST.get('start_date'), '%m-%d-%Y %H:%M')
     Role(team=team, title=title, description=description, start_date=start_date, end_date=end_date).save()
-    return redirect('/app/')
+    return redirect(reverse('team_detail', kwargs={'team_id': team.pk}))

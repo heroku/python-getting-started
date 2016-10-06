@@ -8,7 +8,7 @@ class Team(models.Model):
     description = models.TextField(max_length=200)
     # Image upload is working for S3 bucket, but not for local environment (local development relies on connection to S3 at the moment)
     image = models.ImageField('img', upload_to='media/images/', default='img/dashboard_template_image.png')
-    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    # created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True) # TODO: add created_at field
 
     @property
     def owners(self):
