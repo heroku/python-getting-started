@@ -18,7 +18,8 @@
 
         <div class="row small-up-2 medium-up-4 large-up-4" style="margin-top:60px;">
             {% for team in teams %}
-                {% if request.user == team.owner %}
+
+                 {% if request.user in team.owners %}
                     <div class="column">
                         <a href="/teams/detail/{{ team.pk }}">
                             <img src="{{ MEDIA_URL }}{{ team.image }}" style="width:100%;">

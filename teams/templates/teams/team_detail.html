@@ -1,4 +1,105 @@
 {% extends 'base.html' %}
+
+{% load staticfiles %}
+
+
+{% block extra_header %}
+    <link rel="stylesheet" href="{% static 'css/foundation-datepicker.min.css' %}" />
+<style>
+    .event {
+        padding: 1rem 1rem 1rem 0;
+        display: table;
+    }
+
+    .event-date {
+        width: 6rem;
+        margin: 0 auto 1rem;
+        display: table-cell;
+        width: auto;
+    }
+
+    .event-date .event-month {
+        margin: 0;
+        background: #eee;
+        padding: 0.5rem 2rem;
+        text-align: center;
+    }
+
+    .event-date .event-day {
+        margin: 0;
+        border: 1px solid #eee;
+        padding: 0 2rem;
+        text-align: center;
+        font-size: 2rem;
+    }
+
+    .event-desc {
+        padding: 0 0 0 1rem;
+        text-align: left;
+        display: table-cell;
+        vertical-align: top;
+    }
+
+    .event-desc .event-desc-header {
+        margin: 0 0 0.5rem 0;
+        padding: 0;
+    }
+
+    .event-desc .event-desc-detail {
+        margin: 0 0 0.25rem;
+        padding: 0;
+    }
+
+    .event-desc .event-desc-time {
+        font-weight: bold;
+    }
+
+    .event-desc .rsvp.button {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        margin: 0;
+    }
+
+    .modal-box {
+        color: #333;
+        text-align: left;
+        margin: 0 30px;
+    }
+
+    .modal-title {
+        padding-top: 15px;
+        margin-bottom: 0;
+    }
+
+    .modal-description {
+        color: grey;
+        font-weight: bold;
+        padding-bottom: 20px;
+        font-size: .875rem;
+    }
+
+    .modal-box label {
+        color: #333;
+        font-weight: bold;
+    }
+
+    .modal-box input, .modal-box textarea {
+        margin-top: 15px;
+        background-color: whitesmoke;
+        font-weight: normal;
+    }
+
+    @media screen and (min-width: 60em){
+        .reveal {
+            width: 800px;
+            max-width: 62rem;
+        }
+    }
+
+</style>
+
+{% endblock %}
+
 {% block content %}
 
     {% load staticfiles %}
@@ -18,41 +119,37 @@
             <div class="medium-6 grid-block">
                 <p class="lead" style="text-align: left;">{{ team.title }}</p>
                 <p class="subheader" style="text-align: left;">{{ team.description }}</p>
-
             </div>
         </div>
 
-
         <div class="row" style="padding-top: 100px">
             <div class="small-8 columns small-centered">
-                <h1 class="lead" style="text-align: left;">Team roles</h1>
-                <article class="event">
-                    <div class="event-date">
-                        <img width="125px" src="{% static 'img/dashboard_template_image.png' %}"
-                             alt="image of a planet called Pegasi B">
-                    </div>
+                <h1 class="lead" style="text-align: left;">
+                    Team roles
+                    <a data-open="add_role_modal" style="color: #5da423; cursor: pointer;"><i class="fa fa-plus"></i></a>
+                </h1>
 
-                    <div class="event-desc">
-                        <h4 class="event-desc-header">Day in the Life of Foundation for Apps</h4>
-                        <p class="event-desc-detail"><span class="event-desc-time"></span>BDConf - Altlanta</p>
-                        <a href="http://bdconf.com/speakers/brandon-arnold/" class="rsvp button">RSVP &amp; Details</a>
-                    </div>
-                </article>
+                {% for role in team.role_set.all %}
+                    <article class="event">
+                        <div class="event-date">
+                            <img width="125" src="http://placehold.it/125x125&text=Role"
+                                 alt="image of a planet called Pegasi B">
+                        </div>
 
-                <hr>
+                        <div class="event-desc">
+                            <h4 class="event-desc-header">{{ role.title }}</h4>
+                            <p class="event-desc-detail"><span class="event-desc-time"></span>{{ role.description }}</p>
+                            <a href="http://bdconf.com/speakers/brandon-arnold/" class="rsvp button">RSVP &amp; Details</a>
+                        </div>
+                    </article>
 
-                <article class="event">
-                    <div class="event-date">
-                        <img width="125px" src="{% static 'img/dashboard_template_image.png' %}"
-                             alt="image of a planet called Pegasi B">
-                    </div>
+                    <hr>
+                {% empty %}
+                    No roles have been created yet
+                {% endfor %}
 
-                    <div class="event-desc">
-                        <h4 class="event-desc-header">Day in the Life of Foundation for Apps</h4>
-                        <p class="event-desc-detail"><span class="event-desc-time"></span>BDConf - Washington, DC</p>
-                        <a href="http://bdconf.com/speakers/brandon-arnold/" class="rsvp button">RSVP &amp; Details</a>
-                    </div>
-                </article>
+                <p style="text-align: left;"><button class="success button" data-open="add_role_modal">Create New Role</button></p>
+
             </div>
             <div class="small-4 columns small-centered">
                 <p>(Some) Team members</p>
@@ -90,64 +187,71 @@
         </div>
 
 
-        <style>
-            .event {
-                padding: 1rem 1rem 1rem 0;
-                display: table;
-            }
-
-            .event-date {
-                width: 6rem;
-                margin: 0 auto 1rem;
-                display: table-cell;
-                width: auto;
-            }
-
-            .event-date .event-month {
-                margin: 0;
-                background: #eee;
-                padding: 0.5rem 2rem;
-                text-align: center;
-            }
-
-            .event-date .event-day {
-                margin: 0;
-                border: 1px solid #eee;
-                padding: 0 2rem;
-                text-align: center;
-                font-size: 2rem;
-            }
-
-            .event-desc {
-                padding: 0 0 0 1rem;
-                text-align: left;
-                display: table-cell;
-                vertical-align: top;
-            }
-
-            .event-desc .event-desc-header {
-                margin: 0 0 0.5rem 0;
-                padding: 0;
-            }
-
-            .event-desc .event-desc-detail {
-                margin: 0 0 0.25rem;
-                padding: 0;
-            }
-
-            .event-desc .event-desc-time {
-                font-weight: bold;
-            }
-
-            .event-desc .rsvp.button {
-                padding-top: 0.5rem;
-                padding-bottom: 0.5rem;
-                margin: 0;
-            }
-
-        </style>
+        <div class="reveal" id="add_role_modal" data-reveal>
+            <div class="modal-box">
+                <form action="{% url 'team_roles' team.pk %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="medium-11 small-10 columns">
+                            <h5 class="modal-title">Create New Role</h5>
+                            <p class="modal-description">FILL OUT THE FIELDS BELOW</p>
+                        </div>
+                        <div class="medium-1 small-2 columns">
+                            <button class="close-button" data-close aria-label="Close modal" type="button">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="large-6 small-12 columns">
+                            <label>
+                                Title*
+                                <input type="text" name="role_title" placeholder="Enter role title" required="required" />
+                            </label>
+                            <label>
+                                Description*
+                                <textarea name="role_description" placeholder="Enter role description" required="required"></textarea>
+                            </label>
+                        </div>
+                        <div class="large-6 small-12 columns">
+                            <label>
+                                Start Date*
+                                <input type="text" name="start_date" placeholder="Insert Date" required="required">
+                            </label>
+                            <label>
+                                End Date*
+                                <input type="text" name="end_date" placeholder="Insert Date" required="required">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="columns">
+                            <input type="submit" value="Create Role" class="button alert" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
     </div>
 
 
+{% endblock %}
+
+{% block extra_footer %}
+    <script type="text/javascript" src="{% static 'js/foundation-datepicker.min.js' %}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('input[name="start_date"]').fdatepicker({
+                'pickTime': true,
+                'format': 'mm-dd-yyyy hh:ii',
+                'disableDblClickSelection': true
+            });
+            $('input[name="end_date"]').fdatepicker({
+                'pickTime': true,
+                'format': 'mm-dd-yyyy hh:ii',
+                'disableDblClickSelection': true
+            });
+        });
+    </script>
 {% endblock %}
