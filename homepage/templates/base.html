@@ -23,11 +23,22 @@
 
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato|Montserrat" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/signin.css' %}" rel="stylesheet">
     <!--<script src="{% static 'js/app.js' %}"> </script>-->
+
+    <style type="text/css">
+        body, html {
+            font-family: 'Lato', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
+
+    {% block extra_header %}{% endblock %}
 </head>
 
 <body>
@@ -110,6 +121,8 @@
     <script>
         $(document).foundation();
     </script>
+
+    {% block extra_footer %}{% endblock %}
 </body>
 </html>
 
