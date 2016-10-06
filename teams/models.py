@@ -14,6 +14,10 @@ class Team(models.Model):
     def owners(self):
         return [member.user for member in self.member_set.filter(is_owner=True)]
 
+    @property
+    def members(self):
+        return [member.user for member in self.member_set.all()]
+
     def __str__(self):
         return self.title
 

@@ -19,7 +19,7 @@
         <div class="row small-up-2 medium-up-4 large-up-4" style="margin-top:60px;">
             {% for team in teams %}
 
-                 {% if request.user in team.owners %}
+                 {% if request.user in team.members %}
                     <div class="column">
                         <a href="/teams/detail/{{ team.pk }}">
                             <img src="{{ MEDIA_URL }}{{ team.image }}" style="width:100%;">
@@ -50,7 +50,7 @@
 
         <div style="margin-top:60px;">
             {% for team in teams %}
-                {% if request.user not in team.owners %}
+                {% if request.user not in team.members %}
                     <div class="row team-row hide" data-title="{{team.title}}" data-description="{{team.description}}" style="margin-bottom:20px;">
                         <div class="small-4 medium-3 large-2 columns">
                             <a href="/teams/detail/{{ team.pk }}">
