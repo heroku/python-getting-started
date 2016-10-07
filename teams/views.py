@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from teams.models import Team, Role, Member
+from teams.models import Team, Role, Member, Invite
 from django.contrib.auth.models import User
 
 import datetime
@@ -85,4 +85,8 @@ def invite_people(request, team_id):
     raise Http404
 
 def _invite_people(request, team):
+    invitees = [User.objects.get(pk=invitee_id) for invitee_id in request.POST.get('invitees').split(",")]
+    for invitee in invitees:
+        Invite(team=team, inviter=request.user, invitee=invitee).save()
+
     return HttpResponse(status=200)

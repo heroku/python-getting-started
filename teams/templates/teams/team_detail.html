@@ -360,7 +360,10 @@
             $('#invite_btn').click(function() {
                 $.post(
                     "{% url 'team_invite_people' team.pk %}",
-                    { 'csrfmiddlewaretoken':$.cookie('csrftoken') },
+                    { 
+                        'csrfmiddlewaretoken':$.cookie('csrftoken'),
+                        'invitees': _.map(peopleToInvite, function(p) { return p.id; }).join(',')
+                    },
                     function(data) {
                         jQuery('#invited_modal').foundation('open');
                     }

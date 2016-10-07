@@ -38,3 +38,8 @@ class Member(models.Model):
     is_owner = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
+class Invite(models.Model):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, default=None)
+    inviter = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='invites')
+    invitee = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='inviteds')
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
