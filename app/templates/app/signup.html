@@ -40,7 +40,7 @@
             {{ form.non_field_errors }}
             <div class="row">
                 <div class="columns">
-                    <h4 class="title">Create New Organization</h4>
+                    <h5 class="title">Create New Organization</h5>
                     <p class="description">COMPLETE THE FIELDS BELOW TO REGISTER</p>
                 </div>
             </div>
@@ -56,6 +56,30 @@
                         Email*
                         <input type="text" name="email" placeholder="Enter organization name" />
                     </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-6 medium-12 small-12 columns">
+                    <label>
+                        Password*
+                        <input type="password" name="organization_name" placeholder="Enter password" />
+                    </label>
+                </div>
+                <div class="large-6 medium-12 small-12 columns">
+                    <label>
+                        Repeat Password*
+                        <input type="password" name="repeat_password" placeholder="Repeat password" />
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="columns">
+                    <input type="submit" class="button alert" value="Sign Up" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="columns description">
+                    By signing up you are agreeing to our terms of use and privacy policy. Fields marked with * are mandatory.
                 </div>
             </div>
         </form>
