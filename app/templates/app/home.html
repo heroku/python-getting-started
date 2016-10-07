@@ -17,17 +17,14 @@
         {% include "app/new_team_modal.html" %}
 
         <div class="row small-up-2 medium-up-4 large-up-4" style="margin-top:60px;">
-            {% for team in teams %}
-
-                 {% if request.user in team.members %}
-                    <div class="column">
-                        <a href="/teams/detail/{{ team.pk }}">
-                            <img src="{{ MEDIA_URL }}{{ team.image }}" style="width:100%;">
-                        </a>
-                        <div class="lead" style="margin-top:20px;"><a href="/teams/detail/{{ team.id }}">{{ team.title }}</a></div>
-                        <div class="subheader" style="word-break: break-all;">{{ team.description|slice:":45" }}</div>
-                    </div>
-                {% endif %}
+            {% for team in myteams %}
+                <div class="column">
+                    <a href="/teams/detail/{{ team.pk }}">
+                        <img src="{{ MEDIA_URL }}{{ team.image }}" style="width:100%;">
+                    </a>
+                    <div class="lead" style="margin-top:20px;"><a href="/teams/detail/{{ team.id }}">{{ team.title }}</a></div>
+                    <div class="subheader" style="word-break: break-all;">{{ team.description|slice:":45" }}</div>
+                </div>
             {% endfor %}
         </div>
 
@@ -53,23 +50,21 @@
         </div>
 
         <div style="margin-top:60px;">
-            {% for team in teams %}
-                {% if request.user not in team.members %}
-                    <div class="row team-row hide" data-title="{{team.title}}" data-description="{{team.description}}" style="margin-bottom:20px;">
-                        <div class="small-4 medium-3 large-2 columns">
-                            <a href="/teams/detail/{{ team.pk }}">
-                                <div style="background-image:url('{{ MEDIA_URL }}{{ team.image }}');" class="square-image"></div>
-                            </a>
-                        </div>
-                        <div class="small-8 medium-9 large-10 columns text-left">
-                            <div class="subheader team-row-title" style="display:inline-block;">{{ team.title }}</div>
-                            {% for owner in team.owners %}
-                                <div style="background-color:#9068be; color:white; display:inline-block; padding:2px 5px; margin-left:10px; border-radius:2px;">{{ owner }}</div>
-                            {% endfor %}
-                            <div class="team-row-description" style="word-break: break-all;">{{ team.description }}</div>
-                        </div>
+            {% for team in otherteams %}
+                <div class="row team-row hide" data-title="{{team.title}}" data-description="{{team.description}}" style="margin-bottom:20px;">
+                    <div class="small-4 medium-3 large-2 columns">
+                        <a href="/teams/detail/{{ team.pk }}">
+                            <div style="background-image:url('{{ MEDIA_URL }}{{ team.image }}');" class="square-image"></div>
+                        </a>
                     </div>
-                {% endif %}
+                    <div class="small-8 medium-9 large-10 columns text-left">
+                        <div class="subheader team-row-title" style="display:inline-block;">{{ team.title }}</div>
+                        {% for owner in team.owners %}
+                            <div style="background-color:#9068be; color:white; display:inline-block; padding:2px 5px; margin-left:10px; border-radius:2px;">{{ owner }}</div>
+                        {% endfor %}
+                        <div class="team-row-description" style="word-break: break-all;">{{ team.description }}</div>
+                    </div>
+                </div>
             {% endfor %}
         </div>
 
