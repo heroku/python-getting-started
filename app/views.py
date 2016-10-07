@@ -2,10 +2,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from .models import Alert
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
+
+from .models import Alert
 from teams.models import Team
+from teams.forms import OrgSignUp
 
 
 @login_required
@@ -51,29 +53,29 @@ def login_view(request):
 
 
 def edit_profile(request):
-    user = request.user
-    person = Person.objects.get(profile=user)
-    if request.method == "POST":
-        form = UserForm(request.POST, instance=user)
-        if form.is_valid():
-            person_form = PersonForm(request.POST, request.FILES, instance=person)
-            if person_form.is_valid():
-                user = form.save(commit=False)
-                person = person_form.save(commit=False)
-                user.save()
-                person.save()
-                return redirect('/app/?alert=profile_update')
-    else:
-        form = UserForm(instance=user)
-        person_form = PersonForm(instance=person)
-    return render(request, 'app/profile_edit.html', {'form': form, 'person_form': person_form})
+    # user = request.user
+    # person = Person.objects.get(profile=user)
+    # if request.method == "POST":
+    #     form = UserForm(request.POST, instance=user)
+    #     if form.is_valid():
+    #         person_form = PersonForm(request.POST, request.FILES, instance=person)
+    #         if person_form.is_valid():
+    #             user = form.save(commit=False)
+    #             person = person_form.save(commit=False)
+    #             user.save()
+    #             person.save()
+    #             return redirect('/app/?alert=profile_update')
+    # else:
+    #     form = UserForm(instance=user)
+    #     person_form = PersonForm(instance=person)
+    return render(request, 'app/profile_edit.html', locals())
 
 
 def signup(request):
+    form = OrgSignUp()
     if request.method == 'POST':
-        org_name = request.POST.get('organization_name')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        repeat_password = request.POST.get('repeat_password')
+        form = OrgSignUp(request.POST)
+        if form.is_valid():
+            print 'user created'
         
-    return render(request, 'app/signup.html')
+    return render(request, 'app/signup.html', locals())

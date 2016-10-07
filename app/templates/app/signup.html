@@ -37,7 +37,6 @@
     <div class="container">
         <form enctype="multipart/form-data" method="POST" class="teamedup-form">
             {% csrf_token %}
-            {{ form.non_field_errors }}
             <div class="row">
                 <div class="columns">
                     <h5 class="title">Create New Organization</h5>
@@ -45,16 +44,21 @@
                 </div>
             </div>
             <div class="row">
+                <div class="columns" style="color:red;">
+                    {{ form.non_field_errors }}
+                </div>
+            </div>
+            <div class="row">
                 <div class="large-6 medium-12 small-12 columns">
                     <label>
                         Organization Name*
-                        <input type="text" name="organization_name" placeholder="Enter organization name" required="required" />
+                        {{ form.organization_name }}
                     </label>
                 </div>
                 <div class="large-6 medium-12 small-12 columns">
                     <label>
                         Email*
-                        <input type="text" name="email" placeholder="Enter email address" required="required" />
+                        {{ form.email }}
                     </label>
                 </div>
             </div>
@@ -62,19 +66,20 @@
                 <div class="large-6 medium-12 small-12 columns">
                     <label>
                         Password*
-                        <input type="password" name="password" placeholder="Enter password" required="required" />
+                        {{ form.password }}
                     </label>
                 </div>
                 <div class="large-6 medium-12 small-12 columns">
                     <label>
                         Repeat Password*
-                        <input type="password" name="repeat_password" placeholder="Repeat password" required="required" />
+                        {{ form.repeat_password }}
                     </label>
                 </div>
             </div>
             <div class="row">
                 <div class="columns">
-                    <input type="submit" class="button alert" value="Sign Up" />
+                    <input type="submit" class="button alert hide-for-small-only" value="Sign Up" />
+                    <input type="submit" class="button alert expanded show-for-small-only" value="Sign Up" />
                 </div>
             </div>
             <div class="row">
