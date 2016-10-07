@@ -12,7 +12,7 @@
 
     <link rel="icon" href="../../favicon.ico">
 
-    <title>TeamedUp - Compose your new organisation</title>
+    <title>TeamedUp - You're own gig economy</title>
 
 
     <!-- Latest compiled and minified CSS -->
@@ -45,9 +45,9 @@
     <div class="masthead">
         <div class="masthead_dropnav" id="masthead_dropnav">
             <div style="display: table-cell; vertical-align: middle">
-                <p><a href="#"> Features </a></p>
+                <!--<p><a href="#"> Features </a></p>
                 <p><a href="#"> Pricing </a></p>
-                <p><a href="#"> Contact </a></p>
+                <p><a href="#"> Contact </a></p>-->
                 <p><a href="/app/login/?next=/app/" class="masthead-navregbtn"
                       style="color: white;background:red;padding: 14px 60px 14px 60px; ">Login</a></p>
             </div>
@@ -65,26 +65,34 @@
         <ul class="masthead-nav">
             <li><a href="/app/login/?next=/app/" class="masthead-navregbtn"
                    style=" padding: 8px 60px 8px 60px; ">Login</a></li>
-            <li><a href="#">Contact</a></li>
+            <!--<li><a href="#">Contact</a></li>
             <li><a href="#">Pricing</a></li>
-            <li><a href="#">Features</a></li>
+            <li><a href="#">Features</a></li>-->
         </ul>
     </div>
     <div class="mastsignup">
         <div class="row mastsignup-heading align-center">
             <div class="columns">
-                <h1 class="cover-heading">We connect people to the work</h1>
-                <h1 class="cover-heading">opportunities within their organisation.</h1>
+                <h1 class="cover-heading">Scale your business with your own freelance marketplace</h1>
+                <p>TeamedUp gives you all the tools you need to create your very own gig economy, talent marketplace</p>
             </div>
         </div>
-        <div class="row" style="display:table; width: 80%; margin-top:80px;">
-            <div class="small-12 large-6 columns" id="mastsignup-orgwrap" style="display:table-cell">
-                <input type="text" class="mastsignup-orgname" placeholder="Find out when available">
+
+        {% if alert %}
+            <h3>Thanks for your interest! Someone will be in contact soon.</h3>
+        {% else %}
+        <form method='post'>
+            {% csrf_token %}
+            <div class="row" style="display:table; width: 80%; margin-top:80px;">
+                <div class="small-12 large-6 columns" id="mastsignup-orgwrap" style="display:table-cell">
+                    <input type="text" id='email' name='email' class="mastsignup-orgname" placeholder="Enter your email to find out more.">
+                </div>
+                <div class="small-12 large-6 columns" id="mastsignup-btnwrap" style="display:table-cell">
+                    <button action='submit' class="button mastsignup-button">Submit</button>
+                </div>
             </div>
-            <div class="small-12 large-6 columns" id="mastsignup-btnwrap" style="display:table-cell">
-                <a href="{% url 'signup' %}" class="button mastsignup-button">Sign Up</a>
-            </div>
-        </div>
+        </form>
+        {% endif %}
     </div>
 </div>
 
@@ -97,20 +105,20 @@
             <div class="small-12 large-8 columns">
                 <div class="row align-top">
                     <div class="small-6 large-4 columns mast-mainfoot-col1" style="text-align:left">
-                        <p style="color: black;">@TeamedUp</p>
+                        <!--<p style="color: black;">@TeamedUp</p>
                         <p>Features</p>
                         <p>Pricing</p>
                         <p>Contact</p>
                         <p><a href="{% url 'signup' %}">Register</a></p>
                         <p>Login</p>
-                        <p>FAQ</p>
+                        <p>FAQ</p>-->
                     </div>
                     <div class="small-6 large-4 mast-mainfoot-col2" style="text-align:left">
-                        <p style="color: black;">Contact</p>
+                        <!--<p style="color: black;">Contact</p>
                         <p>About Us</p>
                         <p>Jobs</p>
                         <p>Support</p>
-                        <p>Contact Us</p>
+                        <p>Contact Us</p>-->
                     </div>
                     <div class="small-12 large-4 columns mast-mainfoot-sociallinks">
                         <p style="color: black;">Follow Us</p>
@@ -122,7 +130,7 @@
                             <i class="fa fa-google-plus-square fa-2x" aria-hidden="true"> </i>
                         </div>
                         </p>
-                        <p>Follow us on those social networks</p>
+                        
                     </div>
                 </div>
             </div>

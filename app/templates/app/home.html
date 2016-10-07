@@ -4,44 +4,111 @@
     {% load staticfiles %}
 
     <div class="container">
-
-        <p style="display:block; padding-top: 75px" class="lead">Your Teams</p>
-        <p class="subheader">ACTIVE TEAMS / PROJECTS</p>
-
-        <div class="row">
-            <a href="#" class="button" id="myModalButton">Create new team</a>
+        <div class="row small-up-2" style="margin-top:75px;">
+            <div class="column text-left">
+                <div class="lead">Your Teams</div>
+                <div class="subheader">ACTIVE TEAMS / PROJECTS</div>
+            </div>
+            <div class="column text-right">
+                <a href="#" class="button" id="myModalButton"><i class="fa fa-plus" aria-hidden="true"></i> New Team</a>
+            </div>
         </div>
 
         {% include "app/new_team_modal.html" %}
 
-        <div class="row small-up-1 medium-up-2 large-up-4">
+        <div class="row small-up-2 medium-up-4 large-up-4" style="margin-top:60px;">
             {% for team in teams %}
 
-                <div class="column">
-                    <div class="callout no-border">
-                        <p><a href="/teams/detail/{{ team.pk }}"><img style="background: url(
-                                {{ MEDIA_URL }}{{ team.image }}); background-size:cover; background-repeat:no-repeat;width:100%; height:200px;"></a>
-                        </p>
-                        <p class="lead"><a href="/teams/detail/{{ team.id }}">{{ team.title }}</a></p>
-                        {% if request.user == team.owner %}
-                            <span>[owner]</span>
-                        {% endif %}
-                        <p class="subheader">{{ team.description|slice:":45" }}</p>
-
+                 {% if request.user in team.members %}
+                    <div class="column">
+                        <a href="/teams/detail/{{ team.pk }}">
+                            <img src="{{ MEDIA_URL }}{{ team.image }}" style="width:100%;">
+                        </a>
+                        <div class="lead" style="margin-top:20px;"><a href="/teams/detail/{{ team.id }}">{{ team.title }}</a></div>
+                        <div class="subheader" style="word-break: break-all;">{{ team.description|slice:":45" }}</div>
                     </div>
-                </div>
+                {% endif %}
             {% endfor %}
         </div>
 
-        <div class="row">
-            <a href="/teams" class="button">Find new teams</a>
+        <div class="row text-center" style="margin-top:30px;">
+            <div class="small-12 text-center">
+                <a href="/teams" class="button">Find new teams</a>
+            </div>
         </div>
 
+        <div class="row" style="margin-top:75px;">
+            <div class="columns small-6 medium-4 large-3 text-left">
+                <div class="lead">Other Teams</div>
+                <div class="subheader">SEARCH FOR TEAMS</div>
+            </div>
+            <div class="columns small-6 medium-4 medium-offset-4 large-3 large-offset-6 text-right">
+                <a id="searchteams-btn" class="button" style="float:right;"><i class="fa fa-search" aria-hidden="true"></i></a>
+                <input type="text" id="searchteams-query" name="searchteams-query" placeholder="Search Teams" style="width:calc(100% - 50px); float:right;" />
+            </div>
+        </div>
+
+        <div style="margin-top:60px;">
+            {% for team in teams %}
+                {% if request.user not in team.members %}
+                    <div class="row team-row hide" data-title="{{team.title}}" data-description="{{team.description}}" style="margin-bottom:20px;">
+                        <div class="small-4 medium-3 large-2 columns">
+                            <a href="/teams/detail/{{ team.pk }}">
+                                <div style="background-image:url('{{ MEDIA_URL }}{{ team.image }}');" class="square-image"></div>
+                            </a>
+                        </div>
+                        <div class="small-8 medium-9 large-10 columns text-left">
+                            <div class="subheader" style="display:inline-block;">{{ team.title }}</div>
+                            {% for owner in team.owners %}
+                                <div style="background-color:#9068be; color:white; display:inline-block; padding:2px 5px; margin-left:10px; border-radius:2px;">{{ owner }}</div>
+                            {% endfor %}
+                            <div style="word-break: break-all;">{{ team.description }}</div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="text-center hide" style="margin-top:30px;" id="searchteams-more-btn-div">
+            <a id="searchteams-more-btn" class="button button-purple button-round"><i class="fa fa-repeat" aria-hidden="true" style="margin-right:20px;"></i>Show More</a>
+        </div>
+
+        <div class="text-center hide" style="margin-top:30px;margin-bottom:30px;" id="searchteams-noresult">
+            We can't find teams.
+        </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
-        $(document).ready(function () {
+        var searchTeamsPer = 5;
+        var searchTeamsCount = searchTeamsPer;
+        var teamsCount = $('.team-row').length;
+        var searchTeamsQuery = '';
 
+        function search() {
+            var i = 0;
+            $('#searchteams-more-btn-div').addClass('hide');
+            $('.team-row').each(function(index) {
+                if($(this).data('title').toLowerCase().indexOf(searchTeamsQuery.toLowerCase())>-1 ||
+                $(this).data('description').toLowerCase().indexOf(searchTeamsQuery.toLowerCase())>-1) {
+                    i++;
+                    if(i<=searchTeamsCount) {
+                        $(this).removeClass('hide');
+                    } else {
+                        $(this).addClass('hide');
+                        $('#searchteams-more-btn-div').removeClass('hide');
+                    }
+                } else {
+                    $(this).addClass('hide');
+                }
+            });
+            if(i==0) {
+                $('#searchteams-noresult').removeClass('hide');
+            } else {
+                $('#searchteams-noresult').addClass('hide');
+            }
+        }
+
+        $(document).ready(function () {
             $('.close-reveal-modal').click(function () {
                 jQuery('#myModal').foundation('close');
             });
@@ -50,6 +117,27 @@
                 event.preventDefault();
                 jQuery('#myModal').foundation('open');
             });
+
+            $('#searchteams-btn').click(function() {
+                searchTeamsQuery = $('#searchteams-query').val();
+                searchTeamsCount = searchTeamsPer;
+                search();
+            });
+
+            $('#searchteams-query').keyup(function(e) {
+                if(e.keyCode == 13) {
+                    searchTeamsQuery = $('#searchteams-query').val();
+                    searchTeamsCount = searchTeamsPer;
+                    search();
+                }
+            });
+
+            $('#searchteams-more-btn').click(function() {
+                searchTeamsCount += searchTeamsPer;
+                search();
+            });
+
+            search();
         });
     </script>
 {% endblock %}
