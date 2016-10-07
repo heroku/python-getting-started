@@ -82,7 +82,7 @@
                 <input type="text" class="mastsignup-orgname" placeholder="Find out when available">
             </div>
             <div class="small-12 large-6 columns" id="mastsignup-btnwrap" style="display:table-cell">
-                <a href="#features" class="button mastsignup-button">Sign Up</a>
+                <a href="{% url 'signup' %}" class="button mastsignup-button">Sign Up</a>
             </div>
         </div>
     </div>
@@ -101,7 +101,7 @@
                         <p>Features</p>
                         <p>Pricing</p>
                         <p>Contact</p>
-                        <p>Register</p>
+                        <p><a href="{% url 'signup' %}">Register</a></p>
                         <p>Login</p>
                         <p>FAQ</p>
                     </div>
