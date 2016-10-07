@@ -45,6 +45,10 @@
             <div class="columns small-6 medium-4 medium-offset-4 large-3 large-offset-6 text-right">
                 <a id="searchteams-btn" class="button" style="float:right;"><i class="fa fa-search" aria-hidden="true"></i></a>
                 <input type="text" id="searchteams-query" name="searchteams-query" placeholder="Search Teams" style="width:calc(100% - 50px); float:right;" />
+                
+            </div>
+            <div class="columns small-12 text-right">
+                <div id="searchteams-message"></div>
             </div>
         </div>
 
@@ -58,11 +62,11 @@
                             </a>
                         </div>
                         <div class="small-8 medium-9 large-10 columns text-left">
-                            <div class="subheader" style="display:inline-block;">{{ team.title }}</div>
+                            <div class="subheader team-row-title" style="display:inline-block;">{{ team.title }}</div>
                             {% for owner in team.owners %}
                                 <div style="background-color:#9068be; color:white; display:inline-block; padding:2px 5px; margin-left:10px; border-radius:2px;">{{ owner }}</div>
                             {% endfor %}
-                            <div style="word-break: break-all;">{{ team.description }}</div>
+                            <div class="team-row-description" style="word-break: break-all;">{{ team.description }}</div>
                         </div>
                     </div>
                 {% endif %}
@@ -93,6 +97,20 @@
                     i++;
                     if(i<=searchTeamsCount) {
                         $(this).removeClass('hide');
+                        title = $(this).find('.team-row-title').html();
+                        title = title.replace(new RegExp('<strong>', 'g'),'');
+                        title = title.replace(new RegExp('</strong>', 'g'),'');
+                        if(searchTeamsQuery!=='') {
+                            title = title.replace(new RegExp(searchTeamsQuery, 'gi'), '<strong>$&</strong>');
+                        }
+                        $(this).find('.team-row-title').html(title);
+                        description = $(this).find('.team-row-description').html();
+                        description = description.replace(new RegExp('<strong>', 'g'),'');
+                        description = description.replace(new RegExp('</strong>', 'g'),'');
+                        if(searchTeamsQuery!=='') {
+                            description = description.replace(new RegExp(searchTeamsQuery, 'gi'), '<strong>$&</strong>');
+                        }
+                        $(this).find('.team-row-description').html(description);
                     } else {
                         $(this).addClass('hide');
                         $('#searchteams-more-btn-div').removeClass('hide');
@@ -105,6 +123,10 @@
                 $('#searchteams-noresult').removeClass('hide');
             } else {
                 $('#searchteams-noresult').addClass('hide');
+            }
+            $('#searchteams-message').text('');
+            if(searchTeamsQuery!=='') {
+                $('#searchteams-message').text('displaying team search results for ' + searchTeamsQuery);
             }
         }
 
