@@ -11,8 +11,12 @@ from teams.models import Team
 @login_required
 def index(request):
     teams = Team.objects.all()
+    myteams = [member.team for member in request.user.member_set.all()]
+    otherteams = [team for team in teams if team not in myteams]
     context = {
         'teams': teams,
+        'myteams': myteams,
+        'otherteams': otherteams,
     }
     return render(request, 'app/home.html', context)
 
