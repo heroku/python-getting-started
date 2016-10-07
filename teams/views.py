@@ -1,9 +1,10 @@
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from teams.models import Team, Role, Member
+from teams.models import Team, Role, Member, Invite
+from django.contrib.auth.models import User
 
 import datetime
 
@@ -22,8 +23,11 @@ def team_detail(request, team_id):
         1) fallback to 404 on wrong ids
     """
     team = Team.objects.get(pk=team_id)
+    # ToDo - This should fetch members who belong to team's organization, once organization is implemented
+    nonmembers = [user for user in User.objects.all() if user not in team.members]
     context = {
         'team': team,
+        'nonmembers': nonmembers
     }
     return render(request, 'teams/team_detail.html', context)
 
@@ -71,3 +75,18 @@ def create_role(request, team):
     end_date = datetime.datetime.strptime(request.POST.get('start_date'), '%m-%d-%Y %H:%M')
     Role(team=team, title=title, description=description, start_date=start_date, end_date=end_date).save()
     return redirect(reverse('team_detail', kwargs={'team_id': team.pk}))
+
+@login_required
+def invite_people(request, team_id):
+    team = get_object_or_404(Team, pk=team_id)
+    if request.method == 'POST':
+        return _invite_people(request, team)
+
+    raise Http404
+
+def _invite_people(request, team):
+    invitees = [User.objects.get(pk=invitee_id) for invitee_id in request.POST.get('invitees').split(",")]
+    for invitee in invitees:
+        Invite(team=team, inviter=request.user, invitee=invitee).save()
+
+    return HttpResponse(status=200)

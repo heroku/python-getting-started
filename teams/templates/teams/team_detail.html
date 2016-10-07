@@ -153,6 +153,7 @@
             </div>
             <div class="small-4 columns small-centered">
                 <p>(Some) Team members</p>
+                <a data-open="invite_people_modal" class="button" style="border-radius:50%;"><i class="fa fa-plus"></i></a>
                 <div class="callout no-border">
                     <p><img style="border-radius:180px; width:125px;" src="{% static 'img/person_stock.jpg' %}"
                             alt="image of a planet called Pegasi B"></p>
@@ -233,6 +234,53 @@
             </div>
         </div>
 
+        <div class="reveal" id="invite_people_modal" data-reveal>
+            <div class="modal-box">
+                <div class="row">
+                    <div class="small-12 columns">
+                        <h5 class="modal-title">Invite Users</h5>
+                        <p class="modal-description">SELECT PEOPLE TO INVITE TO THE TEAM</p>
+                        <button class="close-button" data-close aria-label="Close modal" type="button" style="float:right;">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="columns small-12 medium-6">
+                        <input id="people_select" type="text" />
+                    </div>
+                </div>
+                <div id="people_to_invite">
+
+                </div>
+                <div class="row">
+                    <div class="columns text-right">
+                        <input type="button" value="Cancel" class="button secondary" data-close aria-label="Close modal" />
+                        <input type="button" value="Invite" class="button alert" id="invite_btn" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reveal" id="invited_modal" data-reveal>
+            <div class="modal-box">
+                <div class="row">
+                    <div class="small-12 columns text-center">
+                        <h5 class="modal-title">Thanks, Your Invites are on their way</h5>
+                        <p class="modal-description">Your colleagues will receive an invitation to join your team shortly.</p>
+                        <button class="close-button" data-close aria-label="Close modal" type="button" style="float:right;">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="columns text-right">
+                        <input type="button" value="OK" class="button alert" data-close aria-label="Close modal"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
@@ -241,6 +289,41 @@
 {% block extra_footer %}
     <script type="text/javascript" src="{% static 'js/foundation-datepicker.min.js' %}"></script>
     <script type="text/javascript">
+        var peopleAll = [
+        {% for people in nonmembers %}
+            {
+                id: '{{people.pk}}',
+                username: '{{people.username}}'
+            },
+        {% endfor %}
+        ];
+        var peopleToInvite = [];
+        function addPeopleToInviteList(people) {
+            if(_.find(peopleToInvite, function(p) { return p.id == people.id; }) == undefined) {
+                peopleToInvite.push(people);
+            }
+            drawInviteList();
+        }
+        function removePeopleFromInviteList(peopleId) {
+            peopleToInvite = _.reject(peopleToInvite, function(p) {
+                return p.id == peopleId;
+            });
+            drawInviteList();
+        }
+        function drawInviteList() {
+            $('#people_to_invite').html('')
+            _.each(peopleToInvite, function(p) {
+                $('#people_to_invite').append(
+                    '<div class="row" style="margin:10px 0px;">'+
+                        '<div class="columns small-6">'+p.username+'</div>'+
+                        '<div class="columns small-6 text-right">'+
+                            '<i class="fa fa-times" onclick="removePeopleFromInviteList('+p.id+'); event.stopPropagation(); return false;" style="cursor:pointer;"></i>'+
+                        '</div>'+
+                    '</div>'
+                );
+            });
+        }
+
         $(function(){
             $('input[name="start_date"]').fdatepicker({
                 'pickTime': true,
@@ -251,6 +334,40 @@
                 'pickTime': true,
                 'format': 'mm-dd-yyyy hh:ii',
                 'disableDblClickSelection': true
+            });
+
+            $("#people_select").autoComplete({
+                minChars: 0,
+                source: function(term, suggest) {
+                    suggest(_.filter(peopleAll, function(p) {
+                        return p.username.toLowerCase().indexOf(term.toLowerCase()) > -1;
+                    }));
+                },
+                renderItem: function (item, search){
+                    search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                    var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+                    return '<div class="autocomplete-suggestion" data-id="'+item.id+'" data-username="'+item.username+'">'+item.username.replace(re, "<b>$1</b>")+'</div>';
+                },
+                onSelect: function(e, term, item){
+                    $('#people_select').val(item.data('username'));
+                    addPeopleToInviteList({
+                        id: item.data('id'),
+                        username: item.data('username')
+                    });
+                }
+            });
+
+            $('#invite_btn').click(function() {
+                $.post(
+                    "{% url 'team_invite_people' team.pk %}",
+                    { 
+                        'csrfmiddlewaretoken':$.cookie('csrftoken'),
+                        'invitees': _.map(peopleToInvite, function(p) { return p.id; }).join(',')
+                    },
+                    function(data) {
+                        jQuery('#invited_modal').foundation('open');
+                    }
+                );
             });
         });
     </script>
