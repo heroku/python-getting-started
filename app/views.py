@@ -66,4 +66,10 @@ def edit_profile(request):
 
 
 def signup(request):
+    if request.method == 'POST':
+        org_name = request.POST.get('organization_name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        repeat_password = request.POST.get('repeat_password')
+        
     return render(request, 'app/signup.html')
