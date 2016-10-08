@@ -6,3 +6,4 @@ from .models import Team, Role, Member
 admin.site.register(Team)
 admin.site.register(Role)
 admin.site.register(Member)
+admin.site.register(Invite)
