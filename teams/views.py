@@ -87,6 +87,6 @@ def invite_people(request, team_id):
 def _invite_people(request, team):
     invitees = [User.objects.get(pk=invitee_id) for invitee_id in request.POST.get('invitees').split(",")]
     for invitee in invitees:
-        Invite(team=team, inviter=request.user, invitee=invitee).save()
+        Invite(team=team, inviter=request.user, invitee=invitee, status='created').save()
 
     return HttpResponse(status=200)
