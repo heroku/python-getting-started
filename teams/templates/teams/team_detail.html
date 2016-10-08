@@ -362,13 +362,15 @@
                     return '<div class="autocomplete-suggestion" data-id="'+item.id+'" data-username="'+item.username+'" data-invited='+invited+'>'+item.username.replace(re, "<b>$1</b>")+(invited?' - invited':'')+'</div>';
                 },
                 onSelect: function(e, term, item){
-                    $('#people_select').val(item.data('username'));
                     if(!item.data('invited')) {
                         addPeopleToInviteList({
                             id: item.data('id'),
                             username: item.data('username')
                         });
                     }
+                    setTimeout(function() {
+                        $('#people_select').trigger('blur');
+                    }, 100);
                 }
             });
 
