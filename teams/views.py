@@ -4,9 +4,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from teams.models import Team, Role, Member, Invite
+from app.models import Notification
 from django.contrib.auth.models import User
 
-import datetime
+from datetime import datetime, timedelta
 
 
 @login_required
@@ -89,6 +90,11 @@ def invite_people(request, team_id):
 def _invite_people(request, team):
     invitees = [User.objects.get(pk=invitee_id) for invitee_id in request.POST.get('invitees').split(",")]
     for invitee in invitees:
-        Invite(team=team, inviter=request.user, invitee=invitee, status='created').save()
+        invitation = Invite(team=team, inviter=request.user, invitee=invitee, status='created')
+        invitation.save()
+        now = datetime.now()
+        expiredAt = now + timedelta(days=7)
+        notification = Notification(activity='invite_people_to_team', activityId=invitation.id, expiredAt=expiredAt, read=False)
+        notification.save()
 
     return HttpResponse(status=200)
