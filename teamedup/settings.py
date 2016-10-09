@@ -43,7 +43,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django_comments',
     'storages',
-    'django_extensions',
 )
 
 # SITE_ID for django.contrib.comments
