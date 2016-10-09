@@ -14,9 +14,3 @@ class Lead(models.Model):
 
 	def __str__(self):
 		return self.email
-
-class Notification(models.Model):
-	activity = models.CharField(max_length=100)
-	activityId = models.IntegerField()
-	expiredAt = models.DateTimeField(default=None, blank=True, null=True)
-	read = models.BooleanField(default=False, blank=False, null=False)
