@@ -47,6 +47,7 @@
         <div class="masthead_dropnav" id="masthead_dropnav">
             <div style="display: table-cell; vertical-align: middle">
                 <p><a href="#"> Settings </a></p>
+                <p><a href="{% url 'sign-out' %}"> Sign Out </a></p>
             </div>
             <button class="masthead-dropnav-icon" onclick="pulldownMenu();">
                 <i class="fa fa-times" aria-hidden="true"> </i>
@@ -59,6 +60,7 @@
             <img src="{% static 'menu-icon.png' %}">
         </button>
         <ul class="masthead-nav">
+            <li><a href="{% url 'sign-out' %}">Sign Out</a></li>
             <li><a href="#">Settings</a></li>
         </ul>
     </div>
@@ -80,7 +82,7 @@
                             <p>Features</p>
                             <p>Pricing</p>
                             <p>Contact</p>
-                            <p<a href="{% url 'signup' %}">Register</a></p>
+                            <p><a href="{% url 'signup' %}">Register</a></p>
                             <p>Login</p>
                             <p>FAQ</p>
                         </div>
