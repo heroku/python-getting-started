@@ -8,6 +8,10 @@
             right: 10px;
             border-radius: 50%;
         }
+        input[type=file] {
+            width: 1px;
+            visibility: hidden;
+        }
     </style>
 {% endblock %}
 
@@ -26,8 +30,8 @@
             </div>
             <div class="row">
                 <div class="large-4 medium-3 small-12 columns text-right">
-                    <img src="http://placehold.it/350x350&text=Picture">
-                    <button class="button alert round upload-button"><i class="fa fa-upload"></i></button>
+                    <img class="userpic-preview" src="http://placehold.it/350x350&text=Picture">
+                    <a href="#" class="button alert round upload-button"><i class="fa fa-upload"></i></a>
                 </div>
                 <div class="large-7 medium-9 small-12 columns">
                     <div class="row">
@@ -80,9 +84,38 @@
                     <input type="submit" class="button alert expanded show-for-small-only" value="Save Settings" />
                 </div>
             </div>
-
+            <input type="file" onchange="previewFile()">
         </form>
 
     </div>
 
+{% endblock %}
+
+
+{% block extra_footer %}
+    <script type="text/javascript">
+        function previewFile(){
+           var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+           var reader  = new FileReader();
+
+           reader.onloadend = function () {
+               $('img.userpic-preview').attr('src', reader.result)
+           }
+
+           if (file) {
+               reader.readAsDataURL(file); //reads the data as a URL
+           } else {
+               $('img.userpic-preview').attr('src', 'http://placehold.it/350x350&text=Picture')
+           }
+        }
+
+
+        window.onload = function(){
+            $('.upload-button').click(function(){
+               $('input[type="file"]').click();
+                return false;
+            });
+
+        }
+    </script>
 {% endblock %}

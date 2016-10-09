@@ -57,3 +57,5 @@ class Token(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None, blank=True, null=True)
     name = models.CharField(max_length=255, default='')
+    userpic = models.ImageField('img', upload_to='media/images/', default='img/dashboard_template_image.png')
+
