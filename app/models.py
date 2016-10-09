@@ -53,3 +53,7 @@ class Token(models.Model):
         self.token = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(64))
         super(Token, self).save(*args, **kwargs)
 
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None, blank=True, null=True)
+    name = models.CharField(max_length=255, default='')

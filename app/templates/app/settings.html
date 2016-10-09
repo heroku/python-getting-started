@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block extra_header %}
+    <style type="text/css">
+        .teamedup-form .upload-button {
+            position: relative;
+            bottom: 50px;
+            right: 10px;
+            border-radius: 50%;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+
+        <form enctype="multipart/form-data" method="POST" class="teamedup-form">
+
+            {% csrf_token %}
+            <div class="row">
+                <div class="columns">
+                    <h5 class="title">Create New Organization</h5>
+                    <p class="description">COMPLETE THE FIELDS BELOW TO REGISTER</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-4 medium-3 small-12 columns text-right">
+                    <img src="http://placehold.it/350x350&text=Picture">
+                    <button class="button alert round upload-button"><i class="fa fa-upload"></i></button>
+                </div>
+                <div class="large-7 medium-9 small-12 columns">
+                    <div class="row">
+                        <div class="columns" style="color:red;">
+                            {{ form.non_field_errors }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="columns">
+                            <div class="row">
+                                <div class="columns">
+                                    <label>
+                                        Name
+                                        {{ form.name }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="columns">
+                                    <label>
+                                        Email
+                                        {{ form.email }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="columns">
+                                    <label>
+                                        Password
+                                        {{ form.password }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="columns">
+                                    <label>
+                                        Repeat Password
+                                        {{ form.repeat_password }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="columns text-center">
+                    <input type="submit" class="button alert hide-for-small-only" value="Save Settings" />
+                    <input type="submit" class="button alert expanded show-for-small-only" value="Save Settings" />
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+{% endblock %}
