@@ -256,7 +256,7 @@
                 <div class="row">
                     <div class="columns text-right">
                         <input type="button" value="Cancel" class="button secondary" data-close aria-label="Close modal" />
-                        <input type="button" value="Invite" class="button alert" id="invite_btn" />
+                        <input type="button" value="Invite" class="button alert" id="invite_btn" disabled />
                     </div>
                 </div>
             </div>
@@ -297,6 +297,11 @@
             },
         {% endfor %}
         ];
+        var peopleInvited = [
+        {% for people in invitees %}
+            {{people.pk}},
+        {% endfor %}
+        ];
         var peopleToInvite = [];
         function addPeopleToInviteList(people) {
             if(_.find(peopleToInvite, function(p) { return p.id == people.id; }) == undefined) {
@@ -322,6 +327,11 @@
                     '</div>'
                 );
             });
+            if(peopleToInvite.length==0) {
+                $('#invite_btn').prop('disabled', true);
+            } else {
+                $('#invite_btn').prop('disabled', false);
+            }
         }
 
         $(function(){
@@ -346,14 +356,21 @@
                 renderItem: function (item, search){
                     search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
                     var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
-                    return '<div class="autocomplete-suggestion" data-id="'+item.id+'" data-username="'+item.username+'">'+item.username.replace(re, "<b>$1</b>")+'</div>';
+                    var invited = (_.find(peopleInvited, function(p){
+                        return p == item.id;
+                    }) != undefined);
+                    return '<div class="autocomplete-suggestion" data-id="'+item.id+'" data-username="'+item.username+'" data-invited='+invited+'>'+item.username.replace(re, "<b>$1</b>")+(invited?' - invited':'')+'</div>';
                 },
                 onSelect: function(e, term, item){
-                    $('#people_select').val(item.data('username'));
-                    addPeopleToInviteList({
-                        id: item.data('id'),
-                        username: item.data('username')
-                    });
+                    if(!item.data('invited')) {
+                        addPeopleToInviteList({
+                            id: item.data('id'),
+                            username: item.data('username')
+                        });
+                    }
+                    setTimeout(function() {
+                        $('#people_select').trigger('blur');
+                    }, 100);
                 }
             });
 
@@ -365,6 +382,10 @@
                         'invitees': _.map(peopleToInvite, function(p) { return p.id; }).join(',')
                     },
                     function(data) {
+                        peopleInvited = _.union(peopleInvited, _.map(peopleToInvite, function(p) { return p.id; }));
+                        peopleToInvite = [];
+                        drawInviteList();
+                        $('#people_select').val('');
                         jQuery('#invited_modal').foundation('open');
                     }
                 );

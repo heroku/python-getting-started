@@ -25,9 +25,11 @@ def team_detail(request, team_id):
     team = Team.objects.get(pk=team_id)
     # ToDo - This should fetch members who belong to team's organization, once organization is implemented
     nonmembers = [user for user in User.objects.all() if user not in team.members]
+    invitees = [invite.invitee for invite in request.user.invites.all()]
     context = {
         'team': team,
-        'nonmembers': nonmembers
+        'nonmembers': nonmembers,
+        'invitees': invitees
     }
     return render(request, 'teams/team_detail.html', context)
 
@@ -87,6 +89,6 @@ def invite_people(request, team_id):
 def _invite_people(request, team):
     invitees = [User.objects.get(pk=invitee_id) for invitee_id in request.POST.get('invitees').split(",")]
     for invitee in invitees:
-        Invite(team=team, inviter=request.user, invitee=invitee).save()
+        Invite(team=team, inviter=request.user, invitee=invitee, status='created').save()
 
     return HttpResponse(status=200)
