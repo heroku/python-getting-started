@@ -1,0 +1,30 @@
+.no-border {
+    border: none;
+}
+
+.button {
+    background-color: #fc0017;
+}
+
+.button-purple {
+	background-color: #9068be;
+}
+
+.button-round {
+	border-radius: 20px;
+}
+
+a {
+    color: #0a0a0a;
+}
+
+.center-button {
+    text-align: center;
+}
+
+.square-image {
+	background-size: cover;
+    background-position: center center;
+    width: 100%;
+    padding-top: 100%;
+}
