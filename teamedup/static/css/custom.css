@@ -52,3 +52,14 @@ a {
     line-height: 30px;
     margin: 0px 5px;
 }
+
+#notifications_count {
+    margin-left: 5px;
+    background-color: #fc0017;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    line-height: 20px;
+    border-radius: 50% 50%;
+    color: #fefefe;
+}

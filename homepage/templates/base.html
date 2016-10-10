@@ -63,7 +63,7 @@
             <li><a href="{% url 'sign-out' %}">Sign Out</a></li>
             <li><a href="#">Settings</a></li>
             <li>
-                <a data-toggle="notifications"><i class="fa fa-bell-o" aria-hidden="true"></i>{{notifications_count}}</a>
+                <a data-toggle="notifications"><i class="fa fa-bell-o" aria-hidden="true"></i><span id="notifications_count"></span></a>
                 <div class="dropdown-pane bottom right" id="notifications" data-dropdown data-close-on-click="true">
                     <ul>
                     </ul>
@@ -169,6 +169,7 @@
                     '<li>No notifications</li>'
                 );
             }
+            $('#notifications_count').text(notifications.length);
         }
 
         function acceptTeamInvite(id) {
