@@ -176,6 +176,15 @@ Activate your account by clicking this link: %s
 Your friends at TeamedUp
 """
 
+ORGANIZATION_INVITATION_EMAIL = """
+Hello,
+
+You were invited to join %s on TeamedUp.
+Join it by clicking this link: %s
+
+Your friends at TeamedUp
+"""
+
 
 try:
     os.environ['ENVIRONMENT'] == 'local'
