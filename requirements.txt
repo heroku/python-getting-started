@@ -3,6 +3,7 @@ boto==2.42.0
 dj-database-url==0.4.0
 Django==1.9.2
 django-contrib-comments==1.7.1
+django-debug-toolbar==1.6
 django-extensions==1.7.4
 django-storages==1.5.0
 django-waffle==0.11.1
@@ -15,4 +16,5 @@ pytz==2016.6.1
 requests==2.10.0
 six==1.10.0
 sorl-thumbnail==12.3
+sqlparse==0.2.1
 whitenoise==2.0.6

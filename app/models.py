@@ -26,7 +26,7 @@ class Organization(models.Model):
 
     @property
     def members(self):
-        return [membership.user for membership in self.organizationmember_set.all()]
+        return self.organizationmember_set.all()
 
     def __unicode__(self):
         return self.name

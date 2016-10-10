@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'app',
     'recruit',
     'teams',
+    'api',
     'waffle',
     # leave at bottom otherwise some functionality like logout redirect breaks
     'django.contrib.admin',
@@ -44,6 +45,7 @@ INSTALLED_APPS = (
     'django_comments',
     'storages',
     'sorl.thumbnail',
+    'debug_toolbar',
 )
 
 THUMBNAIL_DEBUG = True
@@ -58,6 +60,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',

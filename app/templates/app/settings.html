@@ -97,6 +97,8 @@
 
     </div>
 
+
+
     {% if organizations %}
     <div class="container">
         {% for organization in organizations %}
@@ -108,20 +110,24 @@
                             <p class="description">ORGANIZATION SETTINGS</p>
                         </div>
                         <div class="large-4 medium-5 small-7 columns">
-                            <div class="row">
-                                <div class="large-8 medium-8 small-8 columns">
-                                    <input type="email" style="margin-top:0;" />
+
+                            <form action="{% url 'organization-invite' organization.pk %}" method="POST" class="invitation-form">
+                                <div class="input-group">
+                                    <input name="invitation-email" class="input-group-field" type="email" style="margin-top:0;" required="required" placeholder="Enter email address" />
+                                    <div class="input-group-button">
+                                        <button type="submit" class="postfix alert button invitation-button" data-url="{% url 'organization-invite' organization.pk %}">
+                                            <i class="fa fa-send"></i>
+                                            Invite
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="columns">
-                                    <button class="alert small button"><i class="fa fa-send"></i> Invite</button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                     {% for member in organization.members %}
-                        <div class="row" id="member_{{ member.pk }}">
+                        <div class="row organization-member-{{ member.user.pk }}">
                             <div class="large-2 medium-2 small-4 columns">
-                                {% thumbnail member.profile.userpic "200x200" crop="center" as userpic %}
+                                {% thumbnail member.user.profile.userpic "200x200" crop="center" as userpic %}
                                     <img class="userpic-preview image-rounded" src="{{ userpic.url }}" />
                                 {% empty %}
                                     <img class="userpic-preview image-rounded" src="http://placehold.it/200x200&text=Picture" />
@@ -130,20 +136,14 @@
                             <div class="large-10 medium-10 small-8 columns">
                                 <div class="row">
                                     <div class="large-7 medium-7 small-12 columns">
-                                        <h6 class="title">{{ member.profile.get_name }}</h6>
-                                        <p class="description">{{ member.email }}</p>
+                                        <h6 class="title">{{ member.user.profile.get_name }}</h6>
+                                        <p class="description">{{ member.user.email }}</p>
                                         <div class="show-for-small-only">
-{#                                        {% if member.pk != request.user.pk %}#}
-                                            <button class="secondary button" style="margin-right: 20px;">Make admin</button>
-                                            <button class="secondary button">Remove</button>
-{#                                        {% endif %}#}
+                                            {% include 'app/includes/organization_member_actions.html' %}
                                         </div>
                                     </div>
                                     <div class="large-5 medium-5 small-12 columns hide-for-small-only text-right">
-{#                                        {% if member.pk != request.user.pk %}#}
-                                            <button class="secondary button" style="margin-right: 20px;">Make admin</button>
-                                            <button class="secondary button">Remove</button>
-{#                                        {% endif %}#}
+                                        {% include 'app/includes/organization_member_actions.html' %}
                                     </div>
                                 </div>
                             </div>
@@ -180,6 +180,7 @@
 
 
         window.onload = function(){
+
             $('.upload-button').click(function(){
                $('input[type="file"]').click();
                 return false;
@@ -189,6 +190,32 @@
                 $(this).find('input[type="submit"]').hide();
                 $(this).find('.fa-spinner').show();
                 return true;
+            });
+
+            $('.switch-admin-status-button').click(function(){
+                var button = $(this);
+                $.post(button.data('url'), {}, function(response){
+                    button.text(response.button_text)
+                }, 'json');
+            });
+
+            $('.remove-member-button').click(function(){
+                if(!confirm('This member will be removed from the organization')){
+                    return
+                }
+                var button = $(this);
+                $('.organization-member-' + button.data('user-id')).remove();
+                $.post(button.data('url'));
+            });
+
+            $('.invitation-form').submit(function(){
+                var form = $(this);
+                var email = form.find('[name="invitation-email"]').val();
+                form.find('[name="invitation-email"]').val('');
+                $.post(form.attr('action'), {'email': email}, function(){
+                    alert('sent')
+                }, 'json')
+                return false;
             });
 
         }
