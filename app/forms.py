@@ -50,6 +50,7 @@ class SettingsForm(forms.Form):
                                widget=forms.PasswordInput(attrs={'placeholder': 'Enter password'}))
     repeat_password = forms.CharField(label='Repeat Password', max_length=255, required=False,
                                       widget=forms.PasswordInput(attrs={'placeholder': 'Repeat password'}))
+    userpic = forms.ImageField(label='Picture', required=False)
 
 
     def set_user(self, user):

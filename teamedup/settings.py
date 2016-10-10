@@ -43,7 +43,11 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django_comments',
     'storages',
+    'sorl.thumbnail',
 )
+
+THUMBNAIL_DEBUG = True
+
 
 # SITE_ID for django.contrib.comments
 SITE_ID = 1

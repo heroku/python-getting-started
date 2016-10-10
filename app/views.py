@@ -33,10 +33,10 @@ def login_user(request):
     username = password = ''
 
     if request.POST:
-        username = request.POST['username'] # TODO: use email instead of username
+        email = request.POST['email']
         password = request.POST['password']
 
-        user = authenticate(username=username, password=password)
+        user = authenticate(username=email, password=password)
         if user is not None:
             if user.is_active:
                 login(request, user)
@@ -57,6 +57,7 @@ def login_view(request):
     return render(request, 'app/login.html', context)
 
 
+@login_required
 def edit_settings(request):
     if not hasattr(request.user, 'profile'):
         # TODO: remove this block before release
@@ -65,13 +66,23 @@ def edit_settings(request):
         'name': request.user.profile.name,
         'email': request.user.email
     }
+
     form = SettingsForm(initial=initial)
     if request.method == 'POST':
         form = SettingsForm(request.POST, initial=initial)
         form.set_user(request.user)
         if form.is_valid():
+            if request.FILES.get('userpic'):
+                request.user.profile.userpic =  request.FILES.get('userpic')
             request.user.profile.name = form.cleaned_data.get('name')
             request.user.profile.save()
+            # TODO: if email was updated -> mark user account is_active=False and send activation link
+            password = form.cleaned_data.get('password')
+            if password != '':
+                request.user.set_password(password)
+                request.user.save()
+            messages.add_message(request, messages.SUCCESS, _('Your account was updated successfully'))
+            return redirect(reverse('index'))
     return render(request, 'app/settings.html', locals())
 
 

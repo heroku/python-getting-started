@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 
+{% load thumbnail %}
+
+
 {% block extra_header %}
     <style type="text/css">
         .teamedup-form .upload-button {
@@ -24,13 +27,17 @@
             {% csrf_token %}
             <div class="row">
                 <div class="columns">
-                    <h5 class="title">Create New Organization</h5>
-                    <p class="description">COMPLETE THE FIELDS BELOW TO REGISTER</p>
+                    <h5 class="title">Account Settings</h5>
+                    <p class="description">ACCOUNT SETTINGS</p>
                 </div>
             </div>
             <div class="row">
                 <div class="large-4 medium-3 small-12 columns text-right">
-                    <img class="userpic-preview" src="http://placehold.it/350x350&text=Picture">
+                    {% thumbnail request.user.profile.userpic "350x350" as userpic %}
+                        <img class="userpic-preview" src="{{ userpic.url }}" />
+                    {% empty %}
+                        <img class="userpic-preview" src="http://placehold.it/350x350&text=Picture" />
+                    {% endthumbnail %}
                     <a href="#" class="button alert round upload-button"><i class="fa fa-upload"></i></a>
                 </div>
                 <div class="large-7 medium-9 small-12 columns">
@@ -82,9 +89,10 @@
                 <div class="columns text-center">
                     <input type="submit" class="button alert hide-for-small-only" value="Save Settings" />
                     <input type="submit" class="button alert expanded show-for-small-only" value="Save Settings" />
+                    <i class="fa fa-spinner fa-spin" style="display: none;" aria-hidden="true"></i>
                 </div>
             </div>
-            <input type="file" onchange="previewFile()">
+            <input type="file" onchange="previewFile()" name="userpic">
         </form>
 
     </div>
@@ -114,6 +122,12 @@
             $('.upload-button').click(function(){
                $('input[type="file"]').click();
                 return false;
+            });
+
+            $('.teamedup-form').submit(function(){
+                $(this).find('input[type="submit"]').hide();
+                $(this).find('.fa-spinner').show();
+                return true;
             });
 
         }
