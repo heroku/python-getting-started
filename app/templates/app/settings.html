@@ -97,6 +97,67 @@
 
     </div>
 
+    {% if organizations %}
+    <div class="container">
+        {% for organization in organizations %}
+            <div class="row">
+                <div class="columns teamedup-form">
+                    <div class="row">
+                        <div class="large-8 medium-7 small-5 columns">
+                            <h5 class="title">{{ organization.name }}</h5>
+                            <p class="description">ORGANIZATION SETTINGS</p>
+                        </div>
+                        <div class="large-4 medium-5 small-7 columns">
+                            <div class="row">
+                                <div class="large-8 medium-8 small-8 columns">
+                                    <input type="email" style="margin-top:0;" />
+                                </div>
+                                <div class="columns">
+                                    <button class="alert small button"><i class="fa fa-send"></i> Invite</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% for member in organization.members %}
+                        <div class="row" id="member_{{ member.pk }}">
+                            <div class="large-2 medium-2 small-4 columns">
+                                {% thumbnail member.profile.userpic "200x200" crop="center" as userpic %}
+                                    <img class="userpic-preview image-rounded" src="{{ userpic.url }}" />
+                                {% empty %}
+                                    <img class="userpic-preview image-rounded" src="http://placehold.it/200x200&text=Picture" />
+                                {% endthumbnail %}
+                            </div>
+                            <div class="large-10 medium-10 small-8 columns">
+                                <div class="row">
+                                    <div class="large-7 medium-7 small-12 columns">
+                                        <h6 class="title">{{ member.profile.get_name }}</h6>
+                                        <p class="description">{{ member.email }}</p>
+                                        <div class="show-for-small-only">
+{#                                        {% if member.pk != request.user.pk %}#}
+                                            <button class="secondary button" style="margin-right: 20px;">Make admin</button>
+                                            <button class="secondary button">Remove</button>
+{#                                        {% endif %}#}
+                                        </div>
+                                    </div>
+                                    <div class="large-5 medium-5 small-12 columns hide-for-small-only text-right">
+{#                                        {% if member.pk != request.user.pk %}#}
+                                            <button class="secondary button" style="margin-right: 20px;">Make admin</button>
+                                            <button class="secondary button">Remove</button>
+{#                                        {% endif %}#}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="row">
+                        <div class="columns">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
 {% endblock %}
 
 

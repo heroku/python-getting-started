@@ -64,6 +64,10 @@ def edit_settings(request):
     if not hasattr(request.user, 'profile'):
         # TODO: remove this block before release
         _profile = Profile(user=request.user).save()
+
+    organizations = [membership.organization for membership in OrganizationMember.objects.filter(user=request.user, is_owner=True)]
+
+
     initial = {
         'name': request.user.profile.name,
         'email': request.user.email

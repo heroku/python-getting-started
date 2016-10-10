@@ -13,6 +13,7 @@ import homepage.views
 
 urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
+    url(r'^api/', include('api.urls')),
     url(r'^app/', include('app.urls')),
     url(r'^teams/', include('teams.urls')),
     url(r'^recruit/', include('recruit.urls')),
