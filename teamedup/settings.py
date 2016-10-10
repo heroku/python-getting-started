@@ -43,7 +43,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django_comments',
     'storages',
-    'django_extensions',
 )
 
 # SITE_ID for django.contrib.comments
@@ -154,6 +153,22 @@ LOGIN_REDIRECT_URL = '/app/login/'
 # refers directly to STATIC_URL. So it's safest to always set it.
 
 
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '') #TODO: move to env variables
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '') #TODO: it's not a good idea to store auth credentials like this
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+ACCOUNT_ACTIVATION_EMAIL = """
+Hello %s,
+
+Thank you for joining TeamedUp.
+Activate your account by clicking this link: %s
+
+Your friends at TeamedUp
+"""
+
+
 try:
     os.environ['ENVIRONMENT'] == 'local'
     # DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
@@ -186,3 +201,8 @@ except:
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 # LOCAL SETTINGS THAT WE NEED TO CONFIGURE ENVIRONMENT LOGIC TO HANDLE CORRECTLY
+
+try:
+    from settings_local import *
+except ImportError:
+    pass
