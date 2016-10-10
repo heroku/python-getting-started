@@ -3,7 +3,6 @@ boto==2.42.0
 dj-database-url==0.4.0
 Django==1.9.2
 django-contrib-comments==1.7.1
-django-extensions==1.7.4
 django-storages==1.5.0
 django-waffle==0.11.1
 gunicorn==19.4.5
