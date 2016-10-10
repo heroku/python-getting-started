@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from teams.models import Team, Role, Member, Invite
 from django.contrib.auth.models import User
 
-import datetime
+from datetime import datetime, timedelta
 
 
 @login_required
@@ -25,7 +25,7 @@ def team_detail(request, team_id):
     team = Team.objects.get(pk=team_id)
     # ToDo - This should fetch members who belong to team's organization, once organization is implemented
     nonmembers = [user for user in User.objects.all() if user not in team.members]
-    invitees = [invite.invitee for invite in request.user.invites.all()]
+    invitees = [invite.invitee for invite in request.user.invites.all().filter(status="created")]
     context = {
         'team': team,
         'nonmembers': nonmembers,
@@ -89,6 +89,31 @@ def invite_people(request, team_id):
 def _invite_people(request, team):
     invitees = [User.objects.get(pk=invitee_id) for invitee_id in request.POST.get('invitees').split(",")]
     for invitee in invitees:
-        Invite(team=team, inviter=request.user, invitee=invitee, status='created').save()
+        invitation = Invite(team=team, inviter=request.user, invitee=invitee, status='created', expired_at=datetime.now()+timedelta(days=7), read=False)
+        invitation.save()
 
     return HttpResponse(status=200)
+
+@login_required
+def invite_accept(request, invite_id):
+    try: 
+        invite = Invite.objects.get(pk=invite_id)
+        invite.status = 'accepted'
+        invite.save()
+        member = Member(is_owner=False, team_id=invite.team.pk, user_id=request.user.pk)
+        member.save()
+    except Invite.DoesNotExist:
+        raise Http404
+
+    return HttpResponse(status=200)    
+
+@login_required
+def invite_reject(request, invite_id):
+    try: 
+        invite = Invite.objects.get(pk=invite_id)
+        invite.status = 'rejected'
+        invite.save()
+    except Invite.DoesNotExist:
+        raise Http404
+
+    return HttpResponse(status=200)   

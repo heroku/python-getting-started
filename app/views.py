@@ -7,9 +7,11 @@ from django.contrib import messages
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
+from teams.models import Team
+import json
 from django.core.mail import send_mail
-
 from .models import Alert
+
 from app.models import Organization, OrganizationMember, Token, Profile
 from teams.models import Team
 from app.forms import OrgSignUpForm, SettingsForm
@@ -132,3 +134,24 @@ def sign_out(request):
     logout(request)
     messages.add_message(request, messages.SUCCESS, _('You have successfully logged out'))
     return redirect(reverse('login_view'))
+
+def notifications(request):
+    notifications = []
+    team_invites = request.user.inviteds.all().filter(status="created")
+    for team_invite in team_invites:
+        notification = {
+            'type': 'team_invite',
+            'team_invite': {
+                'id': team_invite.pk
+            },
+            'team': {
+                'id': team_invite.team.pk,
+                'title': team_invite.team.title
+            },
+            'inviter': {
+                'id': team_invite.inviter.pk,
+                'username': team_invite.inviter.username
+            }
+        }
+        notifications.append(notification)
+    return HttpResponse(json.dumps(notifications), content_type='application/json')

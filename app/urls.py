@@ -10,5 +10,5 @@ urlpatterns = [
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^signout/$', views.sign_out, name='sign-out'),
     url(r'^activate/(?P<token>\w+)/$', views.activate_account, name='activate-account'),
-
+	url(r'^notifications$', views.notifications, name='notifications'),
 ]

@@ -43,4 +43,6 @@ class Invite(models.Model):
     inviter = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='invites')
     invitee = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='inviteds')
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    status = models.CharField(max_length=200, default=None)
+    expired_at = models.DateTimeField(default=None, blank=True, null=True)
+    status = models.CharField(max_length=20, default=None)
+    read = models.BooleanField(default=False, blank=False, null=False)
