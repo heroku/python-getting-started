@@ -70,8 +70,14 @@
     <div class="masthead">
         <div class="masthead_dropnav" id="masthead_dropnav">
             <div style="display: table-cell; vertical-align: middle">
-                <p><a href="{% url 'settings' %}"> Settings </a></p>
-                <p><a href="{% url 'sign-out' %}"> Sign Out </a></p>
+                {% if request.user.is_authenticated %}
+                    <p><a href="{% url 'settings' %}"> Settings </a></p>
+                    <p><a href="{% url 'sign-out' %}"> Sign Out </a></p>
+                {% else %}
+                    <p><a href="#"> Features </a></p>
+                    <p><a href="#"> Pricing </a></p>
+                    <p><a href="#"> Contact </a></p>
+                {% endif %}
             </div>
             <button class="masthead-dropnav-icon" onclick="pulldownMenu();">
                 <i class="fa fa-times" aria-hidden="true"> </i>
@@ -84,8 +90,14 @@
             <img src="{% static 'menu-icon.png' %}">
         </button>
         <ul class="masthead-nav">
-            <li><a href="{% url 'sign-out' %}">Sign Out</a></li>
-            <li><a href="{% url 'settings' %}">Settings</a></li>
+            {% if request.user.is_authenticated %}
+                <li><a href="{% url 'sign-out' %}">Sign Out</a></li>
+                <li><a href="{% url 'settings' %}">Settings</a></li>
+            {% else %}
+                <li><a href="#"> Features </a></li>
+                <li><a href="#"> Pricing </a></li>
+                <li><a href="#"> Contact </a></li>
+            {% endif %}
         </ul>
     </div>
 

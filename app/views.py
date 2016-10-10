@@ -68,8 +68,10 @@ def edit_settings(request):
     form = SettingsForm(initial=initial)
     if request.method == 'POST':
         form = SettingsForm(request.POST, initial=initial)
+        form.set_user(request.user)
         if form.is_valid():
-            print form.cleaned_data
+            request.user.profile.name = form.cleaned_data.get('name')
+            request.user.profile.save()
     return render(request, 'app/settings.html', locals())
 
 

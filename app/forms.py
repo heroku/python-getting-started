@@ -41,17 +41,26 @@ class OrgSignUpForm(forms.Form):
 
 
 class SettingsForm(forms.Form):
-    name = forms.CharField(label='Name', max_length=255,
+    user = None
+    name = forms.CharField(label='Name', max_length=255, required=False,
                                         widget=forms.TextInput(attrs={'placeholder': 'Enter name'}))
     email = forms.EmailField(label='Email', max_length=255,
-                             widget=forms.TextInput(attrs={'placeholder': 'Enter email address', 'disabled':'disabled'}))
-    password = forms.CharField(label='Password', max_length=255,
+                             widget=forms.TextInput(attrs={'placeholder': 'Enter email address'}))
+    password = forms.CharField(label='Password', max_length=255, required=False,
                                widget=forms.PasswordInput(attrs={'placeholder': 'Enter password'}))
-    repeat_password = forms.CharField(label='Repeat Password', max_length=255,
+    repeat_password = forms.CharField(label='Repeat Password', max_length=255, required=False,
                                       widget=forms.PasswordInput(attrs={'placeholder': 'Repeat password'}))
 
+
+    def set_user(self, user):
+        self.user = user
 
     def clean(self):
         cleaned_data = super(SettingsForm, self).clean()
         if cleaned_data.get('password') != cleaned_data.get('repeat_password'):
             raise forms.ValidationError('Password doesn\'t match the confirmation')
+
+        users = User.objects.filter(email=cleaned_data.get('email'))
+        if len(users) > 0:
+            if users[0].pk != self.user.pk:
+                raise forms.ValidationError('This email is already taken')

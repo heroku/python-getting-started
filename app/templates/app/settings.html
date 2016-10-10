@@ -95,7 +95,7 @@
 {% block extra_footer %}
     <script type="text/javascript">
         function previewFile(){
-           var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+           var file    = document.querySelector('input[type=file]').files[0];
            var reader  = new FileReader();
 
            reader.onloadend = function () {
@@ -103,7 +103,7 @@
            }
 
            if (file) {
-               reader.readAsDataURL(file); //reads the data as a URL
+               reader.readAsDataURL(file);
            } else {
                $('img.userpic-preview').attr('src', 'http://placehold.it/350x350&text=Picture')
            }
