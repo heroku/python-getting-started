@@ -93,3 +93,27 @@ def _invite_people(request, team):
         invitation.save()
 
     return HttpResponse(status=200)
+
+@login_required
+def invite_accept(request, invite_id):
+    try: 
+        invite = Invite.objects.get(pk=invite_id)
+        invite.status = 'accepted'
+        invite.save()
+        member = Member(is_owner=False, team_id=invite.team.pk, user_id=request.user.pk)
+        member.save()
+    except Invite.DoesNotExist:
+        raise Http404
+
+    return HttpResponse(status=200)    
+
+@login_required
+def invite_reject(request, invite_id):
+    try: 
+        invite = Invite.objects.get(pk=invite_id)
+        invite.status = 'rejected'
+        invite.save()
+    except Invite.DoesNotExist:
+        raise Http404
+
+    return HttpResponse(status=200)   

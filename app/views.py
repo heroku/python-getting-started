@@ -6,7 +6,9 @@ from .models import Alert
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from teams.models import Team
-
+import json
+from django.core import serializers
+from django.forms import model_to_dict
 
 @login_required
 def index(request):
@@ -71,3 +73,24 @@ def edit_profile(request):
 
 def signup(request):
     return render(request, 'app/signup.html')
+
+def notifications(request):
+    notifications = []
+    team_invites = request.user.inviteds.all().filter(status="created")
+    for team_invite in team_invites:
+        notification = {
+            'type': 'team_invite',
+            'team_invite': {
+                'id': team_invite.pk
+            },
+            'team': {
+                'id': team_invite.team.pk,
+                'title': team_invite.team.title
+            },
+            'inviter': {
+                'id': team_invite.inviter.pk,
+                'username': team_invite.inviter.username
+            }
+        }
+        notifications.append(notification)
+    return HttpResponse(json.dumps(notifications), content_type='application/json')

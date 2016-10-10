@@ -60,6 +60,13 @@
         </button>
         <ul class="masthead-nav">
             <li><a href="#">Settings</a></li>
+            <li>
+                <a data-toggle="notifications"><i class="fa fa-bell-o" aria-hidden="true"></i>{{notifications_count}}</a>
+                <div class="dropdown-pane bottom right" id="notifications" data-dropdown data-close-on-click="true">
+                    <ul>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
 
@@ -124,7 +131,77 @@
     <script src="{% static 'autocomplete/jquery.auto-complete.min.js' %}"></script>
 
     <script>
-        $(document).foundation();
+        $(document).foundation(); 
+
+        var notifications = [];
+        function getNotifications() {
+            notifications = [];
+            $.get(
+                "/app/notifications",
+                { 
+                    'csrfmiddlewaretoken':$.cookie('csrftoken')
+                },
+                function(data) {
+                    notifications = data;
+                    drawNotifications();
+                }
+            );
+        }
+
+        function drawNotifications() {
+            $('#notifications ul').html('');
+            for(i=0; i<notifications.length; i++) {
+                notification = notifications[i];
+                if(notification.type=='team_invite') {
+                    $('#notifications ul').append(
+                        '<li data-type="team_invite" data-id="' + notification.team_invite.id + '">' + 
+                            notification.inviter.username + ' invited you into ' + notification.team.title + 
+                            '<button type="button" class="button alert" onclick="acceptTeamInvite(' + notification.team_invite.id + ');"><i class="fa fa-check" aria-hidden="true"></i></button>' + 
+                            '<button type="button" class="button secondary" onclick="rejectTeamInvite(' + notification.team_invite.id + ');"><i class="fa fa-times" aria-hidden="true"></i></button>' +
+                        '</li>'
+                    );
+                }
+            }
+            if(notifications.length == 0) {
+                $('#notifications ul').append(
+                    '<li>No notifications</li>'
+                );
+            }
+        }
+
+        function acceptTeamInvite(id) {
+            $.post(
+                "/teams/invites/" + id + '/accept/',
+                { 
+                    'csrfmiddlewaretoken':$.cookie('csrftoken')
+                },
+                function(data) {
+                    notifications = _.reject(notifications, function(noti) {
+                        return noti.team_invite.id == id;
+                    });
+                    drawNotifications();
+                }
+            );
+        }
+
+        function rejectTeamInvite(id) {
+            $.post(
+                "/teams/invites/" + id + '/reject/',
+                { 
+                    'csrfmiddlewaretoken':$.cookie('csrftoken')
+                },
+                function(data) {
+                    notifications = _.reject(notifications, function(noti) {
+                        return noti.team_invite.id == id;
+                    });
+                    drawNotifications();
+                }
+            );
+        }
+
+        $(function(){
+            getNotifications();
+        });
     </script>
 
     {% block extra_footer %}{% endblock %}
