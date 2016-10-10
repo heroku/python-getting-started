@@ -50,6 +50,7 @@ INSTALLED_APPS = (
 
 THUMBNAIL_DEBUG = True
 
+INTERNAL_IPS = ('127.0.0.1',)
 
 # SITE_ID for django.contrib.comments
 SITE_ID = 1

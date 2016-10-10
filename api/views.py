@@ -51,8 +51,11 @@ def organization_remove_member(request, org_id, user_id):
 
 @csrf_exempt
 def organization_invite(request, org_id):
+    # TODO: check permissions & request method
     email = request.POST.get('email')
     if not email:
         return json_response(status=400)
-
-    return json_response({'email': 'email'})
+    """
+        TODO: Build behavior for the invitations
+    """
+    return json_response({'email': email})
