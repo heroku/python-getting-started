@@ -11,8 +11,10 @@ from teams.models import Team
 import json
 from django.core.mail import send_mail
 from .models import Alert
-from app.models import Organization, OrganizationMember, Token
-from teams.forms import OrgSignUp
+
+from app.models import Organization, OrganizationMember, Token, Profile
+from teams.models import Team
+from app.forms import OrgSignUpForm, SettingsForm
 from teamedup import settings
 
 @login_required
@@ -33,10 +35,10 @@ def login_user(request):
     username = password = ''
 
     if request.POST:
-        username = request.POST['username'] # TODO: use email instead of username
+        email = request.POST['email']
         password = request.POST['password']
 
-        user = authenticate(username=username, password=password)
+        user = authenticate(username=email, password=password)
         if user is not None:
             if user.is_active:
                 login(request, user)
@@ -57,33 +59,44 @@ def login_view(request):
     return render(request, 'app/login.html', context)
 
 
-def edit_profile(request):
-    # user = request.user
-    # person = Person.objects.get(profile=user)
-    # if request.method == "POST":
-    #     form = UserForm(request.POST, instance=user)
-    #     if form.is_valid():
-    #         person_form = PersonForm(request.POST, request.FILES, instance=person)
-    #         if person_form.is_valid():
-    #             user = form.save(commit=False)
-    #             person = person_form.save(commit=False)
-    #             user.save()
-    #             person.save()
-    #             return redirect('/app/?alert=profile_update')
-    # else:
-    #     form = UserForm(instance=user)
-    #     person_form = PersonForm(instance=person)
-    return render(request, 'app/profile_edit.html', locals())
+@login_required
+def edit_settings(request):
+    if not hasattr(request.user, 'profile'):
+        # TODO: remove this block before release
+        _profile = Profile(user=request.user).save()
+    initial = {
+        'name': request.user.profile.name,
+        'email': request.user.email
+    }
+
+    form = SettingsForm(initial=initial)
+    if request.method == 'POST':
+        form = SettingsForm(request.POST, initial=initial)
+        form.set_user(request.user)
+        if form.is_valid():
+            if request.FILES.get('userpic'):
+                request.user.profile.userpic =  request.FILES.get('userpic')
+            request.user.profile.name = form.cleaned_data.get('name')
+            request.user.profile.save()
+            # TODO: if email was updated -> mark user account is_active=False and send activation link
+            password = form.cleaned_data.get('password')
+            if password != '':
+                request.user.set_password(password)
+                request.user.save()
+            messages.add_message(request, messages.SUCCESS, _('Your account was updated successfully'))
+            return redirect(reverse('index'))
+    return render(request, 'app/settings.html', locals())
 
 
 def signup(request):
-    form = OrgSignUp()
+    form = OrgSignUpForm()
     if request.method == 'POST':
-        form = OrgSignUp(request.POST)
+        form = OrgSignUpForm(request.POST)
         if form.is_valid():
             user = User(email=form.cleaned_data.get('email'), username=form.cleaned_data.get('email'))
             user.set_password(form.cleaned_data.get('password'))
             user.save()
+            _profile = Profile(user=user).save()
             org = Organization(name=form.cleaned_data.get('organization_name'))
             org.save()
             _orgmem = OrganizationMember(user=user, is_owner=True, organization=org).save()

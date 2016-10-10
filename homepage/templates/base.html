@@ -36,6 +36,30 @@
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Montserrat', sans-serif;
         }
+        .teamedup-form {
+            color: #333;
+            text-align: left;
+            margin: 0 30px;
+        }
+        .teamedup-form .title {
+            padding-top: 15px;
+            margin-bottom: 0;
+        }
+        .teamedup-form .description {
+            color: grey;
+            font-weight: bold;
+            padding-bottom: 20px;
+            font-size: .875rem;
+        }
+        .teamedup-form label {
+            color: #333;
+            font-weight: bold;
+        }
+        .teamedup-form input, .teamedup-form textarea {
+            margin-top: 15px;
+            background-color: whitesmoke;
+            font-weight: normal;
+        }
     </style>
 
     {% block extra_header %}{% endblock %}
@@ -46,8 +70,14 @@
     <div class="masthead">
         <div class="masthead_dropnav" id="masthead_dropnav">
             <div style="display: table-cell; vertical-align: middle">
-                <p><a href="#"> Settings </a></p>
-                <p><a href="{% url 'sign-out' %}"> Sign Out </a></p>
+                {% if request.user.is_authenticated %}
+                    <p><a href="{% url 'settings' %}"> Settings </a></p>
+                    <p><a href="{% url 'sign-out' %}"> Sign Out </a></p>
+                {% else %}
+                    <p><a href="#"> Features </a></p>
+                    <p><a href="#"> Pricing </a></p>
+                    <p><a href="#"> Contact </a></p>
+                {% endif %}
             </div>
             <button class="masthead-dropnav-icon" onclick="pulldownMenu();">
                 <i class="fa fa-times" aria-hidden="true"> </i>
@@ -60,8 +90,14 @@
             <img src="{% static 'menu-icon.png' %}">
         </button>
         <ul class="masthead-nav">
-            <li><a href="{% url 'sign-out' %}">Sign Out</a></li>
-            <li><a href="#">Settings</a></li>
+            {% if request.user.is_authenticated %}
+                <li><a href="{% url 'sign-out' %}">Sign Out</a></li>
+                <li><a href="{% url 'settings' %}">Settings</a></li>
+            {% else %}
+                <li><a href="#"> Features </a></li>
+                <li><a href="#"> Pricing </a></li>
+                <li><a href="#"> Contact </a></li>
+            {% endif %}
             <li>
                 <a data-toggle="notifications"><i class="fa fa-bell-o" aria-hidden="true"></i><span id="notifications_count"></span></a>
                 <div class="dropdown-pane bottom right" id="notifications" data-dropdown data-close-on-click="true">
