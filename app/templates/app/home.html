@@ -54,9 +54,11 @@
                     </div>
                     <div class="small-8 medium-9 large-10 columns text-left">
                         <div class="subheader team-row-title" style="display:inline-block;">{{ team.title }}</div>
-                        {% for owner in team.owners %}
-                            <div style="background-color:#9068be; color:white; display:inline-block; padding:2px 5px; margin-left:10px; border-radius:2px;">{{ owner }}</div>
-                        {% endfor %}
+
+{#                        {% for owner in team.owners %}#}
+{#                            <div style="background-color:#9068be; color:white; display:inline-block; padding:2px 5px; margin-left:10px; border-radius:2px;">{{ owner }}</div>#}
+{#                        {% endfor %}#}
+
                         <div class="team-row-description" style="word-break: break-all;">{{ team.description }}</div>
                     </div>
                 </div>
