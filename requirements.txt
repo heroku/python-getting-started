@@ -10,7 +10,6 @@ django-waffle==0.11.1
 gunicorn==19.4.5
 injector==0.9.1
 Pillow==3.3.0
-pkg-resources==0.0.0
 psycopg2==2.6.1
 pytz==2016.6.1
 requests==2.10.0
