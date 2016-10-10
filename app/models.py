@@ -24,6 +24,10 @@ class Organization(models.Model):
     name = models.CharField(max_length=255, default='')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def members(self):
+        return self.organizationmember_set.all()
+
     def __unicode__(self):
         return self.name
 
@@ -57,5 +61,7 @@ class Token(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None, blank=True, null=True)
     name = models.CharField(max_length=255, default='')
-    userpic = models.ImageField('img', upload_to='media/images/', default='img/dashboard_template_image.png')
+    userpic = models.ImageField('img', upload_to='media/images/')
 
+    def get_name(self):
+        return self.name or self.user.email.split('@')[0]

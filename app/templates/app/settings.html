@@ -11,6 +11,7 @@
             right: 10px;
             border-radius: 50%;
         }
+
         input[type=file] {
             width: 1px;
             visibility: hidden;
@@ -34,9 +35,9 @@
             <div class="row">
                 <div class="large-4 medium-3 small-12 columns text-right">
                     {% thumbnail request.user.profile.userpic "350x350" as userpic %}
-                        <img class="userpic-preview" src="{{ userpic.url }}" />
+                        <img class="userpic-preview" src="{{ userpic.url }}"/>
                     {% empty %}
-                        <img class="userpic-preview" src="http://placehold.it/350x350&text=Picture" />
+                        <img class="userpic-preview" src="http://placehold.it/350x350&text=Picture"/>
                     {% endthumbnail %}
                     <a href="#" class="button alert round upload-button"><i class="fa fa-upload"></i></a>
                 </div>
@@ -87,8 +88,8 @@
 
             <div class="row">
                 <div class="columns text-center">
-                    <input type="submit" class="button alert hide-for-small-only" value="Save Settings" />
-                    <input type="submit" class="button alert expanded show-for-small-only" value="Save Settings" />
+                    <input type="submit" class="button alert hide-for-small-only" value="Save Settings"/>
+                    <input type="submit" class="button alert expanded show-for-small-only" value="Save Settings"/>
                     <i class="fa fa-spinner fa-spin" style="display: none;" aria-hidden="true"></i>
                 </div>
             </div>
@@ -97,37 +98,144 @@
 
     </div>
 
+
+
+    {% if organizations %}
+        <div class="container">
+            {% for organization in organizations %}
+                <div class="row">
+                    <div class="columns teamedup-form">
+                        <div class="row">
+                            <div class="large-8 medium-7 small-5 columns">
+                                <h5 class="title">{{ organization.name }}</h5>
+                                <p class="description">ORGANIZATION SETTINGS</p>
+                            </div>
+                            <div class="large-4 medium-5 small-7 columns">
+
+                                <form action="{% url 'organization-invite' organization.pk %}" method="POST"
+                                      class="invitation-form">
+                                    <div class="input-group">
+                                        <input name="invitation-email" class="input-group-field" type="email"
+                                               style="margin-top:0;" required="required"
+                                               placeholder="Enter email address"/>
+                                        <div class="input-group-button">
+                                            <button type="submit" class="postfix alert button invitation-button"
+                                                    data-url="{% url 'organization-invite' organization.pk %}">
+                                                <i class="fa fa-send"></i>
+                                                Invite
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        {% for member in organization.members %}
+                            <div class="row organization-member-{{ member.user.pk }}">
+                                <div class="large-2 medium-2 small-4 columns">
+                                    {% thumbnail member.user.profile.userpic "200x200" crop="center" as userpic %}
+                                        <img class="userpic-preview image-rounded" src="{{ userpic.url }}"/>
+                                    {% empty %}
+                                        <img class="userpic-preview image-rounded"
+                                             src="http://placehold.it/200x200&text=Picture"/>
+                                    {% endthumbnail %}
+                                </div>
+                                <div class="large-10 medium-10 small-8 columns">
+                                    <div class="row">
+                                        <div class="large-7 medium-7 small-12 columns">
+                                            <h6 class="title">{{ member.user.profile.get_name }}</h6>
+                                            <p class="description">{{ member.user.email }}</p>
+                                            <div class="show-for-small-only">
+                                                {% include 'app/includes/organization_member_actions.html' %}
+                                            </div>
+                                        </div>
+                                        <div class="large-5 medium-5 small-12 columns hide-for-small-only text-right">
+                                            {% include 'app/includes/organization_member_actions.html' %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="row">
+                            <div class="columns">&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="reveal" id="invitation_results" data-reveal>
+        role="dialog">
+        <div class="teamedup-form">
+            <h5 class="title">Thanks, Your Invites are on the way</h5>
+            <p class="description">Your colleagues will receive an invitation to join your organization shortly.</p>
+        </div>
+        <div class="text-right">
+            <button class="button alert" data-close aria-label="Close modal">OK</button>
+        </div>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
 {% endblock %}
 
 
 {% block extra_footer %}
     <script type="text/javascript">
-        function previewFile(){
-           var file    = document.querySelector('input[type=file]').files[0];
-           var reader  = new FileReader();
+        function previewFile() {
+            var file = document.querySelector('input[type=file]').files[0];
+            var reader = new FileReader();
 
-           reader.onloadend = function () {
-               $('img.userpic-preview').attr('src', reader.result)
-           }
+            reader.onloadend = function () {
+                $('img.userpic-preview').attr('src', reader.result)
+            }
 
-           if (file) {
-               reader.readAsDataURL(file);
-           } else {
-               $('img.userpic-preview').attr('src', 'http://placehold.it/350x350&text=Picture')
-           }
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                $('img.userpic-preview').attr('src', 'http://placehold.it/350x350&text=Picture')
+            }
         }
 
 
-        window.onload = function(){
-            $('.upload-button').click(function(){
-               $('input[type="file"]').click();
+        window.onload = function () {
+
+            $('.upload-button').click(function () {
+                $('input[type="file"]').click();
                 return false;
             });
 
-            $('.teamedup-form').submit(function(){
+            $('.teamedup-form').submit(function () {
                 $(this).find('input[type="submit"]').hide();
                 $(this).find('.fa-spinner').show();
                 return true;
+            });
+
+            $('.switch-admin-status-button').click(function () {
+                var button = $(this);
+                $.post(button.data('url'), {}, function (response) {
+                    button.text(response.button_text)
+                }, 'json');
+            });
+
+            $('.remove-member-button').click(function () {
+                if (!confirm('This member will be removed from the organization')) {
+                    return
+                }
+                var button = $(this);
+                $('.organization-member-' + button.data('user-id')).remove();
+                $.post(button.data('url'));
+            });
+
+            $('.invitation-form').submit(function () {
+                var form = $(this);
+                var email = form.find('[name="invitation-email"]').val();
+                form.find('[name="invitation-email"]').val('');
+                $.post(form.attr('action'), {'email': email}, function () {
+                    $('#invitation_results').foundation('open');
+                }, 'json')
+                return false;
             });
 
         }

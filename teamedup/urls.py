@@ -13,6 +13,7 @@ import homepage.views
 
 urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
+    url(r'^api/', include('api.urls')),
     url(r'^app/', include('app.urls')),
     url(r'^teams/', include('teams.urls')),
     url(r'^recruit/', include('recruit.urls')),
@@ -24,3 +25,9 @@ urlpatterns = [
     url(r'^comments/', include('django_comments.urls')),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT,}),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ]
