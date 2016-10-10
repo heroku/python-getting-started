@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+
+    {% load staticfiles %}
+
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>TeamedUp - Compose your new organisation</title>
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static 'css/foundation.min.css' %}">
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato|Montserrat" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+    <!--<script src="{% static 'js/app.js' %}"> </script>-->
+
+    <style type="text/css">
+        body, html {
+            font-family: 'Lato', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .teamedup-form {
+            color: #333;
+            text-align: left;
+            margin: 0 30px;
+        }
+        .teamedup-form .title {
+            padding-top: 15px;
+            margin-bottom: 0;
+        }
+        .teamedup-form .description {
+            color: grey;
+            font-weight: bold;
+            padding-bottom: 20px;
+            font-size: .875rem;
+        }
+        .teamedup-form label {
+            color: #333;
+            font-weight: bold;
+        }
+        .teamedup-form input, .teamedup-form textarea {
+            margin-top: 15px;
+            background-color: whitesmoke;
+            font-weight: normal;
+        }
+    </style>
+
+    {% block extra_header %}{% endblock %}
+</head>
+
+<body>
+<div class="mastcontent">
+    <div class="masthead">
+        <div class="masthead_dropnav" id="masthead_dropnav">
+            <div style="display: table-cell; vertical-align: middle">
+                {% if request.user.is_authenticated %}
+                    <p><a href="{% url 'settings' %}"> Settings </a></p>
+                    <p><a href="{% url 'sign-out' %}"> Sign Out </a></p>
+                {% else %}
+                    <p><a href="#"> Features </a></p>
+                    <p><a href="#"> Pricing </a></p>
+                    <p><a href="#"> Contact </a></p>
+                {% endif %}
+            </div>
+            <button class="masthead-dropnav-icon" onclick="pulldownMenu();">
+                <i class="fa fa-times" aria-hidden="true"> </i>
+            </button>
+        </div>
+        <div class="masthead-brand">
+            <a href="/"><img class="masthead-blacklogo" src="{% static 'logo1.png' %}"></a>
+        </div>
+        <button class="masthead-menu" onclick="pulldownMenu()">
+            <img src="{% static 'menu-icon.png' %}">
+        </button>
+        <ul class="masthead-nav">
+            {% if request.user.is_authenticated %}
+                <li><a href="{% url 'sign-out' %}">Sign Out</a></li>
+                <li><a href="{% url 'settings' %}">Settings</a></li>
+            {% else %}
+                <li><a href="#"> Features </a></li>
+                <li><a href="#"> Pricing </a></li>
+                <li><a href="#"> Contact </a></li>
+            {% endif %}
+            <li>
+                <a data-toggle="notifications"><i class="fa fa-bell-o" aria-hidden="true"></i><span id="notifications_count"></span></a>
+                <div class="dropdown-pane bottom right" id="notifications" data-dropdown data-close-on-click="true">
+                    <ul>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+
+    <div class="mastfoot">
+        <div class="mast-mainfoot">
+            <div class="row align-middle mast-mainfoot-row">
+                <div class="small-12 large-4 columns mast-mainfoot-logo">
+                    <img src="{% static 'logo1.png' %}">
+                </div>
+                <div class="small-12 large-8 columns">
+                    <div class="row align-top">
+                        <div class="small-6 large-4 columns mast-mainfoot-col1" style="text-align:left">
+                            <p style="color: black;">@TeamedUp</p>
+                            <p>Features</p>
+                            <p>Pricing</p>
+                            <p>Contact</p>
+                            <p><a href="{% url 'signup' %}">Register</a></p>
+                            <p>Login</p>
+                            <p>FAQ</p>
+                        </div>
+                        <div class="small-6 large-4 mast-mainfoot-col2" style="text-align:left">
+                            <p style="color: black;">Contact</p>
+                            <p>About Us</p>
+                            <p>Jobs</p>
+                            <p>Support</p>
+                            <p>Contact Us</p>
+                        </div>
+                        <div class="small-12 large-4 columns mast-mainfoot-sociallinks">
+                            <p style="color: black;">Follow Us</p>
+                            <p>
+                            <div style="color: rgb(144 , 104 , 190)">
+                                <i class="fa fa-facebook-square fa-2x" style="margin-right:20px;"
+                                   aria-hidden="true"> </i>
+                                <i class="fa fa-twitter-square fa-2x" style="margin-right:20px;"
+                                   aria-hidden="true"> </i>
+                                <i class="fa fa-linkedin-square fa-2x" style="margin-right:20px;"
+                                   aria-hidden="true"> </i>
+                                <i class="fa fa-google-plus-square fa-2x" aria-hidden="true"> </i>
+                            </div>
+                            </p>
+                            <p>Follow us on those social networks</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mast-copyright">
+            Copyright &copy; TeamedUp. All rights reserved.
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="{% static 'js/underscore-min.js' %}"></script>
+    <script src="{% static 'js/foundation.min.js' %}"></script>
+
+    <link href="{% static 'autocomplete/jquery.auto-complete.css' %}" rel="stylesheet">
+    <script src="{% static 'autocomplete/jquery.auto-complete.min.js' %}"></script>
+
+    <script>
+        $(document).foundation(); 
+
+        var notifications = [];
+        function getNotifications() {
+            notifications = [];
+            $.get(
+                "/app/notifications",
+                { 
+                    'csrfmiddlewaretoken':$.cookie('csrftoken')
+                },
+                function(data) {
+                    notifications = data;
+                    drawNotifications();
+                }
+            );
+        }
+
+        function drawNotifications() {
+            $('#notifications ul').html('');
+            for(i=0; i<notifications.length; i++) {
+                notification = notifications[i];
+                if(notification.type=='team_invite') {
+                    $('#notifications ul').append(
+                        '<li data-type="team_invite" data-id="' + notification.team_invite.id + '">' + 
+                            notification.inviter.username + ' invited you into ' + notification.team.title + 
+                            '<button type="button" class="button alert" onclick="acceptTeamInvite(' + notification.team_invite.id + ');"><i class="fa fa-check" aria-hidden="true"></i></button>' + 
+                            '<button type="button" class="button secondary" onclick="rejectTeamInvite(' + notification.team_invite.id + ');"><i class="fa fa-times" aria-hidden="true"></i></button>' +
+                        '</li>'
+                    );
+                }
+            }
+            if(notifications.length == 0) {
+                $('#notifications ul').append(
+                    '<li>No notifications</li>'
+                );
+            }
+            $('#notifications_count').text(notifications.length);
+        }
+
+        function acceptTeamInvite(id) {
+            $.post(
+                "/teams/invites/" + id + '/accept/',
+                { 
+                    'csrfmiddlewaretoken':$.cookie('csrftoken')
+                },
+                function(data) {
+                    notifications = _.reject(notifications, function(noti) {
+                        return noti.team_invite.id == id;
+                    });
+                    drawNotifications();
+                }
+            );
+        }
+
+        function rejectTeamInvite(id) {
+            $.post(
+                "/teams/invites/" + id + '/reject/',
+                { 
+                    'csrfmiddlewaretoken':$.cookie('csrftoken')
+                },
+                function(data) {
+                    notifications = _.reject(notifications, function(noti) {
+                        return noti.team_invite.id == id;
+                    });
+                    drawNotifications();
+                }
+            );
+        }
+
+        $(function(){
+            getNotifications();
+        });
+    </script>
+
+
+    {% block extra_footer %}{% endblock %}
+
+</body>
+</html>
+

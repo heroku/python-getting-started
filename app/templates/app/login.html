@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    {% load staticfiles %}
+
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>TeamedUp - Compose your new organisation</title>
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static 'css/foundation.min.css' %}">
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+    <script src="{% static 'js/app.js' %}"></script>
+</head>
+
+<body>
+<div class="mastcontent">
+    <div class="masthead">
+        <div class="masthead_dropnav" id="masthead_dropnav">
+            <div style="display: table-cell; vertical-align: middle">
+                <p><a href="#"> Features </a></p>
+                <p><a href="#"> Pricing </a></p>
+                <p><a href="#"> Contact </a></p>
+            </div>
+            <button class="masthead-dropnav-icon" onclick="pulldownMenu();">
+                <i class="fa fa-times" aria-hidden="true"> </i>
+            </button>
+        </div>
+        <div class="masthead-brand">
+            <img class="masthead-blacklogo" src="{% static 'logo1.png' %}">
+        </div>
+        <button class="masthead-menu" onclick="pulldownMenu()">
+            <img src="{% static 'menu-icon.png' %}">
+        </button>
+        <ul class="masthead-nav">
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Features</a></li>
+        </ul>
+    </div>
+    <div class="mast-signin row align-middle">
+        <form class="form-signin" style="text-align: left; margin: 0 auto;" method="POST" action="/app/login_user/">
+            {% csrf_token %}
+            <div class="row">
+                <div class="columns">
+                    <h2 class="form-signin-heading">Login</h2>
+                    <label for="email">Email*</label>
+                    <input style="width:100%" type="email" name="email" id="email" class="form-control"
+                           placeholder="Enter email" required autofocus>
+                </div>
+            </div>
+            <div class="row">
+                <div class="columns">
+                    <label for="password">Password*</label>
+                    <input type="password" id="password" name="password" class="form-control"
+                           placeholder="Enter password" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="columns">
+                    <p>Forgotten Password? <a> Recover Password </a></p>
+                    <button id="mast-signin-btn" class="button" type="submit" value="login">Login</button>
+                </div>
+            </div>
+        </form>
+    </div> <!-- /container -->
+</div>
+
+<div class="mastfoot">
+    <div class="mast-mainfoot">
+        <div class="row align-middle mast-mainfoot-row">
+            <div class="small-12 large-4 columns mast-mainfoot-logo">
+                <img src="{% static 'logo1.png' %}">
+            </div>
+            <div class="small-12 large-8 columns">
+                <div class="row align-top">
+                    <div class="small-6 large-4 columns mast-mainfoot-col1" style="text-align:left">
+                        <p style="color: black;">@TeamedUp</p>
+                        <p>Features</p>
+                        <p>Pricing</p>
+                        <p>Contact</p>
+                        <p><a href="{% url 'signup' %}">Register</a></p>
+                        <p>Login</p>
+                        <p>FAQ</p>
+                    </div>
+                    <div class="small-6 large-4 mast-mainfoot-col2" style="text-align:left">
+                        <p style="color: black;">Contact</p>
+                        <p>About Us</p>
+                        <p>Jobs</p>
+                        <p>Support</p>
+                        <p>Contact Us</p>
+                    </div>
+                    <div class="small-12 large-4 columns mast-mainfoot-sociallinks">
+                        <p style="color: black;">Follow Us</p>
+                        <p>
+                        <div style="color: rgb(144 , 104 , 190)">
+                            <i class="fa fa-facebook-square fa-2x" style="margin-right:20px;" aria-hidden="true"> </i>
+                            <i class="fa fa-twitter-square fa-2x" style="margin-right:20px;" aria-hidden="true"> </i>
+                            <i class="fa fa-linkedin-square fa-2x" style="margin-right:20px;" aria-hidden="true"> </i>
+                            <i class="fa fa-google-plus-square fa-2x" aria-hidden="true"> </i>
+                        </div>
+                        </p>
+                        <p>Follow us on those social networks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mast-copyright">
+        Copyright &copy; TeamedUp. All rights reserved.
+    </div>
+</div>
+
+
+<script src="{% static 'js/foundation.min.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</body>
+</html>

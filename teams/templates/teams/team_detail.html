@@ -1,0 +1,395 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+
+{% block extra_header %}
+    <link rel="stylesheet" href="{% static 'css/foundation-datepicker.min.css' %}" />
+<style>
+    .event {
+        padding: 1rem 1rem 1rem 0;
+        display: table;
+    }
+
+    .event-date {
+        width: 6rem;
+        margin: 0 auto 1rem;
+        display: table-cell;
+        width: auto;
+    }
+
+    .event-date .event-month {
+        margin: 0;
+        background: #eee;
+        padding: 0.5rem 2rem;
+        text-align: center;
+    }
+
+    .event-date .event-day {
+        margin: 0;
+        border: 1px solid #eee;
+        padding: 0 2rem;
+        text-align: center;
+        font-size: 2rem;
+    }
+
+    .event-desc {
+        padding: 0 0 0 1rem;
+        text-align: left;
+        display: table-cell;
+        vertical-align: top;
+    }
+
+    .event-desc .event-desc-header {
+        margin: 0 0 0.5rem 0;
+        padding: 0;
+    }
+
+    .event-desc .event-desc-detail {
+        margin: 0 0 0.25rem;
+        padding: 0;
+    }
+
+    .event-desc .event-desc-time {
+        font-weight: bold;
+    }
+
+    .event-desc .rsvp.button {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        margin: 0;
+    }
+
+    .modal-box {
+        color: #333;
+        text-align: left;
+        margin: 0 30px;
+    }
+
+    .modal-title {
+        padding-top: 15px;
+        margin-bottom: 0;
+    }
+
+    .modal-description {
+        color: grey;
+        font-weight: bold;
+        padding-bottom: 20px;
+        font-size: .875rem;
+    }
+
+    .modal-box label {
+        color: #333;
+        font-weight: bold;
+    }
+
+    .modal-box input, .modal-box textarea {
+        margin-top: 15px;
+        background-color: whitesmoke;
+        font-weight: normal;
+    }
+
+    @media screen and (min-width: 60em){
+        .reveal {
+            width: 800px;
+            max-width: 62rem;
+        }
+    }
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+    {% load staticfiles %}
+
+    <div class="container">
+
+        <div class="row" style="padding-top: 75px">
+
+            <div class="medium-4 grid-block">
+                <p><img style="background: url(
+                        {{ MEDIA_URL }}{{ team.image }}); background-size:cover; background-repeat:no-repeat;width:250px; height:250px;">
+                </p>
+                {% if request.user = team.owner %}
+                    <a href="delete/"><p>delete</p></a>
+                {% endif %}
+            </div>
+            <div class="medium-6 grid-block">
+                <p class="lead" style="text-align: left;">{{ team.title }}</p>
+                <p class="subheader" style="text-align: left;">{{ team.description }}</p>
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 100px">
+            <div class="small-8 columns small-centered">
+                <h1 class="lead" style="text-align: left;">
+                    Team roles
+                    <a data-open="add_role_modal" style="color: #5da423; cursor: pointer;"><i class="fa fa-plus"></i></a>
+                </h1>
+
+                {% for role in team.role_set.all %}
+                    <article class="event">
+                        <div class="event-date">
+                            <img width="125" src="http://placehold.it/125x125&text=Role"
+                                 alt="image of a planet called Pegasi B">
+                        </div>
+
+                        <div class="event-desc">
+                            <h4 class="event-desc-header">{{ role.title }}</h4>
+                            <p class="event-desc-detail"><span class="event-desc-time"></span>{{ role.description }}</p>
+                            <a href="http://bdconf.com/speakers/brandon-arnold/" class="rsvp button">RSVP &amp; Details</a>
+                        </div>
+                    </article>
+
+                    <hr>
+                {% empty %}
+                    No roles have been created yet
+                {% endfor %}
+
+                <p style="text-align: left;"><button class="success button" data-open="add_role_modal">Create New Role</button></p>
+
+            </div>
+            <div class="small-4 columns small-centered">
+                <p>(Some) Team members</p>
+                <a data-open="invite_people_modal" class="button" style="border-radius:50%;"><i class="fa fa-plus"></i></a>
+                <div class="callout no-border">
+                    <p><img style="border-radius:180px; width:125px;" src="{% static 'img/person_stock.jpg' %}"
+                            alt="image of a planet called Pegasi B"></p>
+                </div>
+                <div class="callout no-border">
+                    <p><img style="border-radius:180px; width:125px;" src="{% static 'img/person_stock.jpg' %}"
+                            alt="image of a planet called Pegasi B"></p>
+                </div>
+                <div class="callout no-border">
+                    <p><img style="border-radius:180px; width:125px;" src="{% static 'img/person_stock.jpg' %}"
+                            alt="image of a planet called Pegasi B"></p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row" style="padding-top: 50px">
+            <div class="pagination-centered">
+                <ul class="pagination">
+                    <li class="arrow unavailable"><a href="">&laquo;</a></li>
+                    <li class="current"><a href="">1</a></li>
+                    <li><a href="">2</a></li>
+                    <li><a href="">3</a></li>
+                    <li><a href="">4</a></li>
+                    <li class="unavailable">&hellip;</li>
+                    <li><a href="">12</a></li>
+                    <li><a href="">13</a></li>
+                    <li class="arrow"><a href="">&raquo;</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="reveal" id="add_role_modal" data-reveal>
+            <div class="modal-box">
+                <form action="{% url 'team_roles' team.pk %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="medium-11 small-10 columns">
+                            <h5 class="modal-title">Create New Role</h5>
+                            <p class="modal-description">FILL OUT THE FIELDS BELOW</p>
+                        </div>
+                        <div class="medium-1 small-2 columns">
+                            <button class="close-button" data-close aria-label="Close modal" type="button">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="large-6 small-12 columns">
+                            <label>
+                                Title*
+                                <input type="text" name="role_title" placeholder="Enter role title" required="required" />
+                            </label>
+                            <label>
+                                Description*
+                                <textarea name="role_description" placeholder="Enter role description" required="required"></textarea>
+                            </label>
+                        </div>
+                        <div class="large-6 small-12 columns">
+                            <label>
+                                Start Date*
+                                <input type="text" name="start_date" placeholder="Insert Date" required="required">
+                            </label>
+                            <label>
+                                End Date*
+                                <input type="text" name="end_date" placeholder="Insert Date" required="required">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="columns">
+                            <input type="submit" value="Create Role" class="button alert" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="reveal" id="invite_people_modal" data-reveal>
+            <div class="modal-box">
+                <div class="row">
+                    <div class="small-12 columns">
+                        <h5 class="modal-title">Invite Users</h5>
+                        <p class="modal-description">SELECT PEOPLE TO INVITE TO THE TEAM</p>
+                        <button class="close-button" data-close aria-label="Close modal" type="button" style="float:right;">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="columns small-12 medium-6">
+                        <input id="people_select" type="text" />
+                    </div>
+                </div>
+                <div id="people_to_invite">
+
+                </div>
+                <div class="row">
+                    <div class="columns text-right">
+                        <input type="button" value="Cancel" class="button secondary" data-close aria-label="Close modal" />
+                        <input type="button" value="Invite" class="button alert" id="invite_btn" disabled />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reveal" id="invited_modal" data-reveal>
+            <div class="modal-box">
+                <div class="row">
+                    <div class="small-12 columns text-center">
+                        <h5 class="modal-title">Thanks, Your Invites are on their way</h5>
+                        <p class="modal-description">Your colleagues will receive an invitation to join your team shortly.</p>
+                        <button class="close-button" data-close aria-label="Close modal" type="button" style="float:right;">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="columns text-right">
+                        <input type="button" value="OK" class="button alert" data-close aria-label="Close modal"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+{% block extra_footer %}
+    <script type="text/javascript" src="{% static 'js/foundation-datepicker.min.js' %}"></script>
+    <script type="text/javascript">
+        var peopleAll = [
+        {% for people in nonmembers %}
+            {
+                id: '{{people.pk}}',
+                username: '{{people.username}}'
+            },
+        {% endfor %}
+        ];
+        var peopleInvited = [
+        {% for people in invitees %}
+            {{people.pk}},
+        {% endfor %}
+        ];
+        var peopleToInvite = [];
+        function addPeopleToInviteList(people) {
+            if(_.find(peopleToInvite, function(p) { return p.id == people.id; }) == undefined) {
+                peopleToInvite.push(people);
+            }
+            drawInviteList();
+        }
+        function removePeopleFromInviteList(peopleId) {
+            peopleToInvite = _.reject(peopleToInvite, function(p) {
+                return p.id == peopleId;
+            });
+            drawInviteList();
+        }
+        function drawInviteList() {
+            $('#people_to_invite').html('')
+            _.each(peopleToInvite, function(p) {
+                $('#people_to_invite').append(
+                    '<div class="row" style="margin:10px 0px;">'+
+                        '<div class="columns small-6">'+p.username+'</div>'+
+                        '<div class="columns small-6 text-right">'+
+                            '<i class="fa fa-times" onclick="removePeopleFromInviteList('+p.id+'); event.stopPropagation(); return false;" style="cursor:pointer;"></i>'+
+                        '</div>'+
+                    '</div>'
+                );
+            });
+            if(peopleToInvite.length==0) {
+                $('#invite_btn').prop('disabled', true);
+            } else {
+                $('#invite_btn').prop('disabled', false);
+            }
+        }
+
+        $(function(){
+            $('input[name="start_date"]').fdatepicker({
+                'pickTime': true,
+                'format': 'mm-dd-yyyy hh:ii',
+                'disableDblClickSelection': true
+            });
+            $('input[name="end_date"]').fdatepicker({
+                'pickTime': true,
+                'format': 'mm-dd-yyyy hh:ii',
+                'disableDblClickSelection': true
+            });
+
+            $("#people_select").autoComplete({
+                minChars: 0,
+                source: function(term, suggest) {
+                    suggest(_.filter(peopleAll, function(p) {
+                        return p.username.toLowerCase().indexOf(term.toLowerCase()) > -1;
+                    }));
+                },
+                renderItem: function (item, search){
+                    search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                    var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+                    var invited = (_.find(peopleInvited, function(p){
+                        return p == item.id;
+                    }) != undefined);
+                    return '<div class="autocomplete-suggestion" data-id="'+item.id+'" data-username="'+item.username+'" data-invited='+invited+'>'+item.username.replace(re, "<b>$1</b>")+(invited?' - invited':'')+'</div>';
+                },
+                onSelect: function(e, term, item){
+                    if(!item.data('invited')) {
+                        addPeopleToInviteList({
+                            id: item.data('id'),
+                            username: item.data('username')
+                        });
+                    }
+                    setTimeout(function() {
+                        $('#people_select').trigger('blur');
+                    }, 100);
+                }
+            });
+
+            $('#invite_btn').click(function() {
+                $.post(
+                    "{% url 'team_invite_people' team.pk %}",
+                    { 
+                        'csrfmiddlewaretoken':$.cookie('csrftoken'),
+                        'invitees': _.map(peopleToInvite, function(p) { return p.id; }).join(',')
+                    },
+                    function(data) {
+                        peopleInvited = _.union(peopleInvited, _.map(peopleToInvite, function(p) { return p.id; }));
+                        peopleToInvite = [];
+                        drawInviteList();
+                        $('#people_select').val('');
+                        jQuery('#invited_modal').foundation('open');
+                    }
+                );
+            });
+        });
+    </script>
+{% endblock %}

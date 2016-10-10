@@ -1,0 +1,65 @@
+.no-border {
+    border: none;
+}
+
+.button {
+    background-color: #fc0017;
+}
+
+.button-purple {
+	background-color: #9068be;
+}
+
+.button-round {
+	border-radius: 20px;
+}
+
+a {
+    color: #0a0a0a;
+}
+
+.center-button {
+    text-align: center;
+}
+
+.square-image {
+	background-size: cover;
+    background-position: center center;
+    width: 100%;
+    padding-top: 100%;
+}
+
+#notifications {
+    padding: 0px;
+}
+
+#notifications ul {
+    list-style-type: none;
+    margin-left: 0px;
+}
+
+#notifications ul li {
+    float: none;
+    padding: 1rem;
+}
+
+#notifications ul li button {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    padding: 0px;
+    text-align: center;
+    line-height: 30px;
+    margin: 0px 5px;
+}
+
+#notifications_count {
+    margin-left: 5px;
+    background-color: #fc0017;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    line-height: 20px;
+    border-radius: 50% 50%;
+    color: #fefefe;
+}
