@@ -31,11 +31,9 @@ class OrgSignUpForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(OrgSignUpForm, self).clean()
-        try:
-            _user = User.objects.get(email=cleaned_data.get('email'))
+        users = User.objects.filter(email=cleaned_data.get('email'))
+        if len(users) > 0:
             raise forms.ValidationError('This email is already taken')
-        except User.DoesNotExist:
-            pass
         if cleaned_data.get('password') != cleaned_data.get('repeat_password'):
             raise forms.ValidationError('Password doesn\'t match the confirmation')
 
@@ -54,11 +52,8 @@ class UserSignUpForm(forms.Form):
         cleaned_data = super(UserSignUpForm, self).clean()
         if cleaned_data.get('password') != cleaned_data.get('repeat_password'):
             raise forms.ValidationError('Password doesn\'t match the confirmation')
-        try:
-            _user = User.objects.get(email=self.email)
-        except:
-            _user = None
-        if _user is not None:
+        users = User.objects.filter(email=self.email)
+        if len(users) > 0:
             raise forms.ValidationError('This email is already taken')
 
 
