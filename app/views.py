@@ -14,7 +14,7 @@ from .models import Alert
 
 from app.models import Organization, OrganizationMember, Token, Profile, OrganizationInvitation
 from teams.models import Team
-from app.forms import OrgSignUpForm, SettingsForm, UserSignUpForm
+from app.forms import OrgSignUpForm, SettingsForm, UserSignUpForm, SignInForm
 from teamedup import settings
 
 
@@ -52,13 +52,19 @@ def login_user(request):
 
 
 def login_view(request):
-    try:
-        next = request.GET['next']
-        context = {'next': next}
-    except:
-        context = {}
-
-    return render(request, 'app/login.html', context)
+    next = request.GET.get('next')
+    form = SignInForm()
+    if request.method == 'POST':
+        form = SignInForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=email, password=password)
+            if user is not None:
+                login(request, user)
+                messages.add_message(request, messages.SUCCESS, _('Your have signed in successfully'))
+                return redirect('/app/')
+    return render(request, 'app/login.html', locals())
 
 
 @login_required
