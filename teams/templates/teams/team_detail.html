@@ -144,17 +144,19 @@
                         <div class="event-desc">
                             <h4 class="event-desc-header title">{{ role.title }}</h4>
                             <p class="event-desc-detail description"><span class="event-desc-time"></span>{{ role.description }}</p>
-                            <button class="button secondary edit-role-button"
-                                    data-url="{% url 'team_roles' team.pk %}"
-                                    data-role-id="{{ role.pk }}"
-                                    data-data='{{ role.jsoned|safe }}'>
-                                <i class="fa fa-pencil"></i>
-                            </button>
-                            <button class="button secondary delete-role-button"
-                                    data-url="{% url 'team_roles' team.pk %}"
-                                    data-role-id="{{ role.pk }}">
-                                <i class="fa fa-trash"></i>
-                            </button>
+                            {% if request.user in team.owners %}
+                                <button class="button secondary edit-role-button"
+                                        data-url="{% url 'team_roles' team.pk %}"
+                                        data-role-id="{{ role.pk }}"
+                                        data-data='{{ role.jsoned|safe }}'>
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                                <button class="button secondary delete-role-button"
+                                        data-url="{% url 'team_roles' team.pk %}"
+                                        data-role-id="{{ role.pk }}">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            {% endif %}
                         </div>
 
                     </article>
