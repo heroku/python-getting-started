@@ -77,7 +77,12 @@ def organization_invite(request, org_id):
         user = None
 
     if user is not None:
-        pass
+        try:
+            membership = OrganizationMember.objects.get(user=user, organization=organization)
+        except OrganizationMember.DoesNotExist:
+            membership = None
+        if membership is None and len(OrganizationMember.objects.filter(user=user, is_owner=True)) == 0:
+            OrganizationMember(user=user, organization=organization).save()
     else:
         inv = OrganizationInvitation()
         inv.organization = organization
