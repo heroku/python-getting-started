@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 
+import json
+
 
 class Team(models.Model):
     title = models.CharField(max_length=200)
@@ -29,6 +31,19 @@ class Role(models.Model):
     end_date = models.DateTimeField(default=None, blank=True, null=True)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, default=None, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
+    def to_dict(self):
+        return {
+            'id': self.pk,
+            'title': self.title,
+            'description': self.description,
+            'start_date': self.start_date.strftime('%m-%d-%Y %H:%M'),
+            'end_date': self.end_date.strftime('%m-%d-%Y %H:%M'),
+        }
+
+    @property
+    def jsoned(self):
+        return json.dumps(self.to_dict())
 
 
 class Member(models.Model):

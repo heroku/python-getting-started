@@ -2,6 +2,7 @@ from django.http import Http404, HttpResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 from teams.models import Team, Role, Member, Invite, JoinRequest
 from django.contrib.auth.models import User
@@ -63,22 +64,35 @@ def create_new_team(request):
 
 
 @login_required
+@csrf_exempt
 def roles(request, team_id):
     # TODO: validation missing
     team = get_object_or_404(Team, pk=team_id)
     if request.method == 'POST':
-        return create_role(request, team)
-
+        return createupdate_role(request, team)
+    elif request.method == 'DELETE':
+        return delete_role(request, team)
     raise Http404
 
-
-def create_role(request, team):
-    title = request.POST.get('role_title')
-    description = request.POST.get('role_description')
-    start_date = datetime.strptime(request.POST.get('start_date'), '%m-%d-%Y %H:%M')
-    end_date = datetime.strptime(request.POST.get('start_date'), '%m-%d-%Y %H:%M')
-    Role(team=team, title=title, description=description, start_date=start_date, end_date=end_date).save()
+def createupdate_role(request, team):
+    role = Role()
+    role_id = request.POST.get('id')
+    if role_id is not None:
+        role = get_object_or_404(Role, pk=role_id, team=team)
+    role.team = team
+    role.title = request.POST.get('role_title')
+    role.description = request.POST.get('role_description')
+    role.start_date = datetime.strptime(request.POST.get('start_date'), '%m-%d-%Y %H:%M')
+    role.end_date = datetime.strptime(request.POST.get('end_date'), '%m-%d-%Y %H:%M')
+    role.save()
+    if request.is_ajax():
+        return HttpResponse('{}')
     return redirect(reverse('team_detail', kwargs={'team_id': team.pk}))
+
+def delete_role(request, team):
+    role = get_object_or_404(Role, pk=request.GET.get('role_id'))
+    role.delete()
+    return HttpResponse('{}')
 
 @login_required
 def invite_people(request, team_id):
@@ -89,6 +103,9 @@ def invite_people(request, team_id):
     raise Http404
 
 def _invite_people(request, team):
+    # TODO: optimize it
+    # we can do `invitees = User.objects.filter(pk__in=request.POST.get('invitees').split(","))`
+    # single db query usually works faster due to internal db caching system
     invitees = [User.objects.get(pk=invitee_id) for invitee_id in request.POST.get('invitees').split(",")]
     for invitee in invitees:
         invitation = Invite(team=team, inviter=request.user, invitee=invitee, status='created', expired_at=datetime.now()+timedelta(days=7), read=False)
