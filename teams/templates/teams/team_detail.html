@@ -135,7 +135,7 @@
                 </h1>
 
                 {% for role in team.role_set.all %}
-                    <article class="event">
+                    <article class="event role-{{ role.pk }}">
                         <div class="event-date">
                             <img width="125" src="http://placehold.it/125x125&text=Role"
                                  alt="image of a planet called Pegasi B">
@@ -144,11 +144,12 @@
                         <div class="event-desc">
                             <h4 class="event-desc-header">{{ role.title }}</h4>
                             <p class="event-desc-detail"><span class="event-desc-time"></span>{{ role.description }}</p>
-                            <a href="http://bdconf.com/speakers/brandon-arnold/" class="rsvp button">RSVP &amp; Details</a>
+{#                            <button class="button secondary"><i class="fa fa-edit"></i></button>#}
+                            <button class="button secondary delete-role-button" data-url="{% url 'team_roles' team.pk %}" data-role-id="{{ role.pk }}"><i class="fa fa-trash"></i></button>
                         </div>
-                    </article>
 
-                    <hr>
+                    </article>
+                    <hr class="role-{{ role.pk }}" />
                 {% empty %}
                     No roles have been created yet
                 {% endfor %}
@@ -364,6 +365,19 @@
                 'pickTime': true,
                 'format': 'mm-dd-yyyy hh:ii',
                 'disableDblClickSelection': true
+            });
+
+            $('.delete-role-button').click(function(){
+                if(!confirm('The role will be deleted')){
+                    return null;
+                }
+                var url = $(this).data('url');
+                var role_id = $(this).data('role-id');
+                $('.role-' + role_id).hide('fast');
+                $.ajax({
+                    url: url + '?role_id=' + role_id,
+                    type: 'DELETE'
+                });
             });
 
             $("#people_select").autoComplete({
