@@ -6,11 +6,11 @@
     <div class="container">
         <div class="row small-up-2" style="margin-top:75px;">
             <div class="column text-left">
-                <div class="lead">Your Teams</div>
-                <div class="subheader">ACTIVE TEAMS / PROJECTS</div>
+                <div class="title-header">Your Teams</div>
+                <div class="title-description">ACTIVE TEAMS / PROJECTS</div>
             </div>
             <div class="column text-right">
-                <a href="#" class="button" id="myModalButton"><i class="fa fa-plus" aria-hidden="true"></i> New Team</a>
+                <a href="#" class="button button-red" id="myModalButton"><i class="fa fa-plus" aria-hidden="true"></i><span style="font-size:12px; margin-left:10px;">New Team</span></a>
             </div>
         </div>
 
@@ -20,27 +20,25 @@
             {% for team in myteams %}
                 <div class="column">
                     <a href="/teams/detail/{{ team.pk }}">
-                        <img src="{{ MEDIA_URL }}{{ team.image }}" style="width:100%;">
+                        <div style="background-image:url('{{ MEDIA_URL }}{{ team.image }}');" class="square-image"></div>
                     </a>
-                    <div class="lead" style="margin-top:20px;"><a href="/teams/detail/{{ team.id }}">{{ team.title }}</a></div>
-                    <div class="subheader" style="word-break: break-all;">{{ team.description|slice:":45" }}</div>
+                    <div class="item-title-header" style="margin-top:30px;"><a href="/teams/detail/{{ team.id }}">{{ team.title }}</a></div>
+                    <div class="item-title-description" style="margin-top:10px; word-break: break-all;">{{ team.description|slice:":45" }}</div>
                 </div>
             {% endfor %}
         </div>
 
-
         <div class="row" style="margin-top:75px;">
-            <div class="columns small-6 medium-4 large-3 text-left">
-                <div class="lead">Other Teams</div>
-                <div class="subheader">SEARCH FOR TEAMS</div>
+            <div class="columns small-6 medium-4 text-left">
+                <div class="title-header">Other Teams</div>
+                <div class="title-description">SEARCH FOR TEAMS</div>
             </div>
-            <div class="columns small-6 medium-4 medium-offset-4 large-3 large-offset-6 text-right">
-                <a id="searchteams-btn" class="button" style="float:right;"><i class="fa fa-search" aria-hidden="true"></i></a>
-                <input type="text" id="searchteams-query" name="searchteams-query" placeholder="Search Teams" style="width:calc(100% - 50px); float:right;" />
-                
+            <div class="columns small-6 medium-4 medium-offset-4 text-right">
+                <a id="searchteams-btn" class="button button-red" style="float:right;"><i class="fa fa-search" aria-hidden="true"></i></a>
+                <input type="text" id="searchteams-query" name="searchteams-query" placeholder="Search Teams" class="input-text" style="width:calc(100% - 50px); float:right;" />
             </div>
             <div class="columns small-12 text-right">
-                <div id="searchteams-message"></div>
+                <div id="searchteams-message" class="message" style="color: #8a8a8a;"></div>
             </div>
         </div>
 
@@ -53,23 +51,21 @@
                         </a>
                     </div>
                     <div class="small-8 medium-9 large-10 columns text-left">
-                        <div class="subheader team-row-title" style="display:inline-block;">{{ team.title }}</div>
-
-{#                        {% for owner in team.owners %}#}
-{#                            <div style="background-color:#9068be; color:white; display:inline-block; padding:2px 5px; margin-left:10px; border-radius:2px;">{{ owner }}</div>#}
-{#                        {% endfor %}#}
-
-                        <div class="team-row-description" style="word-break: break-all;">{{ team.description }}</div>
+                        <div class="team-row-title item-title-header" style="display:inline-block; margin:10px 0px;">{{ team.title }}</div>
+                        {% for member in team.members %}
+                            <div class="user-tag-purple" style="margin:10px 0px 10px 10px;">{{ member.username }}</div>
+                        {% endfor %}
+                        <div class="team-row-description item-title-description" style="word-break: break-all;">{{ team.description }}</div>
                     </div>
                 </div>
             {% endfor %}
         </div>
 
-        <div class="text-center hide" style="margin-top:30px;" id="searchteams-more-btn-div">
+        <div class="text-center hide" style="margin-top:5px;" id="searchteams-more-btn-div">
             <a id="searchteams-more-btn" class="button button-purple button-round"><i class="fa fa-repeat" aria-hidden="true" style="margin-right:20px;"></i>Show More</a>
         </div>
 
-        <div class="text-center hide" style="margin-top:30px;margin-bottom:30px;" id="searchteams-noresult">
+        <div class="text-center hide message" style="margin-bottom:30px;" id="searchteams-noresult">
             We can't find teams.
         </div>
     </div>
