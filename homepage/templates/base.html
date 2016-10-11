@@ -1,7 +1,8 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load staticfiles %}
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,8 +10,6 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="author" content="">
-
-    {% load staticfiles %}
 
     <link rel="icon" href="../../favicon.ico">
 
@@ -70,53 +69,73 @@
         .image-rounded {
             border-radius: 50%;
         }
+
+        .no-js .top-bar {
+          display: none;
+        }
+
+        @media screen and (min-width: 40em) {
+          .no-js .top-bar {
+            display: block;
+          }
+
+          .no-js .title-bar {
+            display: none;
+          }
+        }
+
+        .top-bar {
+            height: 70px;
+            background-color: #e1e8f0;
+            padding: 0 40px;
+        }
+        .top-bar .top-bar-right a {
+            color: black;
+            padding: 14px 16px;
+            overflow: hidden;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .title-bar {
+            background-color: #e1e8f0;
+            padding: 10px 40px;
+        }
     </style>
 
     {% block extra_header %}{% endblock %}
 </head>
 
 <body>
-<div class="mastcontent">
-    <div class="masthead">
-        <div class="masthead_dropnav" id="masthead_dropnav">
-            <div style="display: table-cell; vertical-align: middle">
-                {% if request.user.is_authenticated %}
-                    <p><a href="{% url 'settings' %}"> Settings </a></p>
-                    <p><a href="{% url 'sign-out' %}"> Sign Out </a></p>
-                {% else %}
-                    <p><a href="#"> Features </a></p>
-                    <p><a href="#"> Pricing </a></p>
-                    <p><a href="#"> Contact </a></p>
-                {% endif %}
-            </div>
-            <button class="masthead-dropnav-icon" onclick="pulldownMenu();">
-                <i class="fa fa-times" aria-hidden="true"> </i>
-            </button>
-        </div>
-        <div class="masthead-brand">
-            <a href="/"><img class="masthead-blacklogo" src="{% static 'logo1.png' %}"></a>
-        </div>
-        <button class="masthead-menu" onclick="pulldownMenu()">
+<div class="mastcontent no-js">
+
+    <div class="title-bar" data-responsive-toggle="top-bar" data-hide-for="medium">
+        <a href="{% url 'index' %}"><img src="{% static 'logo1.png' %}" alt=""></a>
+        <a href="#" onclick="return false;" data-toggle>
             <img src="{% static 'menu-icon.png' %}">
-        </button>
-        <ul class="masthead-nav">
+        </a>
+    </div>
+
+    <div class="top-bar" id="top-bar">
+        <div class="top-bar-left text-left hide-for-small-only">
+            <a href="{% url 'index' %}" class="hide-for-small-only"><img src="{% static 'logo1.png' %}" alt=""></a>
+        </div>
+        <div class="top-bar-right text-right">
             {% if request.user.is_authenticated %}
-                <li><a href="{% url 'sign-out' %}">Sign Out</a></li>
-                <li><a href="{% url 'settings' %}">Settings</a></li>
-            {% else %}
-                <li><a href="#"> Features </a></li>
-                <li><a href="#"> Pricing </a></li>
-                <li><a href="#"> Contact </a></li>
-            {% endif %}
-            <li>
                 <a data-toggle="notifications"><i class="fa fa-bell-o" aria-hidden="true"></i><span
                         id="notifications_count" class="alert badge"></span></a>
-                <div class="dropdown-pane bottom right" id="notifications" data-dropdown data-close-on-click="true">
+                <div class="dropdown-pane bottom right text-left" id="notifications" data-dropdown data-close-on-click="true">
                     <ul>
                     </ul>
                 </div>
-            </li>
-        </ul>
+                <a href="{% url 'settings' %}">Settings</a>
+                <a href="{% url 'sign-out' %}">Sign Out</a>
+            {% else %}
+                <a href="#"> Features </a>
+                <a href="#"> Pricing </a>
+                <a href="#"> Contact </a>
+            {% endif %}
+        </div>
     </div>
 
     {% if messages %}
@@ -156,8 +175,10 @@
                             <p>Features</p>
                             <p>Pricing</p>
                             <p>Contact</p>
-                            <p><a href="{% url 'signup' %}">Register</a></p>
-                            <p>Login</p>
+                            {% if not user.is_authenticated %}
+                                <p><a href="{% url 'signup' %}">Register</a></p>
+                                <p><a href="{% url 'login_view' %}">Login</a></p>
+                            {% endif %}
                             <p>FAQ</p>
                         </div>
                         <div class="small-6 large-4 mast-mainfoot-col2" style="text-align:left">
@@ -202,6 +223,7 @@
     <script>
         $(document).foundation();
 
+        {% if request.user.is_authenticated %}
         var notifications = [];
         function getNotifications() {
             notifications = [];
@@ -311,6 +333,7 @@
         $(function () {
             getNotifications();
         });
+        {% endif %}
     </script>
 
 
