@@ -142,10 +142,19 @@
                         </div>
 
                         <div class="event-desc">
-                            <h4 class="event-desc-header">{{ role.title }}</h4>
-                            <p class="event-desc-detail"><span class="event-desc-time"></span>{{ role.description }}</p>
-{#                            <button class="button secondary"><i class="fa fa-edit"></i></button>#}
-                            <button class="button secondary delete-role-button" data-url="{% url 'team_roles' team.pk %}" data-role-id="{{ role.pk }}"><i class="fa fa-trash"></i></button>
+                            <h4 class="event-desc-header title">{{ role.title }}</h4>
+                            <p class="event-desc-detail description"><span class="event-desc-time"></span>{{ role.description }}</p>
+                            <button class="button secondary edit-role-button"
+                                    data-url="{% url 'team_roles' team.pk %}"
+                                    data-role-id="{{ role.pk }}"
+                                    data-data='{{ role.jsoned|safe }}'>
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                            <button class="button secondary delete-role-button"
+                                    data-url="{% url 'team_roles' team.pk %}"
+                                    data-role-id="{{ role.pk }}">
+                                <i class="fa fa-trash"></i>
+                            </button>
                         </div>
 
                     </article>
@@ -239,6 +248,55 @@
                 </form>
             </div>
         </div>
+
+
+        <div class="reveal" id="edit_role_modal" data-reveal>
+            <div class="modal-box">
+                <form action="{% url 'team_roles' team.pk %}"  id="edit_role_form" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="medium-11 small-10 columns">
+                            <h5 class="modal-title">Edit Role</h5>
+                            <p class="modal-description">FILL OUT THE FIELDS BELOW</p>
+                        </div>
+                        <div class="medium-1 small-2 columns">
+                            <button class="close-button" data-close aria-label="Close modal" type="button">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="large-6 small-12 columns">
+                            <input type="hidden" id="edit_id" name="id" value="0" />
+                            <label>
+                                Title*
+                                <input type="text" id="edit_title" name="role_title" placeholder="Enter role title" required="required" />
+                            </label>
+                            <label>
+                                Description*
+                                <textarea name="role_description" id="edit_description" placeholder="Enter role description" required="required"></textarea>
+                            </label>
+                        </div>
+                        <div class="large-6 small-12 columns">
+                            <label>
+                                Start Date*
+                                <input type="text" id="edit_start_date" name="start_date" placeholder="Insert Date" required="required">
+                            </label>
+                            <label>
+                                End Date*
+                                <input type="text" id="edit_end_date" name="end_date" placeholder="Insert Date" required="required">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="columns">
+                            <input type="submit" value="Save Role" class="button alert" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
 
         <div class="reveal" id="invite_people_modal" data-reveal>
             <div class="modal-box">
@@ -367,6 +425,14 @@
                 'disableDblClickSelection': true
             });
 
+            $('.edit-role-button').click(function(){
+                var data = $(this).data('data');
+                for(var field in data){
+                    $('#edit_' + field).val(data[field]);
+                }
+                $('#edit_role_modal').foundation('open');
+            });
+
             $('.delete-role-button').click(function(){
                 if(!confirm('The role will be deleted')){
                     return null;
@@ -378,6 +444,19 @@
                     url: url + '?role_id=' + role_id,
                     type: 'DELETE'
                 });
+            });
+
+            $('#edit_role_form').submit(function(){
+                $.post($(this).attr('action'), $(this).serialize(), function(response){}, 'json');
+                var data = {};
+                $(this).serializeArray().map(function(item){
+                   data[item.name] = item.value;
+                });
+                $('.role-' + data.id).find('.edit-role-button').data('data', data);
+                $('.role-' + data.id).find('.title').text(data.role_title);
+                $('.role-' + data.id).find('.description').text(data.role_description);
+                $('#edit_role_modal').foundation('close');
+                return false;
             });
 
             $("#people_select").autoComplete({
