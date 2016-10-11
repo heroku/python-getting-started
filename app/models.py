@@ -39,6 +39,30 @@ class OrganizationMember(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
+class OrganizationInvitation(models.Model):
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, default=None, blank=True, null=True)
+    email = models.EmailField(max_length=255, default='')
+    token = models.CharField(max_length=64)
+    expired = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return self.token
+
+    def expire(self):
+        self.expired = True
+        self.save()
+
+    def save(self, *args, **kwargs):
+        try:
+            _existing_invitation = OrganizationInvitation.objects.get(email=self.email)
+            return None
+        except self.DoesNotExist:
+            pass
+        # TODO: check if this token wasn't used before
+        self.token = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(64))
+        super(OrganizationInvitation, self).save(*args, **kwargs)
+
+
 class Token(models.Model):
     user = models.ForeignKey(User)
     token = models.CharField(max_length=64)

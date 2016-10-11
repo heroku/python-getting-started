@@ -40,6 +40,28 @@ class OrgSignUpForm(forms.Form):
             raise forms.ValidationError('Password doesn\'t match the confirmation')
 
 
+class UserSignUpForm(forms.Form):
+    email = None
+    password = forms.CharField(label='Password', max_length=255,
+                               widget=forms.PasswordInput(attrs={'placeholder': 'Enter password'}))
+    repeat_password = forms.CharField(label='Repeat Password', max_length=255,
+                                      widget=forms.PasswordInput(attrs={'placeholder': 'Repeat password'}))
+
+    def set_email(self, email):
+        self.email = email
+
+    def clean(self):
+        cleaned_data = super(UserSignUpForm, self).clean()
+        if cleaned_data.get('password') != cleaned_data.get('repeat_password'):
+            raise forms.ValidationError('Password doesn\'t match the confirmation')
+        try:
+            _user = User.objects.get(email=self.email)
+        except:
+            _user = None
+        if _user is not None:
+            raise forms.ValidationError('This email is already taken')
+
+
 class SettingsForm(forms.Form):
     user = None
     name = forms.CharField(label='Name', max_length=255, required=False,

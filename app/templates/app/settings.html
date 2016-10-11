@@ -154,11 +154,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="columns">&nbsp;</div>
+                            </div>
                         {% endfor %}
                         <div class="row">
                             <div class="columns">&nbsp;</div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="columns">&nbsp;</div>
                 </div>
             {% endfor %}
         </div>
@@ -177,6 +183,20 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
+
+{#    <div class="reveal" id="multiple_invitation" data-reveal>#}
+{#        role="dialog">#}
+{#        <div class="teamedup-form">#}
+{#            <h5 class="title">Thanks, Your Invites are on the way</h5>#}
+{#            <p class="description">Your colleagues will receive an invitation to join your organization shortly.</p>#}
+{#        </div>#}
+{#        <div class="text-right">#}
+{#            <button class="button alert" data-close aria-label="Close modal">OK</button>#}
+{#        </div>#}
+{#        <button class="close-button" data-close aria-label="Close modal" type="button">#}
+{#            <span aria-hidden="true">&times;</span>#}
+{#        </button>#}
+{#    </div>#}
 
 {% endblock %}
 
@@ -234,7 +254,7 @@
                 form.find('[name="invitation-email"]').val('');
                 $.post(form.attr('action'), {'email': email}, function () {
                     $('#invitation_results').foundation('open');
-                }, 'json')
+                }, 'json');
                 return false;
             });
 

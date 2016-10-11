@@ -12,10 +12,11 @@ import json
 from django.core.mail import send_mail
 from .models import Alert
 
-from app.models import Organization, OrganizationMember, Token, Profile
+from app.models import Organization, OrganizationMember, Token, Profile, OrganizationInvitation
 from teams.models import Team
-from app.forms import OrgSignUpForm, SettingsForm
+from app.forms import OrgSignUpForm, SettingsForm, UserSignUpForm
 from teamedup import settings
+
 
 @login_required
 def index(request):
@@ -47,6 +48,7 @@ def login_user(request):
                 return HttpResponse("Please check your username or password and try again.")
         else:
             return HttpResponse("Please check your username or password and try again.")
+    return HttpResponse()
 
 
 def login_view(request):
@@ -111,7 +113,7 @@ def signup(request):
             print('Activation link: %s' % (link))
 
             send_mail('Account activation', settings.ACCOUNT_ACTIVATION_EMAIL % (org.name, link,),
-                      'support@teamedup.com', [user.email, ])
+                      'noreply@teamedup.com', [user.email, ])
             messages.add_message(request, messages.SUCCESS,
                                  _('Please click the activation link which was sent to your email'))
             _user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password'])
@@ -120,6 +122,32 @@ def signup(request):
                 return redirect('/app/')
             return redirect('/')
     return render(request, 'app/signup.html', locals())
+
+
+def join_organization(request, token):
+    try:
+        inv = OrganizationInvitation.objects.get(token=token, expired=False)
+    except OrganizationInvitation.DoesNotExist:
+        raise Http404
+
+    form = UserSignUpForm()
+    if request.method == 'POST':
+        form = UserSignUpForm(request.POST)
+        form.set_email(inv.email)
+        if form.is_valid():
+            inv.expire()
+            user = User()
+            user.username = inv.email
+            user.email = inv.email
+            user.set_password(form.cleaned_data.get('password'))
+            user.is_active = True
+            user.save()
+            OrganizationMember(user=user, organization=inv.organization).save()
+            _user = authenticate(username=user.username, password=form.cleaned_data['password'])
+            if _user is not None:
+                login(request, _user)
+                return redirect('/app/')
+    return render(request, 'app/join-organization.html', locals())
 
 
 def activate_account(request, token):
