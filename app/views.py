@@ -31,26 +31,6 @@ def index(request):
     return render(request, 'app/home.html', context)
 
 
-def login_user(request):
-    # logout(request)
-    username = password = ''
-
-    if request.POST:
-        email = request.POST['email']
-        password = request.POST['password']
-
-        user = authenticate(username=email, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect('/app')
-            else:
-                return HttpResponse("Please check your username or password and try again.")
-        else:
-            return HttpResponse("Please check your username or password and try again.")
-    return HttpResponse()
-
-
 def login_view(request):
     next = request.GET.get('next')
     form = SignInForm()
