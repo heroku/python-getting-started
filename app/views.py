@@ -145,7 +145,7 @@ def activate_account(request, token):
     token.user.is_active = True
     token.user.save()
     messages.add_message(request, messages.SUCCESS, _('Your account is now active'))
-    return redirect('sign-in')
+    return redirect('login_view')
 
 
 def sign_out(request):
