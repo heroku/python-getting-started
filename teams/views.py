@@ -28,13 +28,20 @@ def team_detail(request, team_id):
     nonmembers = [user for user in User.objects.all() if user not in team.members]
     invitees = [invite.invitee for invite in request.user.invites.all().filter(status="created")]
     joinrequest = request.user.team_join_requests.all().filter(team__id=team_id).filter(status="created")
-    context = {
-        'team': team,
-        'nonmembers': nonmembers,
-        'invitees': invitees,
-        'join_requested': len(joinrequest) > 0
-    }
-    return render(request, 'teams/team_detail.html', context)
+
+    if request.user in [user for user in team.members]:
+        context = {
+            'team': team,
+            'nonmembers': nonmembers,
+            'invitees': invitees
+        }
+        return render(request, 'teams/team_detail.html', context)
+    else:
+        context = {
+            'team': team,
+            'join_requested': len(joinrequest) > 0
+        }
+        return render(request, 'teams/team_detail_nonmember.html', context)
 
 
 @login_required

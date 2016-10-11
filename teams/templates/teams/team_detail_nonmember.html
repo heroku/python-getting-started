@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block extra_header %}
+    <link rel="stylesheet" href="{% static 'css/foundation-datepicker.min.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+    {% load staticfiles %}
+
+    <div class="container">
+
+        <div class="row" style="padding-top: 75px">
+
+            <div class="medium-4 grid-block">
+                <p><img style="background: url(
+                        {{ MEDIA_URL }}{{ team.image }}); background-size:cover; background-repeat:no-repeat;width:250px; height:250px;">
+                </p>
+                {% if request.user = team.owner %}
+                    <a href="delete/"><p>delete</p></a>
+                {% endif %}
+            </div>
+            <div class="medium-6 grid-block">
+                <p class="lead" style="text-align: left;">{{ team.title }}</p>
+                <p class="subheader" style="text-align: left;">{{ team.description }}</p>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 50px;">
+            <button id="joinrequest_btn" class="success button hide">Request to Join</button>
+            <div id="joinrequest_done" class="primary hide">Your Join Request is pending now...</div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+{% block extra_footer %}
+    <script type="text/javascript" src="{% static 'js/foundation-datepicker.min.js' %}"></script>
+    <script type="text/javascript">
+
+        {% if join_requested == True %}
+            var join_requested = true;
+        {% else %}
+            var join_requested = false;
+        {% endif %}
+        
+        function touchJoinRequest() {
+            if(join_requested) {
+                $('#joinrequest_btn').addClass('hide');
+                $('#joinrequest_done').removeClass('hide');
+            } else {
+                $('#joinrequest_btn').removeClass('hide');
+                $('#joinrequest_done').addClass('hide');
+            }
+        }
+
+        $(function(){
+            touchJoinRequest();
+            $('#joinrequest_btn').click(function() {
+                $.post(
+                    "{% url 'team_request_join' team.pk %}",
+                    { 
+                        'csrfmiddlewaretoken':$.cookie('csrftoken')
+                    },
+                    function(data) {
+                        join_requested = true;
+                        touchJoinRequest();
+                    }
+                );
+            });
+        });
+    </script>
+{% endblock %}
