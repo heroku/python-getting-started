@@ -73,8 +73,8 @@ def roles(request, team_id):
 def create_role(request, team):
     title = request.POST.get('role_title')
     description = request.POST.get('role_description')
-    start_date = datetime.datetime.strptime(request.POST.get('start_date'), '%m-%d-%Y %H:%M')
-    end_date = datetime.datetime.strptime(request.POST.get('start_date'), '%m-%d-%Y %H:%M')
+    start_date = datetime.strptime(request.POST.get('start_date'), '%m-%d-%Y %H:%M')
+    end_date = datetime.strptime(request.POST.get('start_date'), '%m-%d-%Y %H:%M')
     Role(team=team, title=title, description=description, start_date=start_date, end_date=end_date).save()
     return redirect(reverse('team_detail', kwargs={'team_id': team.pk}))
 
