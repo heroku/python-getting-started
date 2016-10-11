@@ -3,10 +3,6 @@
 }
 
 .button {
-    font-family: 'Montserrat', sans-serif;
-}
-
-.button-red {
     background-color: #fc0017;
 }
 
@@ -59,52 +55,4 @@ a {
 
 #notifications_count {
     margin-left: 5px;
-}
-
-.title-header {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 24px;
-}
-
-.title-description {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    color: #8a8a8a;
-}
-
-.item-title-header {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
-}
-
-.item-title-description {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    color: #8a8a8a;
-}
-
-.user-tag-purple {
-    background-color: #9068be;
-    color: white;
-    display: inline-block;
-    padding: 2px 5px;
-    border-radius: 2px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-}
-
-.input-text {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    color: #8a8a8a;
-    background-color: #f1f1f1;
-    border-radius: 0px;
-    border: 0px;
-    padding: 10px 15px;
-    height: 40px;
-    line-height: 40px;
-}
-
-.message {
-    font-family: 'Montserrat', sans-serif;
 }
