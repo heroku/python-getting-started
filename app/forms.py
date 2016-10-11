@@ -19,6 +19,23 @@ class UserForm(forms.ModelForm):
         }
 
 
+class SignInForm(forms.Form):
+    email = forms.EmailField(label='Email', max_length=255,
+                             widget=forms.TextInput(attrs={'placeholder': 'Enter email address'}))
+    password = forms.CharField(label='Password', max_length=255,
+                           widget=forms.PasswordInput(attrs={'placeholder': 'Enter password'}))
+
+    def clean(self):
+        cleaned_data = super(SignInForm, self).clean()
+        try:
+            user = User.objects.get(email=cleaned_data.get('email'))
+        except User.DoesNotExist, User.MultipleObjectsReturned:
+            raise forms.ValidationError('Login failed')
+        if not user.check_password(cleaned_data.get('password')):
+            raise forms.ValidationError('Login failed')
+
+
+
 class OrgSignUpForm(forms.Form):
     organization_name = forms.CharField(label='Organization Name', max_length=255,
                                         widget=forms.TextInput(attrs={'placeholder': 'Enter organization name'}))
