@@ -122,6 +122,11 @@
             </div>
         </div>
 
+        <div class="row" style="margin-top: 50px;">
+            <button id="joinrequest_btn" class="success button hide">Request to Join</button>
+            <div id="joinrequest_done" class="primary hide">Your Join Request is pending now...</div>
+        </div>
+
         <div class="row" style="padding-top: 100px">
             <div class="small-8 columns small-centered">
                 <h1 class="lead" style="text-align: left;">
@@ -334,6 +339,21 @@
             }
         }
 
+        {% if join_requested == True %}
+            var join_requested = true;
+        {% else %}
+            var join_requested = false;
+        {% endif %}
+        function touchJoinRequest() {
+            if(join_requested) {
+                $('#joinrequest_btn').addClass('hide');
+                $('#joinrequest_done').removeClass('hide');
+            } else {
+                $('#joinrequest_btn').removeClass('hide');
+                $('#joinrequest_done').addClass('hide');
+            }
+        }
+
         $(function(){
             $('input[name="start_date"]').fdatepicker({
                 'pickTime': true,
@@ -387,6 +407,20 @@
                         drawInviteList();
                         $('#people_select').val('');
                         jQuery('#invited_modal').foundation('open');
+                    }
+                );
+            });
+
+            touchJoinRequest();
+            $('#joinrequest_btn').click(function() {
+                $.post(
+                    "{% url 'team_request_join' team.pk %}",
+                    { 
+                        'csrfmiddlewaretoken':$.cookie('csrftoken')
+                    },
+                    function(data) {
+                        join_requested = true;
+                        touchJoinRequest();
                     }
                 );
             });

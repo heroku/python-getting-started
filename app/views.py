@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
-from teams.models import Team
+from teams.models import Team, JoinRequest
 import json
 from django.core.mail import send_mail
 from .models import Alert
@@ -141,6 +141,7 @@ def sign_out(request):
 
 def notifications(request):
     notifications = []
+
     team_invites = request.user.inviteds.all().filter(status="created")
     for team_invite in team_invites:
         notification = {
@@ -158,4 +159,24 @@ def notifications(request):
             }
         }
         notifications.append(notification)
+
+    teams_owned = [member.team.pk for member in request.user.member_set.all().filter(is_owner=True)]
+    team_joinrequests = JoinRequest.objects.all().filter(team__id__in=teams_owned).filter(status="created")
+    for team_joinrequest in team_joinrequests:
+        notification = {
+            'type': 'team_join',
+            'team_join_request': {
+                'id': team_joinrequest.pk
+            },
+            'team': {
+                'id': team_joinrequest.team.pk,
+                'title': team_joinrequest.team.title
+            },
+            'requester': {
+                'id': team_joinrequest.requester.pk,
+                'username': team_joinrequest.requester.username
+            }
+        }
+        notifications.append(notification)
+
     return HttpResponse(json.dumps(notifications), content_type='application/json')

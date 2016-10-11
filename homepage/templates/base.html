@@ -202,6 +202,15 @@
                         '</li>'
                     );
                 }
+                if(notification.type=='team_join') {
+                    $('#notifications ul').append(
+                        '<li data-type="team_join" data-id="' + notification.team_join_request.id + '">' + 
+                            notification.requester.username + ' requested to join ' + notification.team.title + 
+                            '<button type="button" class="button alert" onclick="acceptTeamJoin(' + notification.team_join_request.id + ');"><i class="fa fa-check" aria-hidden="true"></i></button>' + 
+                            '<button type="button" class="button secondary" onclick="rejectTeamJoin(' + notification.team_join_request.id + ');"><i class="fa fa-times" aria-hidden="true"></i></button>' +
+                        '</li>'
+                    );
+                }
             }
             if(notifications.length == 0) {
                 $('#notifications ul').append(
@@ -219,7 +228,7 @@
                 },
                 function(data) {
                     notifications = _.reject(notifications, function(noti) {
-                        return noti.team_invite.id == id;
+                        return noti.type == 'team_invite' && noti.team_invite.id == id;
                     });
                     drawNotifications();
                 }
@@ -234,7 +243,37 @@
                 },
                 function(data) {
                     notifications = _.reject(notifications, function(noti) {
-                        return noti.team_invite.id == id;
+                        return noti.type == 'team_invite' && noti.team_invite.id == id;
+                    });
+                    drawNotifications();
+                }
+            );
+        }
+
+        function acceptTeamJoin(id) {
+            $.post(
+                "/teams/joinrequests/" + id + '/accept/',
+                { 
+                    'csrfmiddlewaretoken':$.cookie('csrftoken')
+                },
+                function(data) {
+                    notifications = _.reject(notifications, function(noti) {
+                        return noti.type == 'team_join' && noti.team_join_request.id == id;
+                    });
+                    drawNotifications();
+                }
+            );
+        }
+
+        function rejectTeamJoin(id) {
+            $.post(
+                "/teams/joinrequests/" + id + '/reject/',
+                { 
+                    'csrfmiddlewaretoken':$.cookie('csrftoken')
+                },
+                function(data) {
+                    notifications = _.reject(notifications, function(noti) {
+                        return noti.type == 'team_join' && noti.team_join_request.id == id;
                     });
                     drawNotifications();
                 }

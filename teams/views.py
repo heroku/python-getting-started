@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from teams.models import Team, Role, Member, Invite
+from teams.models import Team, Role, Member, Invite, JoinRequest
 from django.contrib.auth.models import User
 
 from datetime import datetime, timedelta
@@ -26,10 +26,12 @@ def team_detail(request, team_id):
     # ToDo - This should fetch members who belong to team's organization, once organization is implemented
     nonmembers = [user for user in User.objects.all() if user not in team.members]
     invitees = [invite.invitee for invite in request.user.invites.all().filter(status="created")]
+    joinrequest = request.user.team_join_requests.all().filter(team__id=team_id).filter(status="created")
     context = {
         'team': team,
         'nonmembers': nonmembers,
-        'invitees': invitees
+        'invitees': invitees,
+        'join_requested': len(joinrequest) > 0
     }
     return render(request, 'teams/team_detail.html', context)
 
@@ -117,3 +119,41 @@ def invite_reject(request, invite_id):
         raise Http404
 
     return HttpResponse(status=200)   
+
+@login_required
+def request_join(request, team_id):
+    team = get_object_or_404(Team, pk=team_id)
+    if request.method == 'POST':
+        return _request_join(request, team)
+
+    raise Http404
+
+def _request_join(request, team):
+    join_request = JoinRequest(team=team, requester=request.user, status='created', expired_at=datetime.now()+timedelta(days=7), read=False)
+    join_request.save()
+
+    return HttpResponse(status=200)
+
+@login_required
+def joinrequest_accept(request, request_id):
+    try: 
+        joinrequest = JoinRequest.objects.get(pk=request_id)
+        joinrequest.status = 'accepted'
+        joinrequest.save()
+        member = Member(is_owner=False, team_id=joinrequest.team.pk, user_id=joinrequest.requester.pk)
+        member.save()
+    except Invite.DoesNotExist:
+        raise Http404
+
+    return HttpResponse(status=200)    
+
+@login_required
+def joinrequest_reject(request, request_id):
+    try: 
+        joinrequest = JoinRequest.objects.get(pk=request_id)
+        joinrequest.status = 'rejected'
+        joinrequest.save()
+    except Invite.DoesNotExist:
+        raise Http404
+
+    return HttpResponse(status=200) 

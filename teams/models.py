@@ -46,3 +46,11 @@ class Invite(models.Model):
     expired_at = models.DateTimeField(default=None, blank=True, null=True)
     status = models.CharField(max_length=20, default=None)
     read = models.BooleanField(default=False, blank=False, null=False)
+
+class JoinRequest(models.Model):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, default=None)
+    requester = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='team_join_requests')
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    expired_at = models.DateTimeField(default=None, blank=True, null=True)
+    status = models.CharField(max_length=20, default=None)
+    read = models.BooleanField(default=False, blank=False, null=False)
