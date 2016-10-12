@@ -1,0 +1,10 @@
+{% if member.user.pk != request.user.pk %}
+    <button class="secondary button switch-admin-status-button" style="margin-right: 20px;" data-url="{% url 'organization-switch-admin-status' organization.pk member.user.pk %}">
+        {% if member.is_owner %}
+            Revoke admin
+        {% else %}
+            Make admin
+        {% endif %}
+    </button>
+    <button class="secondary button remove-member-button" data-url="{% url 'organization-remove-member' organization.pk member.user.pk %}" data-user-id="{{ member.user.pk }}">Remove</button>
+{% endif %}

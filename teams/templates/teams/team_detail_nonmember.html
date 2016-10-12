@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block extra_header %}
+    <link rel="stylesheet" href="{% static 'css/foundation-datepicker.min.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+    {% load staticfiles %}
+
+    <div class="container">
+        <div class="row" style="margin-top:75px">
+            <div class="columns small-4">
+                <div style="background-image: url({{ MEDIA_URL }}{{ team.image }});" class="square-image"></div>
+            </div>
+            <div class="columns small-8 text-left">
+                <div class="title-header" style="display:inline-block;">{{ team.title }}</div>
+                {% for owner in owners %}
+                    <div class="user-tag-purple" style="display:inline-block; margin-left:10px;">{{ owner.username }}</div>
+                {% endfor %}
+                <div class="title-description">
+                    {% if members_count > 1 %}
+                        {{ members_count }} MEMBERS
+                    {% else %}
+                        {{ members_count }} MEMBER
+                    {% endif %}
+                </div>
+                <div class="item-description" style="margin-top:30px;">{{ team.description }}</div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:50px; margin-bottom:50px;">
+            <div class="columns small-12 text-center">
+                <button id="joinrequest_btn" class="button button-red hide"><i class="fa fa-user" aria-hidden="true" style="margin-right:10px;"></i>Request to Join</button>
+                <div id="joinrequest_done" class="message hide">Your Join Request is pending now...</div>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+{% block extra_footer %}
+    <script type="text/javascript" src="{% static 'js/foundation-datepicker.min.js' %}"></script>
+    <script type="text/javascript">
+
+        {% if join_requested == True %}
+            var join_requested = true;
+        {% else %}
+            var join_requested = false;
+        {% endif %}
+        
+        function touchJoinRequest() {
+            if(join_requested) {
+                $('#joinrequest_btn').addClass('hide');
+                $('#joinrequest_done').removeClass('hide');
+            } else {
+                $('#joinrequest_btn').removeClass('hide');
+                $('#joinrequest_done').addClass('hide');
+            }
+        }
+
+        $(function(){
+            touchJoinRequest();
+            $('#joinrequest_btn').click(function() {
+                $.post(
+                    "{% url 'team_request_join' team.pk %}",
+                    { 
+                        'csrfmiddlewaretoken':$.cookie('csrftoken')
+                    },
+                    function(data) {
+                        join_requested = true;
+                        touchJoinRequest();
+                    }
+                );
+            });
+        });
+    </script>
+{% endblock %}
