@@ -36,6 +36,7 @@ def team_detail(request, team_id):
             'nonmembers': nonmembers,
             'invitees': invitees,
             'members_count': len(team.members),
+            'members': team.members,
             'owners': owners
         }
         return render(request, 'teams/team_detail.html', context)

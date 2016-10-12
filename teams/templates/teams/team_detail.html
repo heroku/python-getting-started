@@ -167,9 +167,17 @@
                 <p style="text-align: left;"><button class="success button" data-open="add_role_modal">Create New Role</button></p>
 
             </div>
-            <div class="medium-4 small-12 columns small-centered">
-                <p>(Some) Team members</p>
-                <a data-open="invite_people_modal" class="button" style="border-radius:50%;"><i class="fa fa-plus"></i></a>
+
+            <div class="medium-4 small-12 columns">
+                <div class="title-header text-left">Team Members</div>
+                <div class="title-description text-left">
+                    {% if members_count > 1 %}
+                        {{ members_count }} TEAM MEMBERS
+                    {% else %}
+                        {{ members_count }} TEAM MEMBER
+                    {% endif %}
+                </div>
+                <a data-open="invite_people_modal" class="button button-red" style="margin-top:40px; border-radius:50%;"><i class="fa fa-plus"></i></a>
                 <div class="callout no-border">
                     <p><img style="border-radius:180px; width:125px;" src="{% static 'img/person_stock.jpg' %}"
                             alt="image of a planet called Pegasi B"></p>
