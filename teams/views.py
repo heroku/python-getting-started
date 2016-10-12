@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 
 from teams.models import Team, Role, Member, Invite, JoinRequest
-from app.models import Organization
+from app.models import Organization, OrganizationMember
 from django.contrib.auth.models import User
 
 from datetime import datetime, timedelta
@@ -25,9 +25,14 @@ def team_detail(request, team_id):
         0) check if current user has access to this team
         1) fallback to 404 on wrong ids
     """
+    try:
+        organization = Organization.get_single_by_user(request.user)
+    except Organization.DoesNotExist:
+        messages.add_message(request, messages.WARNING, 'You\'re not assigned to any organizations')
+        return redirect('/app/')
+
     team = Team.objects.get(pk=team_id)
-    # ToDo - This should fetch members who belong to team's organization, once organization is implemented
-    nonmembers = [user for user in User.objects.all() if user not in team.members]
+    nonmembers = [membership.user for membership in OrganizationMember.objects.filter(organization=organization) if membership.user not in team.members]
     owners = team.owners
     invitees = [invite.invitee for invite in request.user.invites.all().filter(status="created")]
     joinrequest = request.user.team_join_requests.all().filter(team__id=team_id).filter(status="created")
