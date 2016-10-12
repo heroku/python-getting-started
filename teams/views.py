@@ -34,7 +34,9 @@ def team_detail(request, team_id):
         context = {
             'team': team,
             'nonmembers': nonmembers,
-            'invitees': invitees
+            'invitees': invitees,
+            'members_count': len(team.members),
+            'owners': owners
         }
         return render(request, 'teams/team_detail.html', context)
     else:

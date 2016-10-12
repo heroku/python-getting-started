@@ -107,23 +107,27 @@
     <div class="container">
 
         <div class="row" style="padding-top: 75px">
-
-            <div class="medium-4 grid-block">
-                <p><img style="background: url(
-                        {{ MEDIA_URL }}{{ team.image }}); background-size:cover; background-repeat:no-repeat;width:250px; height:250px;">
-                </p>
-                {% if request.user = team.owner %}
-                    <a href="delete/"><p>delete</p></a>
-                {% endif %}
+            <div class="columns small-4">
+                <div style="background-image: url({{ MEDIA_URL }}{{ team.image }});" class="square-image"></div>
             </div>
-            <div class="medium-6 grid-block">
-                <p class="lead" style="text-align: left;">{{ team.title }}</p>
-                <p class="subheader" style="text-align: left;">{{ team.description }}</p>
+            <div class="columns small-8 text-left">
+                <div class="title-header" style="display:inline-block;">{{ team.title }}</div>
+                {% for owner in owners %}
+                    <div class="user-tag-purple" style="display:inline-block; margin-left:10px;">{{ owner.username }}</div>
+                {% endfor %}
+                <div class="title-description">
+                    {% if members_count > 1 %}
+                        {{ members_count }} MEMBERS
+                    {% else %}
+                        {{ members_count }} MEMBER
+                    {% endif %}
+                </div>
+                <div class="item-description" style="margin-top:30px;">{{ team.description }}</div>
             </div>
         </div>
 
         <div class="row" style="padding-top: 100px">
-            <div class="small-8 columns small-centered">
+            <div class="small-12 medium-8 columns small-centered">
                 <h1 class="lead" style="text-align: left;">
                     Team roles
                     <a data-open="add_role_modal" style="color: #5da423; cursor: pointer;"><i class="fa fa-plus"></i></a>
@@ -163,7 +167,7 @@
                 <p style="text-align: left;"><button class="success button" data-open="add_role_modal">Create New Role</button></p>
 
             </div>
-            <div class="small-4 columns small-centered">
+            <div class="medium-4 small-12 columns small-centered">
                 <p>(Some) Team members</p>
                 <a data-open="invite_people_modal" class="button" style="border-radius:50%;"><i class="fa fa-plus"></i></a>
                 <div class="callout no-border">
