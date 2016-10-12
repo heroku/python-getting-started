@@ -6,58 +6,13 @@
 {% block extra_header %}
     <link rel="stylesheet" href="{% static 'css/foundation-datepicker.min.css' %}" />
 <style>
+
     .event {
-        padding: 1rem 1rem 1rem 0;
-        display: table;
+        padding: 1rem 0;
     }
 
-    .event-date {
-        width: 6rem;
-        margin: 0 auto 1rem;
-        display: table-cell;
-        width: auto;
-    }
-
-    .event-date .event-month {
-        margin: 0;
-        background: #eee;
-        padding: 0.5rem 2rem;
-        text-align: center;
-    }
-
-    .event-date .event-day {
-        margin: 0;
-        border: 1px solid #eee;
-        padding: 0 2rem;
-        text-align: center;
-        font-size: 2rem;
-    }
-
-    .event-desc {
-        padding: 0 0 0 1rem;
-        text-align: left;
-        display: table-cell;
-        vertical-align: top;
-    }
-
-    .event-desc .event-desc-header {
-        margin: 0 0 0.5rem 0;
-        padding: 0;
-    }
-
-    .event-desc .event-desc-detail {
-        margin: 0 0 0.25rem;
-        padding: 0;
-    }
-
-    .event-desc .event-desc-time {
-        font-weight: bold;
-    }
-
-    .event-desc .rsvp.button {
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-        margin: 0;
+    .delete-role-button {
+        margin-left: 5px;
     }
 
     .modal-box {
@@ -127,48 +82,56 @@
         </div>
 
         <div class="row" style="padding-top: 100px">
-            <div class="small-12 medium-8 columns small-centered">
-                <h1 class="lead" style="text-align: left;">
-                    Team roles
-                    <a data-open="add_role_modal" style="color: #5da423; cursor: pointer;"><i class="fa fa-plus"></i></a>
-                </h1>
+            <div class="small-12 medium-8 columns">
+                <div class="row">
+                    <div class="columns small-6 text-left">
+                        <div class="title-header">Roles</div>
+                        <div class="title-description">3 MILESTONES</div>
+                    </div>
+                    <div class="columns small-6 text-right">
+                        <button class="button button-red" data-open="add_role_modal"><i class="fa fa-plus" style="margin-right:10px;"></i>Team Role</button>
+                    </div>
 
-                {% for role in team.role_set.all %}
-                    <article class="event role-{{ role.pk }}">
-                        <div class="event-date">
-                            <img width="125" src="http://placehold.it/125x125&text=Role"
-                                 alt="image of a planet called Pegasi B">
+                    <div class="columns small-12" style="margin-top:40px;">
+                    {% for role in team.role_set.all %}
+                        <div class="row event role-{{ role.pk }}">
+                            <div class="event-date columns small-3 text-left">
+                                <img width="125" src="http://placehold.it/125x125&text=Role"
+                                     alt="image of a planet called Pegasi B">
+                            </div>
+
+                            <div class="event-desc columns small-7 text-left">
+                                <p class="event-desc-header item-title">
+                                    {{ role.title }}
+                                    {% if request.user in team.owners %}
+                                        <button class="button secondary tiny delete-role-button float-right"
+                                                data-url="{% url 'team_roles' team.pk %}"
+                                                data-role-id="{{ role.pk }}">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                        <button class="button secondary tiny edit-role-button float-right"
+                                                data-url="{% url 'team_roles' team.pk %}"
+                                                data-role-id="{{ role.pk }}"
+                                                data-data='{{ role.jsoned|safe }}'>
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                    {% endif %}
+                                </p>
+                                <div class="event-desc-detail item-description">{{ role.description }}</div>
+                            </div>
+
+                            <div class="event-member columns small-2 text-right">
+                                <div style="background-image: url('{% static 'img/person_stock.jpg' %}'); width:60px; height:60px; border-radius:50%; background-size:cover; display:inline-block;"></div>
+                            </div>
                         </div>
-
-                        <div class="event-desc">
-                            <h4 class="event-desc-header title">{{ role.title }}</h4>
-                            <p class="event-desc-detail description"><span class="event-desc-time"></span>{{ role.description }}</p>
-                            {% if request.user in team.owners %}
-                                <button class="button secondary edit-role-button"
-                                        data-url="{% url 'team_roles' team.pk %}"
-                                        data-role-id="{{ role.pk }}"
-                                        data-data='{{ role.jsoned|safe }}'>
-                                    <i class="fa fa-pencil"></i>
-                                </button>
-                                <button class="button secondary delete-role-button"
-                                        data-url="{% url 'team_roles' team.pk %}"
-                                        data-role-id="{{ role.pk }}">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            {% endif %}
-                        </div>
-
-                    </article>
-                    <hr class="role-{{ role.pk }}" />
-                {% empty %}
-                    No roles have been created yet
-                {% endfor %}
-
-                <p style="text-align: left;"><button class="success button" data-open="add_role_modal">Create New Role</button></p>
-
+                    {% empty %}
+                        No roles have been created yet
+                    {% endfor %}
+                    </div>
+                </div>
             </div>
 
-            <div class="medium-4 small-12 columns">
+            <div class="medium-3 medium-offset-1 small-12 columns">
                 <div class="title-header text-left">Team Members</div>
                 <div class="title-description text-left">
                     {% if members_count > 1 %}
