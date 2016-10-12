@@ -101,6 +101,22 @@
             background-color: #e1e8f0;
             padding: 10px 40px;
         }
+
+        #menu_modal {
+            margin-bottom: 30%;
+        }
+        #menu_modal a {
+            color: black;
+            padding: 14px 16px;
+            overflow: hidden;
+            font-size: 12px;
+            font-weight: bold;
+            display: block;
+        }
+        #menu_modal .modal-box {
+            height: 100%;
+            padding-top: 40%;
+        }
     </style>
 
     {% block extra_header %}{% endblock %}
@@ -111,7 +127,7 @@
 
     <div class="title-bar" data-responsive-toggle="top-bar" data-hide-for="medium">
         <a href="{% url 'index' %}"><img src="{% static 'logo1.png' %}" alt=""></a>
-        <a href="#" onclick="return false;" data-toggle>
+        <a href="#" onclick="return showMenuModal();">
             <img src="{% static 'menu-icon.png' %}">
         </a>
     </div>
@@ -209,6 +225,20 @@
             Copyright &copy; TeamedUp. All rights reserved.
         </div>
     </div>
+</div>
+
+        <div class="reveal tiny" id="menu_modal" data-reveal>
+            <div class="modal-box">
+                <div class="row">
+                    <div class="columns text-center">
+                        <div class="modal-menu-wrapper"></div>
+                        <button class="close-button" data-close aria-label="Close modal" type="button" style="float:right;">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
@@ -220,6 +250,12 @@
 
     <script>
         $(document).foundation();
+
+        function showMenuModal(){
+            $('#menu_modal').foundation('open');
+            $('.modal-menu-wrapper').html($('.top-bar-right').html());
+            return false;
+        }
 
         {% if request.user.is_authenticated %}
         var notifications = [];
