@@ -51,8 +51,8 @@ INSTALLED_APPS = (
 )
 
 
-_r = redis.from_url(os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/1'))
-redis_url = urlparse.urlparse(os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/1'))
+_r = redis.from_url(os.environ.get('REDIS_URL', 'redis://localhost:6379'))
+redis_url = urlparse.urlparse(os.environ.get('REDIS_URL', 'redis://localhost:6379'))
 CACHES = {
     "default": {
         "BACKEND": "redis_cache.RedisCache",
@@ -63,6 +63,11 @@ CACHES = {
         }
     }
 }
+THUMBNAIL_DEBUG = True
+THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
+THUMBNAIL_REDIS_HOST = redis_url.hostname
+THUMBNAIL_REDIS_PORT = redis_url.port
+
 
 INTERNAL_IPS = ('127.0.0.1',)
 
@@ -231,8 +236,6 @@ except:
     # you run `collectstatic`).
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
-THUMBNAIL_DEBUG = True
-THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
 
 # LOCAL SETTINGS THAT WE NEED TO CONFIGURE ENVIRONMENT LOGIC TO HANDLE CORRECTLY
 
