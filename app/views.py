@@ -24,11 +24,13 @@ def index(request):
         organization = Organization.get_single_by_user(request.user)
     except Organization.DoesNotExist:
         messages.add_message(request, messages.WARNING, 'You\'re not assigned to any organizations')
-        return redirect('/app/')
+        organization = None
+        # return redirect('/app/')
 
-    teams = Team.objects.filter(organization=organization)
-    myteams = [member.team for member in request.user.member_set.filter(team_id__in=[t.pk for t in teams])]
-    otherteams = [team for team in teams if team not in myteams]
+    if organization is not None:
+        teams = Team.objects.filter(organization=organization)
+        myteams = [member.team for member in request.user.member_set.filter(team_id__in=[t.pk for t in teams])]
+        otherteams = [team for team in teams if team not in myteams]
 
     return render(request, 'app/home.html', locals())
 
