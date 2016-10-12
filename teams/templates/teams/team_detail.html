@@ -203,7 +203,7 @@
                 <div class="row">
                     {% for member in members %}
                         <div class="columns small-6 medium-12 member">
-                            {% thumbnail member.profile.userpic "100x100" as avatar %}
+                            {% thumbnail member.profile.userpic "100x100" crop="center" as avatar %}
                                 <img src="{{ avatar.url }}" width="{{ avatar.width }}" height="{{ avatar.height }}" class="member-avatar" />
                                 <div class="member-name">{{ member.profile.name }}</div>
                             {% endthumbnail %}
