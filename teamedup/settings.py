@@ -216,6 +216,8 @@ except:
     # you run `collectstatic`).
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
+    import redis
+    _r = redis.from_url(os.environ.get("REDIS_URL"))
     redis_url = urlparse.urlparse(os.environ.get('REDIS_URL'))
     CACHES = {
         "default": {
