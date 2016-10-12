@@ -101,8 +101,8 @@
                             </div>
 
                             <div class="event-desc columns small-7 text-left">
-                                <p class="event-desc-header item-title">
-                                    {{ role.title }}
+                                <p class="event-desc-headerf">
+                                    <span class="title item-title">{{ role.title }}</span>
                                     {% if request.user in team.owners %}
                                         <button class="button secondary tiny delete-role-button float-right"
                                                 data-url="{% url 'team_roles' team.pk %}"
@@ -117,7 +117,7 @@
                                         </button>
                                     {% endif %}
                                 </p>
-                                <div class="event-desc-detail item-description">{{ role.description }}</div>
+                                <div class="event-desc-detail description item-description">{{ role.description }}</div>
                             </div>
 
                             <div class="event-member columns small-2 text-right">
