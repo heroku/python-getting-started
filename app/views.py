@@ -20,15 +20,17 @@ from teamedup import settings
 
 @login_required
 def index(request):
-    teams = Team.objects.all()
-    myteams = [member.team for member in request.user.member_set.all()]
+    try:
+        organization = Organization.get_single_by_user(request.user)
+    except Organization.DoesNotExist:
+        messages.add_message(request, messages.WARNING, 'You\'re not assigned to any organizations')
+        return redirect('/app/')
+
+    teams = Team.objects.filter(organization=organization)
+    myteams = [member.team for member in request.user.member_set.filter(team_id__in=[t.pk for t in teams])]
     otherteams = [team for team in teams if team not in myteams]
-    context = {
-        'teams': teams,
-        'myteams': myteams,
-        'otherteams': otherteams,
-    }
-    return render(request, 'app/home.html', context)
+
+    return render(request, 'app/home.html', locals())
 
 
 def login_view(request):

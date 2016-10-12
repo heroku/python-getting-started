@@ -3,8 +3,10 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
 
 from teams.models import Team, Role, Member, Invite, JoinRequest
+from app.models import Organization
 from django.contrib.auth.models import User
 
 from datetime import datetime, timedelta
@@ -68,7 +70,13 @@ def create_new_team(request):
     description = request.POST.get('description')
     team_image = request.FILES['team_image']
 
-    team = Team(title=title, description=description, image=team_image)
+    try:
+        organization = Organization.get_single_by_user(request.user)
+    except Organization.DoesNotExist:
+        messages.add_message(request, messages.WARNING, 'You\'re not assigned to any organizations')
+        return redirect('/app/')
+
+    team = Team(title=title, description=description, image=team_image, organization=organization)
     team.save()
 
     Member(user=request.user, is_owner=True, team=team).save()

@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 
+from app.models import Organization
+
 import json
 
 
@@ -10,7 +12,7 @@ class Team(models.Model):
     description = models.TextField(max_length=200)
     # Image upload is working for S3 bucket, but not for local environment (local development relies on connection to S3 at the moment)
     image = models.ImageField('img', upload_to='media/images/', default='img/dashboard_template_image.png')
-    # created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True) # TODO: add created_at field
+    organization = models.ForeignKey(Organization, blank=True, null=True, default=None)
 
     @property
     def owners(self):
@@ -22,6 +24,13 @@ class Team(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.organization:
+            # TODO: remove this block before going live
+            raise AttributeError
+        super(Team, self).save(*args, **kwargs)
+
 
 
 class Role(models.Model):
