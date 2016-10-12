@@ -7,8 +7,36 @@
     <link rel="stylesheet" href="{% static 'css/foundation-datepicker.min.css' %}" />
 <style>
 
-    .event {
+    .role {
         padding: 1rem 0;
+    }
+
+    .role-date {
+        font-family: 'Montserrat', sans-serif;
+        color: #8a8a8a;
+        text-align: center;
+        font-size: 10px;
+        font-weight: bold;
+        background-color: #e1e8f0;
+        width: 100px;
+        height: 100px;
+        border-radius: 5px;
+        padding: 0px;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .role-date-start {
+        color: black;
+        font-size: 14px;
+    }
+
+    .role-member-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-size: cover;
+        display: inline-block;
     }
 
     .delete-role-button {
@@ -48,6 +76,19 @@
         .reveal {
             width: 800px;
             max-width: 62rem;
+        }
+    }
+
+    @media screen and (max-width: 450px){
+        .role-date {
+            width: 80px;
+            height: 80px;
+            font-size: 8px;
+        }
+
+        .role-member-avatar {
+            width: 40px;
+            height: 40px;
         }
     }
 
@@ -94,14 +135,17 @@
 
                     <div class="columns small-12" style="margin-top:40px;">
                     {% for role in team.role_set.all %}
-                        <div class="row event role-{{ role.pk }}">
-                            <div class="event-date columns small-3 text-left">
-                                <img width="125" src="http://placehold.it/125x125&text=Role"
-                                     alt="image of a planet called Pegasi B">
+                        <div class="row role role-{{ role.pk }}">
+                            <div class="columns small-3 text-left">
+                                <div class="role-date">
+                                    <div>STARTS ON</div>
+                                    <div class="role-date-start">{{ role.start_date | date:"j M" | upper }}</div>
+                                    <div class="role-date-duration">FOR {{ role.end_date | timeuntil:role.start_date | upper }}</div>
+                                </div>
                             </div>
 
-                            <div class="event-desc columns small-7 text-left">
-                                <p class="event-desc-headerf">
+                            <div class="role-desc columns small-7 text-left">
+                                <p class="role-desc-header">
                                     <span class="title item-title">{{ role.title }}</span>
                                     {% if request.user in team.owners %}
                                         <button class="button secondary tiny delete-role-button float-right"
@@ -117,15 +161,15 @@
                                         </button>
                                     {% endif %}
                                 </p>
-                                <div class="event-desc-detail description item-description">{{ role.description }}</div>
+                                <div class="role-desc-detail description item-description">{{ role.description }}</div>
                             </div>
 
-                            <div class="event-member columns small-2 text-right">
-                                <div style="background-image: url('{% static 'img/person_stock.jpg' %}'); width:60px; height:60px; border-radius:50%; background-size:cover; display:inline-block;"></div>
+                            <div class="role-member columns small-2 text-right">
+                                <div class="role-member-avatar" style="background-image: url('{% static 'img/person_stock.jpg' %}');"></div>
                             </div>
                         </div>
                     {% empty %}
-                        No roles have been created yet
+                        <div class="message">No roles have been created yet</div>
                     {% endfor %}
                     </div>
                 </div>
@@ -403,18 +447,18 @@
                 });
             });
 
-            $('#edit_role_form').submit(function(){
-                $.post($(this).attr('action'), $(this).serialize(), function(response){}, 'json');
-                var data = {};
-                $(this).serializeArray().map(function(item){
-                   data[item.name] = item.value;
-                });
-                $('.role-' + data.id).find('.edit-role-button').data('data', data);
-                $('.role-' + data.id).find('.title').text(data.role_title);
-                $('.role-' + data.id).find('.description').text(data.role_description);
-                $('#edit_role_modal').foundation('close');
-                return false;
-            });
+            // $('#edit_role_form').submit(function(){
+            //     $.post($(this).attr('action'), $(this).serialize(), function(response){}, 'json');
+            //     var data = {};
+            //     $(this).serializeArray().map(function(item){
+            //        data[item.name] = item.value;
+            //     });
+            //     $('.role-' + data.id).find('.edit-role-button').data('data', data);
+            //     $('.role-' + data.id).find('.title').text(data.role_title);
+            //     $('.role-' + data.id).find('.description').text(data.role_description);
+            //     $('#edit_role_modal').foundation('close');
+            //     return false;
+            // });
 
             $("#people_select").autoComplete({
                 minChars: 0,
