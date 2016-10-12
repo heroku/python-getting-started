@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 import urlparse
+import redis
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -48,6 +49,20 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'debug_toolbar',
 )
+
+
+_r = redis.from_url(os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/1'))
+redis_url = urlparse.urlparse(os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379/1'))
+CACHES = {
+    "default": {
+        "BACKEND": "redis_cache.RedisCache",
+        "LOCATION": "{0}:{1}".format(redis_url.hostname, redis_url.port),
+        "OPTIONS": {
+            "PASSWORD": redis_url.password,
+            "DB": 0,
+        }
+    }
+}
 
 INTERNAL_IPS = ('127.0.0.1',)
 
@@ -215,20 +230,6 @@ except:
     # Tell the staticfiles app to use S3Boto storage when writing the collected static files (when
     # you run `collectstatic`).
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-    import redis
-    _r = redis.from_url(os.environ.get("REDIS_URL"))
-    redis_url = urlparse.urlparse(os.environ.get('REDIS_URL'))
-    CACHES = {
-        "default": {
-            "BACKEND": "redis_cache.RedisCache",
-            "LOCATION": "{0}:{1}".format(redis_url.hostname, redis_url.port),
-            "OPTIONS": {
-                "PASSWORD": redis_url.password,
-                "DB": 0,
-            }
-        }
-    }
 
 THUMBNAIL_DEBUG = True
 THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
