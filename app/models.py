@@ -24,6 +24,20 @@ class Organization(models.Model):
     name = models.CharField(max_length=255, default='')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @staticmethod
+    def get_by_user(user):
+        return [membership.organization for membership in OrganizationMember.objects.filter(user=user)]
+
+    @staticmethod
+    def get_single_by_user(user):
+        """
+        This method will be useful only until the number organizations per users is limited to 1
+        """
+        organizations = Organization.get_by_user(user)
+        if len(organizations) == 0:
+            raise Organization.DoesNotExist
+        return organizations[0]
+
     @property
     def members(self):
         return self.organizationmember_set.all()
