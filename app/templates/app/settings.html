@@ -133,9 +133,9 @@
                             <div class="row organization-member-{{ member.user.pk }}">
                                 <div class="large-2 medium-2 small-4 columns">
                                     {% thumbnail member.user.profile.userpic "200x200" crop="center" as userpic %}
-                                        <img class="userpic-preview image-rounded" src="{{ userpic.url }}"/>
+                                        <img class="image-rounded" src="{{ userpic.url }}"/>
                                     {% empty %}
-                                        <img class="userpic-preview image-rounded"
+                                        <img class="image-rounded"
                                              src="http://placehold.it/200x200&text=Picture"/>
                                     {% endthumbnail %}
                                 </div>
