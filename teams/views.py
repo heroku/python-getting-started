@@ -26,6 +26,7 @@ def team_detail(request, team_id):
     team = Team.objects.get(pk=team_id)
     # ToDo - This should fetch members who belong to team's organization, once organization is implemented
     nonmembers = [user for user in User.objects.all() if user not in team.members]
+    owners = [member.user for member in team.member_set.all().filter(is_owner=True)]
     invitees = [invite.invitee for invite in request.user.invites.all().filter(status="created")]
     joinrequest = request.user.team_join_requests.all().filter(team__id=team_id).filter(status="created")
 
@@ -40,7 +41,8 @@ def team_detail(request, team_id):
         context = {
             'team': team,
             'join_requested': len(joinrequest) > 0,
-            'members_count': len(team.members)
+            'members_count': len(team.members),
+            'owners': owners
         }
         return render(request, 'teams/team_detail_nonmember.html', context)
 
