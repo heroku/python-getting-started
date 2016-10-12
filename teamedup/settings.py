@@ -49,9 +49,6 @@ INSTALLED_APPS = (
     'debug_toolbar',
 )
 
-THUMBNAIL_DEBUG = True
-THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
-
 INTERNAL_IPS = ('127.0.0.1',)
 
 # SITE_ID for django.contrib.comments
@@ -230,6 +227,9 @@ except:
             }
         }
     }
+
+THUMBNAIL_DEBUG = True
+THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
 
 # LOCAL SETTINGS THAT WE NEED TO CONFIGURE ENVIRONMENT LOGIC TO HANDLE CORRECTLY
 
