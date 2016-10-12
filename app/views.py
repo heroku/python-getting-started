@@ -55,7 +55,6 @@ def edit_settings(request):
 
     organizations = [membership.organization for membership in OrganizationMember.objects.filter(user=request.user, is_owner=True)]
 
-
     initial = {
         'name': request.user.profile.name,
         'email': request.user.email
