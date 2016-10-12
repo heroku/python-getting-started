@@ -67,6 +67,7 @@ THUMBNAIL_DEBUG = True
 THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
 THUMBNAIL_REDIS_HOST = redis_url.hostname
 THUMBNAIL_REDIS_PORT = redis_url.port
+THUMBNAIL_REDIS_PASSWORD = redis_url.password
 
 
 INTERNAL_IPS = ('127.0.0.1',)
