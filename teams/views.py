@@ -39,7 +39,8 @@ def team_detail(request, team_id):
     else:
         context = {
             'team': team,
-            'join_requested': len(joinrequest) > 0
+            'join_requested': len(joinrequest) > 0,
+            'members_count': len(team.members)
         }
         return render(request, 'teams/team_detail_nonmember.html', context)
 

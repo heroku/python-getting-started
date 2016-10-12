@@ -22,8 +22,8 @@
                     <a href="/teams/detail/{{ team.pk }}">
                         <div style="background-image:url('{{ MEDIA_URL }}{{ team.image }}');" class="square-image"></div>
                     </a>
-                    <div class="item-title-header" style="margin-top:30px;"><a href="/teams/detail/{{ team.id }}">{{ team.title }}</a></div>
-                    <div class="item-title-description" style="margin-top:10px; word-break: break-all;">{{ team.description|slice:":45" }}</div>
+                    <div class="item-title" style="margin-top:30px;"><a href="/teams/detail/{{ team.id }}">{{ team.title }}</a></div>
+                    <div class="item-description" style="margin-top:10px; word-break: break-all;">{{ team.description|slice:":45" }}</div>
                 </div>
             {% endfor %}
         </div>
@@ -51,11 +51,11 @@
                         </a>
                     </div>
                     <div class="small-8 medium-9 large-10 columns text-left">
-                        <div class="team-row-title item-title-header" style="display:inline-block; margin:10px 0px;">{{ team.title }}</div>
+                        <div class="team-row-title item-title" style="display:inline-block; margin:10px 0px;">{{ team.title }}</div>
                         {% for member in team.members %}
                             <div class="user-tag-purple" style="margin:10px 0px 10px 10px;">{{ member.username }}</div>
                         {% endfor %}
-                        <div class="team-row-description item-title-description" style="word-break: break-all;">{{ team.description }}</div>
+                        <div class="team-row-description item-description" style="word-break: break-all;">{{ team.description }}</div>
                     </div>
                 </div>
             {% endfor %}

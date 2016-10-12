@@ -11,26 +11,22 @@
     {% load staticfiles %}
 
     <div class="container">
-
-        <div class="row" style="padding-top: 75px">
-
-            <div class="medium-4 grid-block">
-                <p><img style="background: url(
-                        {{ MEDIA_URL }}{{ team.image }}); background-size:cover; background-repeat:no-repeat;width:250px; height:250px;">
-                </p>
-                {% if request.user = team.owner %}
-                    <a href="delete/"><p>delete</p></a>
-                {% endif %}
+        <div class="row" style="margin-top:75px">
+            <div class="columns small-4">
+                <div style="background-image: url({{ MEDIA_URL }}{{ team.image }});" class="square-image"></div>
             </div>
-            <div class="medium-6 grid-block">
-                <p class="lead" style="text-align: left;">{{ team.title }}</p>
-                <p class="subheader" style="text-align: left;">{{ team.description }}</p>
+            <div class="columns small-8 text-left">
+                <div class="title-header">{{ team.title }}</div>
+                <div class="title-description">{{ members_count }} MEMBERS</div>
+                <div class="item-description" style="margin-top:30px;">{{ team.description }}</div>
             </div>
         </div>
 
-        <div class="row" style="margin-top: 50px;">
-            <button id="joinrequest_btn" class="success button hide">Request to Join</button>
-            <div id="joinrequest_done" class="primary hide">Your Join Request is pending now...</div>
+        <div class="row" style="margin-top:50px; margin-bottom:50px;">
+            <div class="columns small-12 text-left">
+                <button id="joinrequest_btn" class="button button-red hide"><i class="fa fa-user" aria-hidden="true" style="margin-right:10px;"></i>Request to Join</button>
+                <div id="joinrequest_done" class="message hide">Your Join Request is pending now...</div>
+            </div>
         </div>
 
     </div>
