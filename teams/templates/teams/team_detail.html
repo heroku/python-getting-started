@@ -2,6 +2,7 @@
 
 {% load staticfiles %}
 
+{% load thumbnail %}
 
 {% block extra_header %}
     <link rel="stylesheet" href="{% static 'css/foundation-datepicker.min.css' %}" />
@@ -41,6 +42,20 @@
 
     .delete-role-button {
         margin-left: 5px;
+    }
+
+    .member {
+        margin: 20px 0px;
+    }
+
+    .member-avatar {
+        border-radius: 50%;
+    }
+
+    .member-name {
+        font-family: 'Montserrat', sans-serif;
+        margin-top: 10px;
+        font-size: 14px;
     }
 
     .modal-box {
@@ -185,19 +200,16 @@
                     {% endif %}
                 </div>
                 <a data-open="invite_people_modal" class="button button-red" style="margin-top:40px; border-radius:50%;"><i class="fa fa-plus"></i></a>
-                <div class="callout no-border">
-                    <p><img style="border-radius:180px; width:125px;" src="{% static 'img/person_stock.jpg' %}"
-                            alt="image of a planet called Pegasi B"></p>
+                <div class="row">
+                    {% for member in members %}
+                        <div class="columns small-6 medium-12 member">
+                            {% thumbnail member.profile.userpic "100x100" as avatar %}
+                                <img src="{{ avatar.url }}" width="{{ avatar.width }}" height="{{ avatar.height }}" class="member-avatar" />
+                                <div class="member-name">{{ member.profile.name }}</div>
+                            {% endthumbnail %}
+                        </div>
+                    {% endfor %}
                 </div>
-                <div class="callout no-border">
-                    <p><img style="border-radius:180px; width:125px;" src="{% static 'img/person_stock.jpg' %}"
-                            alt="image of a planet called Pegasi B"></p>
-                </div>
-                <div class="callout no-border">
-                    <p><img style="border-radius:180px; width:125px;" src="{% static 'img/person_stock.jpg' %}"
-                            alt="image of a planet called Pegasi B"></p>
-                </div>
-
             </div>
 
         </div>
