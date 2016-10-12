@@ -49,6 +49,7 @@ INSTALLED_APPS = (
 )
 
 THUMBNAIL_DEBUG = True
+THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
 
 INTERNAL_IPS = ('127.0.0.1',)
 
