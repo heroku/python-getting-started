@@ -105,7 +105,7 @@ class Profile(models.Model):
     bio = models.TextField(default='')
 
     def get_name(self):
-        return self.name or self.user.email.split('@')[0]
+        return self.name or self.user.email
 
     def get_location_string(self):
         return '%s%s%s' % (self.city, ', ' if self.city and self.country else '' , self.country)
