@@ -85,6 +85,11 @@ class SettingsForm(forms.Form):
     repeat_password = forms.CharField(label='Repeat Password', max_length=255, required=False,
                                       widget=forms.PasswordInput(attrs={'placeholder': 'Repeat password'}))
     userpic = forms.ImageField(label='Picture', required=False)
+    city = forms.CharField(label='City', max_length=255, required=False,
+                               widget=forms.TextInput(attrs={'placeholder': 'Enter city'}))
+    country = forms.CharField(label='Country', max_length=255, required=False,
+                               widget=forms.TextInput(attrs={'placeholder': 'Enter country'}))
+    bio = forms.CharField(label='Bio', widget=forms.Textarea)
 
 
     def set_user(self, user):

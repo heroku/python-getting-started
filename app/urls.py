@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^join/(?P<token>\w+)/$', views.join_organization, name='join-organization'),
 	url(r'^notifications$', views.notifications, name='notifications'),
 	url(r'^people$', views.searchpeople, name='search-people'),
+    url(r'^member/(?P<user_id>\d+)/$', views.user_page, name='user-page'),
 ]
