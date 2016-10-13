@@ -161,7 +161,12 @@ def searchpeople(request):
     peoples = []
     for people in User.objects.all():
         porgs = [membership.organization for membership in OrganizationMember.objects.filter(user=people)]
-        if bool(set(organizations).intersection(set(porgs))):
+        corgs = list(set(organizations).intersection(set(porgs)))
+        if len(corgs)>0:
+            teams = [teammember.team for teammember in people.member_set.all()]
+            for org in corgs:
+                org.teams = [team for team in teams if team.organization == org]
+            people.orgs = corgs
             peoples.append(people)
 
     return render(request, 'app/people.html', locals())

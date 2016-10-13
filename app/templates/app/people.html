@@ -44,6 +44,22 @@
                     </div>
                     <div class="columns small-10 text-left">
                         <div class="people-name">{{ people.profile.name }}</div>
+                        <ul>
+                            {% for org in people.orgs %}
+                            <li>
+                                {{ org.name }}
+                                {% if org.teams %}
+                                    <ul>
+                                    {% for team in org.teams %}
+                                        <li>
+                                        {{ team.title }}
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
             {% endfor %}
