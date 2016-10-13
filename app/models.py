@@ -99,7 +99,13 @@ class Token(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None, blank=True, null=True)
     name = models.CharField(max_length=255, default='')
+    country = models.CharField(max_length=255, default='')
+    city = models.CharField(max_length=255, default='')
     userpic = models.ImageField('img', upload_to='media/images/')
+    bio = models.TextField(default='')
 
     def get_name(self):
         return self.name or self.user.email
+
+    def get_location_string(self):
+        return '%s%s%s' % (self.city, ', ' if self.city and self.country else '' , self.country)

@@ -13,7 +13,7 @@ from django.core.mail import send_mail
 from .models import Alert
 
 from app.models import Organization, OrganizationMember, Token, Profile, OrganizationInvitation
-from teams.models import Team
+from teams.models import Team, Member
 from app.forms import OrgSignUpForm, SettingsForm, UserSignUpForm, SignInForm
 from teamedup import settings
 
@@ -61,7 +61,10 @@ def edit_settings(request):
 
     initial = {
         'name': request.user.profile.name,
-        'email': request.user.email
+        'email': request.user.email,
+        'bio': request.user.profile.bio,
+        'city': request.user.profile.city,
+        'country': request.user.profile.country
     }
 
     form = SettingsForm(initial=initial)
@@ -72,6 +75,9 @@ def edit_settings(request):
             if request.FILES.get('userpic'):
                 request.user.profile.userpic =  request.FILES.get('userpic')
             request.user.profile.name = form.cleaned_data.get('name')
+            request.user.profile.city = form.cleaned_data.get('city')
+            request.user.profile.country = form.cleaned_data.get('country')
+            request.user.profile.bio = form.cleaned_data.get('bio')
             request.user.profile.save()
             # TODO: if email was updated -> mark user account is_active=False and send activation link
             password = form.cleaned_data.get('password')
@@ -213,3 +219,11 @@ def notifications(request):
         notifications.append(notification)
 
     return HttpResponse(json.dumps(notifications), content_type='application/json')
+
+
+@login_required
+def user_page(request, user_id):
+    member = get_object_or_404(User, pk=user_id)
+    # TODO: validation required
+    teams = [membership.team for membership in Member.objects.filter(user=member)]
+    return render(request, 'app/user_page.html', locals())

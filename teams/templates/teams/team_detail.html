@@ -207,12 +207,14 @@
                 <div class="row">
                     {% for member in members %}
                         <div class="columns small-6 medium-12 member">
+                            <a href="{% url 'user-page' member.pk %}">
                             {% thumbnail member.profile.userpic "100x100" crop="center" as avatar %}
                                 <img src="{{ avatar.url }}" width="{{ avatar.width }}" height="{{ avatar.height }}" class="member-avatar" />
                             {% empty %}
                                 <img src="http://placehold.it/100x100&text=MEMBER" class="member-avatar" />
                             {% endthumbnail %}
                             <div class="member-name">{{ member.profile.get_name }}</div>
+                            </a>
                         </div>
                     {% endfor %}
                 </div>
