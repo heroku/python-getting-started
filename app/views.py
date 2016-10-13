@@ -156,6 +156,16 @@ def sign_out(request):
     messages.add_message(request, messages.SUCCESS, _('You have successfully logged out'))
     return redirect(reverse('login_view'))
 
+def searchpeople(request):
+    organizations = [membership.organization for membership in OrganizationMember.objects.filter(user=request.user)]
+    peoples = []
+    for people in User.objects.all():
+        porgs = [membership.organization for membership in OrganizationMember.objects.filter(user=people)]
+        if bool(set(organizations).intersection(set(porgs))):
+            peoples.append(people)
+
+    return render(request, 'app/people.html', locals())
+
 def notifications(request):
     notifications = []
 
