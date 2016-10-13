@@ -131,6 +131,7 @@ def join_organization(request, token):
             user.set_password(form.cleaned_data.get('password'))
             user.is_active = True
             user.save()
+            Profile(user=user).save()
             OrganizationMember(user=user, organization=inv.organization).save()
             _user = authenticate(username=user.username, password=form.cleaned_data['password'])
             if _user is not None:
