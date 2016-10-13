@@ -26,7 +26,7 @@
                         {% thumbnail team.image "350x350" crop='center' as img %}
                             <img src="{{ img.url }}"/>
                         {% empty %}
-                            <img src="http://placehold.it/350x350&text=TEAM"/>
+                            <img src="http://placehold.it/350x350&text=Picture"/>
                         {% endthumbnail %}
                     </a>
                     <div class="item-title" style="margin-top:30px;"><a href="/teams/detail/{{ team.id }}">{{ team.title }}</a></div>
@@ -57,7 +57,7 @@
                             {% thumbnail team.image "350x350" crop='center' as img %}
                                 <img src="{{ img.url }}"/>
                             {% empty %}
-                                <img src="http://placehold.it/350x350&text=TEAM"/>
+                                <img src="http://placehold.it/350x350&text=Picture"/>
                             {% endthumbnail %}
                         </a>
                     </div>
