@@ -64,7 +64,7 @@
                     <div class="small-8 medium-9 large-10 columns text-left">
                         <div class="team-row-title item-title" style="display:inline-block; margin:10px 0px;">{{ team.title }}</div>
                         {% for member in team.members %}
-                            <div class="user-tag-purple" style="margin:10px 0px 10px 10px;">{{ member.username }}</div>
+                            <div class="user-tag-purple" style="margin:10px 0px 10px 10px;">{{ member.profile.get_name }}</div>
                         {% endfor %}
                         <div class="team-row-description item-description" style="word-break: break-all;">{{ team.description }}</div>
                     </div>
