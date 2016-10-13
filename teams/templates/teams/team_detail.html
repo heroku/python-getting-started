@@ -124,7 +124,7 @@
             <div class="columns small-8 text-left">
                 <div class="title-header" style="display:inline-block;">{{ team.title }}</div>
                 {% for owner in owners %}
-                    <div class="user-tag-purple" style="display:inline-block; margin-left:10px;">{{ owner.username }}</div>
+                    <div class="user-tag-purple" style="display:inline-block; margin-left:10px;">{{ owner.profile.get_name }}</div>
                 {% endfor %}
                 <div class="title-description">
                     {% if members_count > 1 %}
@@ -205,8 +205,8 @@
                         <div class="columns small-6 medium-12 member">
                             {% thumbnail member.profile.userpic "100x100" crop="center" as avatar %}
                                 <img src="{{ avatar.url }}" width="{{ avatar.width }}" height="{{ avatar.height }}" class="member-avatar" />
-                                <div class="member-name">{{ member.profile.name }}</div>
                             {% endthumbnail %}
+                            <div class="member-name">{{ member.profile.get_name }}</div>
                         </div>
                     {% endfor %}
                 </div>
@@ -368,7 +368,7 @@
         {% for people in nonmembers %}
             {
                 id: '{{people.pk}}',
-                username: '{{people.username}}'
+                username: '{{people.profile.get_name}}'
             },
         {% endfor %}
         ];
