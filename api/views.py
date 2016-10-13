@@ -4,8 +4,10 @@ from django.views.decorators.csrf import csrf_exempt # TODO: switch to valid pro
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
+from django.views.generic import View
 
 from app.models import Organization, OrganizationMember, OrganizationInvitation
+from teams.models import Team, Role, Member
 
 
 """
@@ -93,3 +95,39 @@ def organization_invite(request, org_id):
                   'support@teamedup.com', [email, ])
 
     return json_response({'email': email})
+
+
+class TeamRolesView(View):
+    """
+    TODO: validate user!
+    """
+    def get(self, request, team_id):
+        team = Team.objects.get(pk=team_id)
+        roles = [role.to_dict() for role in Role.objects.filter(team=team)]
+        return json_response({'entries': roles})
+
+    def post(self, request, team_id):
+        return json_response()
+
+    def put(self, request, team_id):
+        return json_response()
+
+    def delete(self, request, team_id):
+        return json_response()
+
+
+class TeamView(View):
+    """
+    TODO: validate user!
+    """
+    def get(self, request, team_id=None):
+        if team_id is not None:
+            return self.get_single(request, team_id)
+        return json_response()
+
+    def get_single(self, request, team_id):
+        try:
+            team = Team.objects.get(pk=team_id)
+        except Team.DoesNotExist:
+            return json_response(status=404)
+        return json_response(team.to_dict())

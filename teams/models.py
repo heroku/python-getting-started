@@ -25,6 +25,19 @@ class Team(models.Model):
     def __str__(self):
         return self.title
 
+    def to_dict(self):
+        return {
+            'id': self.pk,
+            'title': self.title,
+            'description': self.description,
+            'image': self.image.url,
+            #TODO: add organization field
+        }
+
+    @property
+    def jsoned(self):
+        return json.dumps(self.to_dict())
+
     def save(self, *args, **kwargs):
         if not self.organization:
             # TODO: remove this block before going live

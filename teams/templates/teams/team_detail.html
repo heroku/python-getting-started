@@ -115,7 +115,7 @@
 
     {% load staticfiles %}
 
-    <div class="container">
+    <div class="container" ng-controller="TeamPageController" ng-init="init({'team': '{% url 'api-team' team.pk %}', 'roles': '{% url 'api-team-roles' team.pk %}'})">
 
         <div class="row" style="padding-top: 75px">
             <div class="columns small-4">
@@ -371,6 +371,10 @@
 
 {% block extra_footer %}
     <script type="text/javascript" src="{% static 'js/foundation-datepicker.min.js' %}"></script>
+    <script src="{% static 'js/angular.min.js' %}"></script>
+    <script src="{% static 'js/angular-foundation.min.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+
     <script type="text/javascript">
         var peopleAll = [
         {% for people in nonmembers %}
