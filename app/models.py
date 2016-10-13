@@ -102,4 +102,4 @@ class Profile(models.Model):
     userpic = models.ImageField('img', upload_to='media/images/')
 
     def get_name(self):
-        return self.name or self.user.email.split('@')[0]
+        return self.name or self.user.email
