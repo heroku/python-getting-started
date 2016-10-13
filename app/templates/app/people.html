@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% load thumbnail %}
+
+{% block extra_header %}
+<style>
+
+    .people-avatar {
+        border-radius: 50%;
+    }
+
+    .people-name {
+        font-family: 'Montserrat', sans-serif;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+    {% load staticfiles %}
+
+    <div class="container">
+        <div class="row" style="margin-top:75px;">
+            <div class="columns small-6 medium-8 text-left">
+                <div class="title-header">People</div>
+                <div class="title-description">SEARCH FOR PEOPLE IN YOUR ORGANIZATION</div>
+            </div>
+            <div class="columns small-6 medium-4 text-right">
+                <a id="search-btn" class="button button-red" style="float:right;"><i class="fa fa-search" aria-hidden="true"></i></a>
+                <input type="text" id="search-query" name="search-query" placeholder="Search People" class="input-text" style="width:calc(100% - 50px); float:right;" />
+            </div>
+            <div class="columns small-12 text-right">
+                <div id="search-message" class="message" style="color: #8a8a8a;"></div>
+            </div>
+        </div>
+        <div style="margin-top:75px;">
+            {% for people in peoples %}
+                <div class="row" style="padding:10px 0px;">
+                    <div class="columns small-2">
+                        {% thumbnail people.profile.userpic "100x100" crop="center" as avatar %}
+                            <img src="{{ avatar.url }}" width="{{ avatar.width }}" height="{{ avatar.height }}" class="people-avatar" />
+                        {% endthumbnail %}
+                    </div>
+                    <div class="columns small-10 text-left">
+                        <div class="people-name">{{ people.profile.name }}</div>
+                        <ul>
+                            {% for org in people.orgs %}
+                            <li>
+                                {{ org.name }}
+                                {% if org.teams %}
+                                    <ul>
+                                    {% for team in org.teams %}
+                                        <li>
+                                        {{ team.title }}
+                                        </li>
+                                    {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        
+    </script>
+{% endblock %}

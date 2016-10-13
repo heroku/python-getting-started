@@ -1,0 +1,379 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>{% block title %}TeamedUp - Compose your new organisation{% endblock %}</title>
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static 'css/foundation.min.css' %}">
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato|Montserrat" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+    <script src="{% static 'js/app.js' %}"></script>
+
+    <style type="text/css">
+        body, html {
+            font-family: 'Lato', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .teamedup-form {
+            color: #333;
+            text-align: left;
+            margin: 0 30px;
+        }
+
+        .teamedup-form .title {
+            padding-top: 15px;
+            margin-bottom: 0;
+        }
+
+        .teamedup-form .description {
+            color: grey;
+            font-weight: bold;
+            padding-bottom: 20px;
+            font-size: .875rem;
+        }
+
+        .teamedup-form label {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .teamedup-form input, .teamedup-form textarea {
+            margin-top: 15px;
+            background-color: whitesmoke;
+            font-weight: normal;
+        }
+
+        .image-rounded {
+            border-radius: 50%;
+        }
+
+        .no-js .top-bar {
+          display: none;
+        }
+
+        @media screen and (min-width: 40em) {
+          .no-js .top-bar {
+            display: block;
+          }
+
+          .no-js .title-bar {
+            display: none;
+          }
+        }
+
+        .top-bar {
+            height: 70px;
+            background-color: #e1e8f0;
+            padding: 0 40px;
+        }
+        .top-bar .top-bar-right a {
+            color: black;
+            padding: 14px 16px;
+            overflow: hidden;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .title-bar {
+            background-color: #e1e8f0;
+            padding: 10px 40px;
+        }
+
+        #menu_modal {
+            margin-bottom: 30%;
+        }
+        #menu_modal a {
+            color: black;
+            padding: 14px 16px;
+            overflow: hidden;
+            font-size: 12px;
+            font-weight: bold;
+            display: block;
+        }
+        #menu_modal .modal-box {
+            height: 100%;
+            padding-top: 40%;
+        }
+    </style>
+
+    {% block extra_header %}{% endblock %}
+</head>
+
+<body>
+<div class="mastcontent no-js">
+
+    <div class="title-bar" data-responsive-toggle="top-bar" data-hide-for="medium">
+        <a href="{% url 'index' %}"><img src="{% static 'logo1.png' %}" alt=""></a>
+        <a href="#" onclick="return showMenuModal();">
+            <img src="{% static 'menu-icon.png' %}">
+        </a>
+    </div>
+
+    <div class="top-bar" id="top-bar">
+        <div class="top-bar-left text-left hide-for-small-only">
+            <a href="{% url 'index' %}" class="hide-for-small-only"><img src="{% static 'logo1.png' %}" alt=""></a>
+        </div>
+        <div class="top-bar-right text-right">
+            {% if request.user.is_authenticated %}
+                <a data-toggle="notifications"><i class="fa fa-bell-o" aria-hidden="true"></i><span
+                        id="notifications_count" class="alert badge"></span></a>
+                <div class="dropdown-pane bottom right text-left" id="notifications" data-dropdown data-close-on-click="true">
+                    <ul>
+                    </ul>
+                </div>
+                <a href="{% url 'search-people' %}">People</a>
+                <a href="{% url 'settings' %}">Settings</a>
+                <a href="{% url 'sign-out' %}">Sign Out</a>
+            {% else %}
+                <a href="#"> Features </a>
+                <a href="#"> Pricing </a>
+                <a href="#"> Contact </a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="container">
+            <div class="row">
+                <div class="columns">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="columns">
+                    {% for message in messages %}
+                        <div class="{{ message.tags }} callout" data-closable="slide-out-right">
+                            <h6>{{ message }}</h6>
+                            <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+    <div class="mastfoot">
+        <div class="mast-mainfoot">
+            <div class="row align-middle mast-mainfoot-row">
+                <div class="small-12 large-4 columns mast-mainfoot-logo">
+                    <img src="{% static 'logo1.png' %}">
+                </div>
+                <div class="small-12 large-8 columns">
+                    <div class="row align-top">
+                        <div class="small-6 large-4 columns mast-mainfoot-col1" style="text-align:left">
+                            <p style="color: black;">@TeamedUp</p>
+                            <p>Features</p>
+                            <p>Pricing</p>
+                            <p>Contact</p>
+                            {% if not user.is_authenticated %}
+                                <p><a href="{% url 'signup' %}">Register</a></p>
+                                <p><a href="{% url 'login_view' %}">Login</a></p>
+                            {% endif %}
+                            <p>FAQ</p>
+                        </div>
+                        <div class="small-6 large-4 mast-mainfoot-col2" style="text-align:left">
+                            <p style="color: black;">Contact</p>
+                            <p>About Us</p>
+                            <p>Jobs</p>
+                            <p>Support</p>
+                            <p>Contact Us</p>
+                        </div>
+                        <div class="small-12 large-4 columns mast-mainfoot-sociallinks">
+                            <p style="color: black;">Follow Us</p>
+                            <p>
+                            <div style="color: rgb(144 , 104 , 190)">
+                                <i class="fa fa-facebook-square fa-2x" style="margin-right:20px;"
+                                   aria-hidden="true"> </i>
+                                <i class="fa fa-twitter-square fa-2x" style="margin-right:20px;"
+                                   aria-hidden="true"> </i>
+                                <i class="fa fa-linkedin-square fa-2x" style="margin-right:20px;"
+                                   aria-hidden="true"> </i>
+                                <i class="fa fa-google-plus-square fa-2x" aria-hidden="true"> </i>
+                            </div>
+                            </p>
+                            <p>Follow us on those social networks</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mast-copyright">
+            Copyright &copy; TeamedUp. All rights reserved.
+        </div>
+    </div>
+</div>
+
+        <div class="reveal tiny" id="menu_modal" data-reveal>
+            <div class="modal-box">
+                <div class="row">
+                    <div class="columns text-center">
+                        <div class="modal-menu-wrapper"></div>
+                        <button class="close-button" data-close aria-label="Close modal" type="button" style="float:right;">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="{% static 'js/underscore-min.js' %}"></script>
+    <script src="{% static 'js/foundation.min.js' %}"></script>
+
+    <link href="{% static 'autocomplete/jquery.auto-complete.css' %}" rel="stylesheet">
+    <script src="{% static 'autocomplete/jquery.auto-complete.min.js' %}"></script>
+
+    <script>
+        $(document).foundation();
+
+        function showMenuModal(){
+            $('#menu_modal').foundation('open');
+            $('.modal-menu-wrapper').html($('.top-bar-right').html());
+            return false;
+        }
+
+        {% if request.user.is_authenticated %}
+        var notifications = [];
+        function getNotifications() {
+            notifications = [];
+            $.get(
+                    "/app/notifications",
+                    {
+                        'csrfmiddlewaretoken': $.cookie('csrftoken')
+                    },
+                    function (data) {
+                        notifications = data;
+                        drawNotifications();
+                    }
+            );
+        }
+
+        function drawNotifications() {
+            $('#notifications ul').html('');
+            for (i = 0; i < notifications.length; i++) {
+                notification = notifications[i];
+                if (notification.type == 'team_invite') {
+                    $('#notifications ul').append(
+                            '<li data-type="team_invite" data-id="' + notification.team_invite.id + '">' +
+                            notification.inviter.username + ' invited you into ' + notification.team.title +
+                            '<button type="button" class="button alert" onclick="acceptTeamInvite(' + notification.team_invite.id + ');"><i class="fa fa-check" aria-hidden="true"></i></button>' +
+                            '<button type="button" class="button secondary" onclick="rejectTeamInvite(' + notification.team_invite.id + ');"><i class="fa fa-times" aria-hidden="true"></i></button>' +
+                            '</li>'
+                    );
+                }
+                if (notification.type == 'team_join') {
+                    $('#notifications ul').append(
+                            '<li data-type="team_join" data-id="' + notification.team_join_request.id + '">' +
+                            notification.requester.username + ' requested to join ' + notification.team.title +
+                            '<button type="button" class="button alert" onclick="acceptTeamJoin(' + notification.team_join_request.id + ');"><i class="fa fa-check" aria-hidden="true"></i></button>' +
+                            '<button type="button" class="button secondary" onclick="rejectTeamJoin(' + notification.team_join_request.id + ');"><i class="fa fa-times" aria-hidden="true"></i></button>' +
+                            '</li>'
+                    );
+                }
+            }
+            if (notifications.length == 0) {
+                $('#notifications ul').append(
+                        '<li>No notifications</li>'
+                );
+            }
+            $('#notifications_count').text(notifications.length);
+        }
+
+        function acceptTeamInvite(id) {
+            $.post(
+                    "/teams/invites/" + id + '/accept/',
+                    {
+                        'csrfmiddlewaretoken': $.cookie('csrftoken')
+                    },
+                    function (data) {
+                        notifications = _.reject(notifications, function (noti) {
+                            return noti.type == 'team_invite' && noti.team_invite.id == id;
+                        });
+                        drawNotifications();
+                    }
+            );
+        }
+
+        function rejectTeamInvite(id) {
+            $.post(
+                    "/teams/invites/" + id + '/reject/',
+                    {
+                        'csrfmiddlewaretoken': $.cookie('csrftoken')
+                    },
+                    function (data) {
+                        notifications = _.reject(notifications, function (noti) {
+                            return noti.type == 'team_invite' && noti.team_invite.id == id;
+                        });
+                        drawNotifications();
+                    }
+            );
+        }
+
+        function acceptTeamJoin(id) {
+            $.post(
+                    "/teams/joinrequests/" + id + '/accept/',
+                    {
+                        'csrfmiddlewaretoken': $.cookie('csrftoken')
+                    },
+                    function (data) {
+                        notifications = _.reject(notifications, function (noti) {
+                            return noti.type == 'team_join' && noti.team_join_request.id == id;
+                        });
+                        drawNotifications();
+                    }
+            );
+        }
+
+        function rejectTeamJoin(id) {
+            $.post(
+                    "/teams/joinrequests/" + id + '/reject/',
+                    {
+                        'csrfmiddlewaretoken': $.cookie('csrftoken')
+                    },
+                    function (data) {
+                        notifications = _.reject(notifications, function (noti) {
+                            return noti.type == 'team_join' && noti.team_join_request.id == id;
+                        });
+                        drawNotifications();
+                    }
+            );
+        }
+
+        $(function () {
+            getNotifications();
+        });
+        {% endif %}
+    </script>
+
+
+    {% block extra_footer %}{% endblock %}
+
+</body>
+</html>
+
