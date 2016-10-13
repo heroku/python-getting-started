@@ -40,10 +40,12 @@
                     <div class="columns small-2">
                         {% thumbnail people.profile.userpic "100x100" crop="center" as avatar %}
                             <img src="{{ avatar.url }}" width="{{ avatar.width }}" height="{{ avatar.height }}" class="people-avatar" />
+                        {% empty %}
+                            <img src="http://placehold.it/100x100&text=MEMBER" class="people-avatar" />
                         {% endthumbnail %}
                     </div>
                     <div class="columns small-10 text-left">
-                        <div class="people-name">{{ people.profile.name }}</div>
+                        <div class="people-name">{{ people.profile.get_name }}</div>
                         <ul>
                             {% for org in people.orgs %}
                             <li>
