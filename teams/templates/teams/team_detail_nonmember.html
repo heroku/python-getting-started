@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load thumbnail %}
 {% load staticfiles %}
 
 {% block extra_header %}
@@ -13,7 +14,11 @@
     <div class="container">
         <div class="row" style="margin-top:75px">
             <div class="columns small-4">
-                <div style="background-image: url({{ MEDIA_URL }}{{ team.image }});" class="square-image"></div>
+                {% thumbnail team.image "350x350" crop='center' as img %}
+                    <img src="{{ img.url }}"/>
+                {% empty %}
+                    <img src="http://placehold.it/350x350&text=Picture"/>
+                {% endthumbnail %}
             </div>
             <div class="columns small-8 text-left">
                 <div class="title-header" style="display:inline-block;">{{ team.title }}</div>

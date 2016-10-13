@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+
+{% load thumbnail %}
+
 {% block content %}
 
     {% load staticfiles %}
@@ -20,7 +23,11 @@
             {% for team in myteams %}
                 <div class="column">
                     <a href="/teams/detail/{{ team.pk }}">
-                        <div style="background-image:url('{{ MEDIA_URL }}{{ team.image }}');" class="square-image"></div>
+                        {% thumbnail team.image "350x350" crop='center' as img %}
+                            <img src="{{ img.url }}"/>
+                        {% empty %}
+                            <img src="http://placehold.it/350x350&text=Picture"/>
+                        {% endthumbnail %}
                     </a>
                     <div class="item-title" style="margin-top:30px;"><a href="/teams/detail/{{ team.id }}">{{ team.title }}</a></div>
                     <div class="item-description" style="margin-top:10px; word-break: break-all;">{{ team.description|slice:":45" }}</div>
@@ -47,7 +54,11 @@
                 <div class="row team-row hide" data-title="{{team.title}}" data-description="{{team.description}}" style="margin-bottom:20px;">
                     <div class="small-4 medium-3 large-2 columns">
                         <a href="/teams/detail/{{ team.pk }}">
-                            <div style="background-image:url('{{ MEDIA_URL }}{{ team.image }}');" class="square-image"></div>
+                            {% thumbnail team.image "350x350" crop='center' as img %}
+                                <img src="{{ img.url }}"/>
+                            {% empty %}
+                                <img src="http://placehold.it/350x350&text=Picture"/>
+                            {% endthumbnail %}
                         </a>
                     </div>
                     <div class="small-8 medium-9 large-10 columns text-left">
