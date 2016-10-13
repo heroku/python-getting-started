@@ -128,7 +128,7 @@
             <div class="columns small-8 text-left">
                 <div class="title-header" style="display:inline-block;">{{ team.title }}</div>
                 {% for owner in owners %}
-                    <div class="user-tag-purple" style="display:inline-block; margin-left:10px;">{{ owner.username }}</div>
+                    <div class="user-tag-purple" style="display:inline-block; margin-left:10px;">{{ owner.profile.get_name }}</div>
                 {% endfor %}
                 <div class="title-description">
                     {% if members_count > 1 %}
@@ -209,31 +209,14 @@
                         <div class="columns small-6 medium-12 member">
                             {% thumbnail member.profile.userpic "100x100" crop="center" as avatar %}
                                 <img src="{{ avatar.url }}" width="{{ avatar.width }}" height="{{ avatar.height }}" class="member-avatar" />
-                                <div class="member-name">{{ member.profile.name }}</div>
                             {% endthumbnail %}
+                            <div class="member-name">{{ member.profile.get_name }}</div>
                         </div>
                     {% endfor %}
                 </div>
             </div>
 
         </div>
-
-        <div class="row" style="padding-top: 50px">
-            <div class="pagination-centered">
-                <ul class="pagination">
-                    <li class="arrow unavailable"><a href="">&laquo;</a></li>
-                    <li class="current"><a href="">1</a></li>
-                    <li><a href="">2</a></li>
-                    <li><a href="">3</a></li>
-                    <li><a href="">4</a></li>
-                    <li class="unavailable">&hellip;</li>
-                    <li><a href="">12</a></li>
-                    <li><a href="">13</a></li>
-                    <li class="arrow"><a href="">&raquo;</a></li>
-                </ul>
-            </div>
-        </div>
-
 
         <div class="reveal" id="add_role_modal" data-reveal>
             <div class="modal-box">
@@ -389,7 +372,7 @@
         {% for people in nonmembers %}
             {
                 id: '{{people.pk}}',
-                username: '{{people.username}}'
+                username: '{{people.profile.get_name}}'
             },
         {% endfor %}
         ];
