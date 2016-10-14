@@ -117,6 +117,40 @@
             height: 100%;
             padding-top: 40%;
         }
+
+        #notifications {
+            padding: 0px;
+        }
+
+        #notifications ul {
+            list-style-type: none;
+            margin-left: 0px;
+            margin-bottom: 0px;
+            background-color: white;
+        }
+
+        #notifications ul li {
+            float: none;
+            padding: 0.5rem 1rem;
+        }
+
+        #notifications ul form {
+            display: inline-block;
+        }
+
+        #notifications ul li button {
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            padding: 0px;
+            text-align: center;
+            line-height: 30px;
+            margin: 0px 5px;
+        }
+
+        #notifications_count {
+            margin-left: 5px;
+        }
     </style>
 
     {% block extra_header %}{% endblock %}
@@ -138,8 +172,10 @@
         </div>
         <div class="top-bar-right text-right">
             {% if request.user.is_authenticated %}
-                <a data-toggle="notifications"><i class="fa fa-bell-o" aria-hidden="true"></i><span
-                        id="notifications_count" class="alert badge"></span></a>
+                <a data-toggle="notifications">
+                    <i class="fa fa-bell-o" aria-hidden="true"></i>
+                    <span id="notifications_count" class="alert badge"></span>
+                </a>
                 <div class="dropdown-pane bottom right text-left" id="notifications" data-dropdown data-close-on-click="true">
                     <ul>
                     </ul>
@@ -274,95 +310,74 @@
             );
         }
 
+        function removeNotification(type, id) {
+            notifications = _.reject(notifications, function (noti) {
+                return noti.type == type && noti.object.id == id;
+            });
+            drawNotifications();
+        }
+
         function drawNotifications() {
             $('#notifications ul').html('');
             for (i = 0; i < notifications.length; i++) {
                 notification = notifications[i];
                 if (notification.type == 'team_invite') {
                     $('#notifications ul').append(
-                            '<li data-type="team_invite" data-id="' + notification.team_invite.id + '">' +
-                            notification.inviter.username + ' invited you into ' + notification.team.title +
-                            '<button type="button" class="button alert" onclick="acceptTeamInvite(' + notification.team_invite.id + ');"><i class="fa fa-check" aria-hidden="true"></i></button>' +
-                            '<button type="button" class="button secondary" onclick="rejectTeamInvite(' + notification.team_invite.id + ');"><i class="fa fa-times" aria-hidden="true"></i></button>' +
-                            '</li>'
+                        '<li data-type="team_invite" data-id="' + notification.object.id + '">' +
+                            '<div>' + notification.object.inviter.name + ' invited you into ' + notification.object.team.title + '</div>' +
+                            '<div class="text-right">' +
+                                '<form action="/teams/invites/' + notification.object.id + '/accept/" method="POST">' +
+                                    "{% csrf_token %}" +
+                                    '<button type="submit" class="button alert"><i class="fa fa-check" aria-hidden="true"></i></button>' +
+                                '</form>' +
+                                '<form action="/teams/invites/' + notification.object.id + '/reject/" method="POST" class="teaminvite_reject_form">' +
+                                    "{% csrf_token %}" +
+                                    '<button type="submit" class="button secondary"><i class="fa fa-times" aria-hidden="true"></i></button>' +
+                                '</form>' +
+                            '</div>' +
+                        '</li>'
                     );
                 }
                 if (notification.type == 'team_join') {
                     $('#notifications ul').append(
-                            '<li data-type="team_join" data-id="' + notification.team_join_request.id + '">' +
-                            notification.requester.username + ' requested to join ' + notification.team.title +
-                            '<button type="button" class="button alert" onclick="acceptTeamJoin(' + notification.team_join_request.id + ');"><i class="fa fa-check" aria-hidden="true"></i></button>' +
-                            '<button type="button" class="button secondary" onclick="rejectTeamJoin(' + notification.team_join_request.id + ');"><i class="fa fa-times" aria-hidden="true"></i></button>' +
-                            '</li>'
+                        '<li data-type="team_join" data-id="' + notification.object.id + '">' +
+                            '<div>' + notification.object.requester.name + ' requested to join ' + notification.object.team.title + '</div>' +
+                            '<div class="text-right">' +
+                                '<form action="/teams/joinrequests/' + notification.object.id + '/accept/" method="POST">' +
+                                    "{% csrf_token %}" +
+                                    '<button type="submit" class="button alert"><i class="fa fa-check" aria-hidden="true"></i></button>' +
+                                '</form>' +
+                                '<form action="/teams/joinrequests/' + notification.object.id + '/reject/" method="POST" class="teamjoinrequest_reject_form">' +
+                                    "{% csrf_token %}" +
+                                    '<button type="submit" class="button secondary"><i class="fa fa-times" aria-hidden="true"></i></button>' +
+                                '</form>' +
+                            '</div>' +
+                        '</li>'
                     );
                 }
             }
             if (notifications.length == 0) {
                 $('#notifications ul').append(
-                        '<li>No notifications</li>'
+                    '<li>No notifications</li>'
                 );
             }
             $('#notifications_count').text(notifications.length);
-        }
 
-        function acceptTeamInvite(id) {
-            $.post(
-                    "/teams/invites/" + id + '/accept/',
-                    {
-                        'csrfmiddlewaretoken': $.cookie('csrftoken')
-                    },
-                    function (data) {
-                        notifications = _.reject(notifications, function (noti) {
-                            return noti.type == 'team_invite' && noti.team_invite.id == id;
-                        });
-                        drawNotifications();
-                    }
-            );
-        }
+            $('.teaminvite_reject_form').submit(function(event){
+                $.post($(this).attr('action'), $(this).serialize(), function(response){}, 'json');
+                setTimeout(function() {
+                    removeNotification('team_invite', $(event.currentTarget).parent('li').data('id'));
+                }, 0);
+                return false;
+            });
 
-        function rejectTeamInvite(id) {
-            $.post(
-                    "/teams/invites/" + id + '/reject/',
-                    {
-                        'csrfmiddlewaretoken': $.cookie('csrftoken')
-                    },
-                    function (data) {
-                        notifications = _.reject(notifications, function (noti) {
-                            return noti.type == 'team_invite' && noti.team_invite.id == id;
-                        });
-                        drawNotifications();
-                    }
-            );
-        }
-
-        function acceptTeamJoin(id) {
-            $.post(
-                    "/teams/joinrequests/" + id + '/accept/',
-                    {
-                        'csrfmiddlewaretoken': $.cookie('csrftoken')
-                    },
-                    function (data) {
-                        notifications = _.reject(notifications, function (noti) {
-                            return noti.type == 'team_join' && noti.team_join_request.id == id;
-                        });
-                        drawNotifications();
-                    }
-            );
-        }
-
-        function rejectTeamJoin(id) {
-            $.post(
-                    "/teams/joinrequests/" + id + '/reject/',
-                    {
-                        'csrfmiddlewaretoken': $.cookie('csrftoken')
-                    },
-                    function (data) {
-                        notifications = _.reject(notifications, function (noti) {
-                            return noti.type == 'team_join' && noti.team_join_request.id == id;
-                        });
-                        drawNotifications();
-                    }
-            );
+            $('.teamjoinrequest_reject_form').submit(function(event){
+                $.post($(this).attr('action'), $(this).serialize(), function(response){}, 'json');
+                setTimeout(function() {
+                    removeNotification('team_join', $(event.currentTarget).parent('li').data('id'));
+                }, 0);
+                return false;
+            });
         }
 
         $(function () {

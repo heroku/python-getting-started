@@ -185,17 +185,8 @@ def notifications(request):
     for team_invite in team_invites:
         notification = {
             'type': 'team_invite',
-            'team_invite': {
-                'id': team_invite.pk
-            },
-            'team': {
-                'id': team_invite.team.pk,
-                'title': team_invite.team.title
-            },
-            'inviter': {
-                'id': team_invite.inviter.pk,
-                'username': team_invite.inviter.username
-            }
+            'created_at': team_invite.created_at.strftime('%m-%d-%Y %H:%M'),
+            'object': team_invite.to_dict()
         }
         notifications.append(notification)
 
@@ -204,17 +195,8 @@ def notifications(request):
     for team_joinrequest in team_joinrequests:
         notification = {
             'type': 'team_join',
-            'team_join_request': {
-                'id': team_joinrequest.pk
-            },
-            'team': {
-                'id': team_joinrequest.team.pk,
-                'title': team_joinrequest.team.title
-            },
-            'requester': {
-                'id': team_joinrequest.requester.pk,
-                'username': team_joinrequest.requester.username
-            }
+            'created_at': team_joinrequest.created_at.strftime('%m-%d-%Y %H:%M'),
+            'object': team_joinrequest.to_dict()
         }
         notifications.append(notification)
 
