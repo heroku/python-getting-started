@@ -1,9 +1,11 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timesince import timeuntil
 
 from app.models import Organization
 
+import datetime
 import json
 
 
@@ -24,6 +26,19 @@ class Team(models.Model):
 
     def __str__(self):
         return self.title
+
+    def to_dict(self):
+        return {
+            'id': self.pk,
+            'title': self.title,
+            'description': self.description,
+            'image': self.image.url,
+            #TODO: add organization field
+        }
+
+    @property
+    def jsoned(self):
+        return json.dumps(self.to_dict())
 
     def save(self, *args, **kwargs):
         if not self.organization:
@@ -48,6 +63,8 @@ class Role(models.Model):
             'description': self.description,
             'start_date': self.start_date.strftime('%m-%d-%Y %H:%M'),
             'end_date': self.end_date.strftime('%m-%d-%Y %H:%M'),
+            'duration': timeuntil(self.end_date, self.start_date),
+            'start_date_str': self.start_date.strftime('%d %b').lstrip("0"),
         }
 
     @property
@@ -61,6 +78,10 @@ class Member(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE, default=None)
     is_owner = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
+    def get_roles_ids(self):
+        return [item['id'] for item in self.role.values('id')]
+
 
 class Invite(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE, default=None)

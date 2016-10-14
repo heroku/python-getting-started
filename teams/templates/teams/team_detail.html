@@ -30,6 +30,11 @@
     .role-date-start {
         color: black;
         font-size: 14px;
+        text-transform: uppercase;
+    }
+
+    .role-date-duration {
+        text-transform: uppercase;
     }
 
     .role-member-avatar {
@@ -115,7 +120,10 @@
 
     {% load staticfiles %}
 
-    <div class="container">
+    <div class="container" ng-controller="TeamPageController"
+         ng-init="init({'team': '{% url 'api-team' team.pk %}',
+         'roles': '{% url 'api-team-roles' team.pk %}',
+         'members': '{% url 'api-team-members' team.pk %}'})">
 
         <div class="row" style="padding-top: 75px">
             <div class="columns small-4">
@@ -149,47 +157,47 @@
                         <div class="title-description">3 MILESTONES</div>
                     </div>
                     <div class="columns small-6 text-right">
-                        <button class="button button-red" data-open="add_role_modal"><i class="fa fa-plus" style="margin-right:10px;"></i>Team Role</button>
+                        {% if request.user in team.owners %}
+                            <button class="button button-red" ng-click="createRole()"><i class="fa fa-plus" style="margin-right:10px;"></i>Team Role</button>
+                        {% endif %}
                     </div>
 
                     <div class="columns small-12" style="margin-top:40px;">
-                    {% for role in team.role_set.all %}
-                        <div class="row role role-{{ role.pk }}">
+
+                        <div class="message" ng-show="roles.length === 0">No roles have been created yet</div>
+
+                        <div class="row role role-[[ role.id ]]" ng-repeat="role in roles">
                             <div class="columns small-3 text-left">
                                 <div class="role-date">
                                     <div>STARTS ON</div>
-                                    <div class="role-date-start">{{ role.start_date | date:"j M" | upper }}</div>
-                                    <div class="role-date-duration">FOR {{ role.end_date | timeuntil:role.start_date | upper }}</div>
+                                    <div class="role-date-start">[[ role.start_date_str ]]</div>
+                                    <div class="role-date-duration">FOR [[ role.duration ]]</div>
                                 </div>
                             </div>
 
                             <div class="role-desc columns small-7 text-left">
                                 <p class="role-desc-header">
-                                    <span class="title item-title">{{ role.title }}</span>
-                                    {% if request.user in team.owners %}
-                                        <button class="button secondary tiny delete-role-button float-right"
-                                                data-url="{% url 'team_roles' team.pk %}"
-                                                data-role-id="{{ role.pk }}">
+                                    <span class="title item-title">[[ role.title ]]</span>
+                                    {% if request.user in team.owners %} {# TODO: move this validation to angular #}
+                                        <button class="button secondary tiny delete-role-button float-right" ng-click="deleteRole($index)">
                                             <i class="fa fa-trash"></i>
                                         </button>
-                                        <button class="button secondary tiny edit-role-button float-right"
-                                                data-url="{% url 'team_roles' team.pk %}"
-                                                data-role-id="{{ role.pk }}"
-                                                data-data='{{ role.jsoned|safe }}'>
+                                        <button class="button secondary tiny edit-role-button float-right" ng-click="editRole($index)">
                                             <i class="fa fa-pencil"></i>
                                         </button>
                                     {% endif %}
                                 </p>
-                                <div class="role-desc-detail description item-description">{{ role.description }}</div>
+                                <div class="role-desc-detail description item-description">[[ role.description ]]</div>
                             </div>
 
-                            <div class="role-member columns small-2 text-right">
+                            <div class="role-member columns small-2 text-center">
                                 <div class="role-member-avatar" style="background-image: url('{% static 'img/person_stock.jpg' %}');"></div>
+
+                                <button class="button tiny" ng-click="assignRole($index)" ng-show="isAssignedRole($index)">Update</button>
+                                <button class="button success tiny" ng-click="assignRole($index)" ng-hide="isAssignedRole($index)">Assign</button>
                             </div>
                         </div>
-                    {% empty %}
-                        <div class="message">No roles have been created yet</div>
-                    {% endfor %}
+
                     </div>
                 </div>
             </div>
@@ -222,99 +230,99 @@
 
         </div>
 
-        <div class="reveal" id="add_role_modal" data-reveal>
-            <div class="modal-box">
-                <form action="{% url 'team_roles' team.pk %}" method="POST">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="medium-11 small-10 columns">
-                            <h5 class="modal-title">Create New Role</h5>
-                            <p class="modal-description">FILL OUT THE FIELDS BELOW</p>
-                        </div>
-                        <div class="medium-1 small-2 columns">
-                            <button class="close-button" data-close aria-label="Close modal" type="button">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div>
+
+    <script type="text/ng-template" id="_assignees_modal.html">
+        <div class="modal-box">
+            <form ng-submit="save()" onsubmit="return false" method="POST">
+                <div class="row">
+                    <div class="medium-11 small-10 columns">
+                        <h5 class="modal-title">Assign role</h5>
+                        <p class="modal-description">CHOOSE ASSIGNEES BELOW</p>
                     </div>
-                    <div class="row">
-                        <div class="large-6 small-12 columns">
-                            <label>
-                                Title*
-                                <input type="text" name="role_title" placeholder="Enter role title" required="required" />
-                            </label>
-                            <label>
-                                Description*
-                                <textarea name="role_description" placeholder="Enter role description" required="required"></textarea>
-                            </label>
-                        </div>
-                        <div class="large-6 small-12 columns">
-                            <label>
-                                Start Date*
-                                <input type="text" name="start_date" placeholder="Insert Date" required="required">
-                            </label>
-                            <label>
-                                End Date*
-                                <input type="text" name="end_date" placeholder="Insert Date" required="required">
-                            </label>
-                        </div>
+                    <div class="medium-1 small-2 columns">
+                        <button ng-click="cancel()" class="close-button" aria-label="Close reveal" type="button">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="row">
-                        <div class="columns">
-                            <input type="submit" value="Create Role" class="button alert" />
+                </div>
+                <div class="row">
+                    <div class="columns" style="overflow:auto;">
+
+                        <div class="row" ng-repeat="member in members" style="margin-bottom:20px;">
+                            <div class="large-3 small-3 columns">
+                                <img ng-src="[[ member.user.userpic ]]" class="image-rounded">
+                            </div>
+                            <div class="large-5 small-5 columns">
+                                <h5>[[ member.user.name ]]</h5>
+                                <div style="color:#ccc;">[[ member.user.location ]]</div>
+                            </div>
+                            <div class="large-4 small-4 columns text-right">
+                                <button class="button success"
+                                        ng-show="member.roles.indexOf(role.id) === -1"
+                                        ng-click="member.roles.push(role.id)" onclick="return false">Assign</button>
+                                <button class="button secondary"
+                                        ng-hide="member.roles.indexOf(role.id) === -1"
+                                        ng-click="member.roles.splice(member.roles.indexOf(role.id), 1)" onclick="return false">Unassign</button>
+                            </div>
                         </div>
+
                     </div>
-                </form>
-            </div>
+                </div>
+                <div class="row">
+                    <div class="columns text-right">
+                        <button onclick="return false" class="button alert" ng-click="cancel()">Cancel</button>
+                        <button type="submit" class="button warning">Save</button>
+                    </div>
+                </div>
+            </form>
         </div>
+      </script>
 
 
-        <div class="reveal" id="edit_role_modal" data-reveal>
-            <div class="modal-box">
-                <form action="{% url 'team_roles' team.pk %}"  id="edit_role_form" method="POST">
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="medium-11 small-10 columns">
-                            <h5 class="modal-title">Edit Role</h5>
-                            <p class="modal-description">FILL OUT THE FIELDS BELOW</p>
-                        </div>
-                        <div class="medium-1 small-2 columns">
-                            <button class="close-button" data-close aria-label="Close modal" type="button">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div>
+      <script type="text/ng-template" id="_role_modal.html">
+        <div class="modal-box">
+            <form ng-submit="save()" onsubmit="return false" method="POST">
+                <div class="row">
+                    <div class="medium-11 small-10 columns">
+                        <h5 class="modal-title">Create New Role</h5>
+                        <p class="modal-description">FILL OUT THE FIELDS BELOW</p>
                     </div>
-                    <div class="row">
-                        <div class="large-6 small-12 columns">
-                            <input type="hidden" id="edit_id" name="id" value="0" />
-                            <label>
-                                Title*
-                                <input type="text" id="edit_title" name="role_title" placeholder="Enter role title" required="required" />
-                            </label>
-                            <label>
-                                Description*
-                                <textarea name="role_description" id="edit_description" placeholder="Enter role description" required="required"></textarea>
-                            </label>
-                        </div>
-                        <div class="large-6 small-12 columns">
-                            <label>
-                                Start Date*
-                                <input type="text" id="edit_start_date" name="start_date" placeholder="Insert Date" required="required">
-                            </label>
-                            <label>
-                                End Date*
-                                <input type="text" id="edit_end_date" name="end_date" placeholder="Insert Date" required="required">
-                            </label>
-                        </div>
+                    <div class="medium-1 small-2 columns">
+                        <button ng-click="cancel()" class="close-button" aria-label="Close reveal" type="button">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="row">
-                        <div class="columns">
-                            <input type="submit" value="Save Role" class="button alert" />
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="large-6 small-12 columns">
+                        <label>
+                            Title*
+                            <input type="text" ng-model="role.title" placeholder="Enter role title" required="required" />
+                        </label>
+                        <label>
+                            Description*
+                            <textarea ng-model="role.description" placeholder="Enter role description" required="required"></textarea>
+                        </label>
                     </div>
-                </form>
-            </div>
+                    <div class="large-6 small-12 columns">
+                        <label>
+                            Start Date*
+                            <input type="text" f-datepicker ng-model="role.start_date" placeholder="Insert Date" required="required">
+                        </label>
+                        <label>
+                            End Date*
+                            <input type="text" f-datepicker ng-model="role.end_date" placeholder="Insert Date" required="required">
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="columns">
+                        <button type="submit" class="button success">Save</button>
+                    </div>
+                </div>
+            </form>
         </div>
+      </script>
 
 
         <div class="reveal" id="invite_people_modal" data-reveal>
@@ -375,40 +383,13 @@
 
 {% block extra_footer %}
     <script type="text/javascript" src="{% static 'js/foundation-datepicker.min.js' %}"></script>
+    <script src="{% static 'js/angular.min.js' %}"></script>
+    <script src="{% static 'js/angular-foundation.min.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+
     <script type="text/javascript">
 
         $(function(){
-            $('input[name="start_date"]').fdatepicker({
-                'pickTime': true,
-                'format': 'mm-dd-yyyy hh:ii',
-                'disableDblClickSelection': true
-            });
-            $('input[name="end_date"]').fdatepicker({
-                'pickTime': true,
-                'format': 'mm-dd-yyyy hh:ii',
-                'disableDblClickSelection': true
-            });
-
-            $('.edit-role-button').click(function(){
-                var data = $(this).data('data');
-                for(var field in data){
-                    $('#edit_' + field).val(data[field]);
-                }
-                $('#edit_role_modal').foundation('open');
-            });
-
-            $('.delete-role-button').click(function(){
-                if(!confirm('The role will be deleted')){
-                    return null;
-                }
-                var url = $(this).data('url');
-                var role_id = $(this).data('role-id');
-                $('.role-' + role_id).hide('fast');
-                $.ajax({
-                    url: url + '?role_id=' + role_id,
-                    type: 'DELETE'
-                });
-            });
 
             $('#people-toinvite-select').select2();
             $('#invite_people_form').submit(function(){

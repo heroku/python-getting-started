@@ -4,8 +4,13 @@ from django.views.decorators.csrf import csrf_exempt # TODO: switch to valid pro
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
+from django.views.generic import View
 
 from app.models import Organization, OrganizationMember, OrganizationInvitation
+from teams.models import Team, Role, Member
+
+import datetime
+import json
 
 
 """
@@ -93,3 +98,73 @@ def organization_invite(request, org_id):
                   'support@teamedup.com', [email, ])
 
     return json_response({'email': email})
+
+
+class TeamRolesView(View):
+    """
+    TODO: validate user!
+    """
+    def get(self, request, team_id):
+        team = Team.objects.get(pk=team_id)
+        roles = [role.to_dict() for role in Role.objects.filter(team=team)]
+        return json_response({'entries': roles})
+
+    def post(self, request, team_id):
+        team = Team.objects.get(pk=team_id)
+        data = json.loads(request.body)
+
+        role = Role()
+        role_id = data.get('id')
+        if role_id is not None:
+            role = Role.objects.get(pk=role_id)
+        role.team = team
+        role.title = data.get('title')
+        role.description = data.get('description')
+        role.start_date = datetime.datetime.strptime(data.get('start_date'), '%m-%d-%Y %H:%M')
+        role.end_date = datetime.datetime.strptime(data.get('end_date'), '%m-%d-%Y %H:%M')
+        role.save()
+
+        member_ids = data.get('members_ids')
+        members = Member.objects.filter(team=team)
+        for member in members:
+            member.role.remove(role)
+            if member.user.pk in member_ids:
+                member.role.add(role)
+
+        return json_response(role.to_dict())
+
+    def delete(self, request, team_id):
+        role_id = request.GET.get('role_id')
+        role = Role.objects.get(pk=role_id)
+        role.delete()
+        return json_response()
+
+
+class TeamMembersView(View):
+    """
+    TODO: validate user!
+    """
+    def get(self, request, team_id):
+        team = Team.objects.get(pk=team_id)
+        members = [{
+                    'user': member.user.profile.to_dict(),
+                    'roles': member.get_roles_ids(),
+                   } for member in Member.objects.filter(team=team)] # TODO: optimize it
+        return json_response({'entries': members})
+
+
+class TeamView(View):
+    """
+    TODO: validate user!
+    """
+    def get(self, request, team_id=None):
+        if team_id is not None:
+            return self.get_single(request, team_id)
+        return json_response()
+
+    def get_single(self, request, team_id):
+        try:
+            team = Team.objects.get(pk=team_id)
+        except Team.DoesNotExist:
+            return json_response(status=404)
+        return json_response(team.to_dict())

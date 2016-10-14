@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from sorl.thumbnail import get_thumbnail
 
 import string, random
 
@@ -110,5 +111,17 @@ class Profile(models.Model):
     def get_location_string(self):
         return '%s%s%s' % (self.city, ', ' if self.city and self.country else '' , self.country)
 
+    def to_dict(self):
+        try:
+            userpic_url = get_thumbnail(self.userpic, '300x300', crop='center', quality=99).url
+        except AttributeError:
+            userpic_url = 'http://placehold.it/300x300&text=Userpic'
+        return {
+            'id': self.user.pk,
+            'name': self.get_name(),
+            'location': self.get_location_string(),
+            'userpic': userpic_url,
+        }
     def get_teams_pks(self):
         return ','.join([str(team_membership.team.pk) for team_membership in self.user.member_set.all()])
+
