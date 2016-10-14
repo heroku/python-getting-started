@@ -11,6 +11,18 @@
 
     .people-name {
         font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+    }
+
+    .people-teams {
+        margin-left: 0px;
+    }
+    
+    .people-team {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        list-style: none;
+        margin: 10px 0px;
     }
 
 </style>
@@ -46,9 +58,14 @@
                     </div>
                     <div class="columns small-10 text-left">
                         <div class="people-name">{{ people.profile.get_name }}</div>
-                        <ul>
+                        <ul class="people-teams">
                             {% for team_membership in people.member_set.all %}
-                            <li>
+                            <li class="people-team">
+                                {% thumbnail team_membership.team.image "30x30" crop="center" as avatar %}
+                                    <img src="{{ avatar.url }}" width="{{ avatar.width }}" height="{{ avatar.height }}" class="people-team-avatar" />
+                                {% empty %}
+                                    <img src="http://placehold.it/30x30&text=TEAM" class="people-team-avatar" />
+                                {% endthumbnail %}
                                 {{ team_membership.team.title }}
                             </li>
                             {% endfor %}
@@ -83,6 +100,14 @@
                     i++;
                     if(i<=countDisplayed) {
                         $(this).removeClass('hide');
+
+                        name = $(this).find('.people-name').html();
+                        name = name.replace(new RegExp('<strong>', 'g'),'');
+                        name = name.replace(new RegExp('</strong>', 'g'),'');
+                        if(searchQuery!=='') {
+                            name = name.replace(new RegExp(searchQuery, 'gi'), '<strong>$&</strong>');
+                        }
+                        $(this).find('.people-name').html(name);
                     } else {
                         $(this).addClass('hide');
                         $('#search-more-btn-div').removeClass('hide');
