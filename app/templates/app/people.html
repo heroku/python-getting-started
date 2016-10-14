@@ -34,40 +34,95 @@
                 <div id="search-message" class="message" style="color: #8a8a8a;"></div>
             </div>
         </div>
-        <div style="margin-top:75px;">
+        <div style="margin-top:75px; margin-bottom:30px;">
             {% for people in peoples %}
-                <div class="row" style="padding:10px 0px;">
+                <div class="row people hide" style="padding:10px 0px;" data-peoplename="{{ people.profile.get_name }}">
                     <div class="columns small-2">
                         {% thumbnail people.profile.userpic "100x100" crop="center" as avatar %}
                             <img src="{{ avatar.url }}" width="{{ avatar.width }}" height="{{ avatar.height }}" class="people-avatar" />
+                        {% empty %}
+                            <img src="http://placehold.it/100x100&text=MEMBER" class="people-avatar" />
                         {% endthumbnail %}
                     </div>
                     <div class="columns small-10 text-left">
-                        <div class="people-name">{{ people.profile.name }}</div>
+                        <div class="people-name">{{ people.profile.get_name }}</div>
                         <ul>
-                            {% for org in people.orgs %}
+                            {% for team_membership in people.member_set.all %}
                             <li>
-                                {{ org.name }}
-                                {% if org.teams %}
-                                    <ul>
-                                    {% for team in org.teams %}
-                                        <li>
-                                        {{ team.title }}
-                                        </li>
-                                    {% endfor %}
-                                    </ul>
-                                {% endif %}
+                                {{ team_membership.team.title }}
                             </li>
                             {% endfor %}
                         </ul>
                     </div>
                 </div>
             {% endfor %}
+
+            <div class="text-center hide" style="margin-top:5px;" id="search-more-btn-div">
+                <a id="search-more-btn" class="button button-purple button-round"><i class="fa fa-repeat" aria-hidden="true" style="margin-right:20px;"></i>Show More</a>
+            </div>
+
+            <div class="text-center hide message" style="margin-bottom:30px;" id="search-noresult">
+                We can't find people.
+            </div>
         </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
         
+        var peopleCount = $('.people').length;
+        var countPerOne = 5;
+        var countDisplayed = countPerOne;
+        var searchQuery = '';
+
+        function search() {
+            var i = 0;
+            $('#search-more-btn-div').addClass('hide');
+            $('.people').each(function(index) {
+                if($(this).data('peoplename').toLowerCase().indexOf(searchQuery.toLowerCase())>-1) {
+                    i++;
+                    if(i<=countDisplayed) {
+                        $(this).removeClass('hide');
+                    } else {
+                        $(this).addClass('hide');
+                        $('#search-more-btn-div').removeClass('hide');
+                    }
+                } else {
+                    $(this).addClass('hide');
+                }
+            });
+            if(i==0) {
+                $('#search-noresult').removeClass('hide');
+            } else {
+                $('#search-noresult').addClass('hide');
+            }
+            $('#search-message').text('');
+            if(searchQuery!=='') {
+                $('#search-message').text('Displaying people search results for ' + searchQuery);
+            }
+        }
+
+        $(document).ready(function () {
+            $('#search-btn').click(function() {
+                searchQuery = $('#searchteams-query').val();
+                countDisplayed = countPerOne;
+                search();
+            });
+
+            $('#search-query').keyup(function(e) {
+                if(e.keyCode == 13) {
+                    searchQuery = $('#search-query').val();
+                    countDisplayed = countPerOne;
+                    search();
+                }
+            });
+
+            $('#search-more-btn').click(function() {
+                countDisplayed += countPerOne;
+                search();
+            });
+
+            search();
+        });
     </script>
 {% endblock %}

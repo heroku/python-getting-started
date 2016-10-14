@@ -150,7 +150,7 @@ def invite_accept(request, invite_id):
     except Invite.DoesNotExist:
         raise Http404
 
-    return HttpResponse(status=200)    
+    return redirect(reverse('team_detail', kwargs={'team_id': invite.team.pk}))
 
 @login_required
 def invite_reject(request, invite_id):
@@ -188,7 +188,7 @@ def joinrequest_accept(request, request_id):
     except Invite.DoesNotExist:
         raise Http404
 
-    return HttpResponse(status=200)    
+    return redirect(reverse('team_detail', kwargs={'team_id': joinrequest.team.pk}))
 
 @login_required
 def joinrequest_reject(request, request_id):

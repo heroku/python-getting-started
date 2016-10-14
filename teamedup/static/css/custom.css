@@ -33,34 +33,6 @@ a {
     padding-top: 100%;
 }
 
-#notifications {
-    padding: 0px;
-}
-
-#notifications ul {
-    list-style-type: none;
-    margin-left: 0px;
-}
-
-#notifications ul li {
-    float: none;
-    padding: 1rem;
-}
-
-#notifications ul li button {
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;
-    padding: 0px;
-    text-align: center;
-    line-height: 30px;
-    margin: 0px 5px;
-}
-
-#notifications_count {
-    margin-left: 5px;
-}
-
 .title-header {
     font-family: 'Montserrat', sans-serif;
     font-size: 24px;

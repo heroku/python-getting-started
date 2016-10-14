@@ -84,6 +84,25 @@ class Invite(models.Model):
     status = models.CharField(max_length=20, default=None)
     read = models.BooleanField(default=False, blank=False, null=False)
 
+    def to_dict(self):
+        return {
+            'id': self.pk,
+            'status': self.status,
+            'team': {
+                'id': self.team.pk,
+                'title': self.team.title
+            },
+            'inviter': {
+                'id': self.inviter.pk,
+                'name': self.inviter.profile.get_name()
+            },
+            'invitee': {
+                'id': self.invitee.pk,
+                'name': self.invitee.profile.get_name()
+            }
+        }
+
+
 class JoinRequest(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE, default=None)
     requester = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='team_join_requests')
@@ -91,3 +110,17 @@ class JoinRequest(models.Model):
     expired_at = models.DateTimeField(default=None, blank=True, null=True)
     status = models.CharField(max_length=20, default=None)
     read = models.BooleanField(default=False, blank=False, null=False)
+
+    def to_dict(self):
+        return {
+            'id': self.pk,
+            'status': self.status,
+            'team': {
+                'id': self.team.pk,
+                'title': self.team.title
+            },
+            'requester': {
+                'id': self.requester.pk,
+                'name': self.requester.profile.get_name()
+            }
+        }
