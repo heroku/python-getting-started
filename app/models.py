@@ -109,3 +109,6 @@ class Profile(models.Model):
 
     def get_location_string(self):
         return '%s%s%s' % (self.city, ', ' if self.city and self.country else '' , self.country)
+
+    def get_teams_pks(self):
+        return ','.join([str(team_membership.team.pk) for team_membership in self.user.member_set.all()])
