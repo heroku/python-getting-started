@@ -9,6 +9,9 @@ from django.views.generic import View
 from app.models import Organization, OrganizationMember, OrganizationInvitation
 from teams.models import Team, Role, Member
 
+import datetime
+import json
+
 
 """
     TODO:
@@ -107,12 +110,26 @@ class TeamRolesView(View):
         return json_response({'entries': roles})
 
     def post(self, request, team_id):
-        return json_response()
+        team = Team.objects.get(pk=team_id)
+        data = json.loads(request.body)
 
-    def put(self, request, team_id):
-        return json_response()
+        role = Role()
+        role_id = data.get('id')
+        if role_id is not None:
+            role = Role.objects.get(pk=role_id)
+        role.team = team
+        role.title = data.get('title')
+        role.description = data.get('description')
+        role.start_date = datetime.datetime.strptime(data.get('start_date'), '%m-%d-%Y %H:%M')
+        role.end_date = datetime.datetime.strptime(data.get('end_date'), '%m-%d-%Y %H:%M')
+        role.save()
+
+        return json_response(role.to_dict())
 
     def delete(self, request, team_id):
+        role_id = request.GET.get('role_id')
+        role = Role.objects.get(pk=role_id)
+        role.delete()
         return json_response()
 
 
