@@ -319,29 +319,33 @@
 
         <div class="reveal" id="invite_people_modal" data-reveal>
             <div class="modal-box">
-                <div class="row">
-                    <div class="small-12 columns">
-                        <h5 class="modal-title">Invite Users</h5>
-                        <p class="modal-description">SELECT PEOPLE TO INVITE TO THE TEAM</p>
-                        <button class="close-button" data-close aria-label="Close modal" type="button" style="float:right;">
-                            <i class="fa fa-times"></i>
-                        </button>
+                <form action="{% url 'team_invite_people' team.pk %}" id="invite_people_form" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <h5 class="modal-title">Invite Users</h5>
+                            <p class="modal-description">SELECT PEOPLE TO INVITE TO THE TEAM</p>
+                            <button class="close-button" data-close aria-label="Close modal" type="button" style="float:right;">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="columns small-12 medium-6">
-                        <input id="people_select" type="text" />
+                    <div class="row">
+                        <div class="columns small-12 medium-12">
+                            <select id="people-toinvite-select" name="people-toinvite" multiple="multiple" style="width:100%;">
+                            {% for people in nonmembers %}
+                                <option value="{{people.pk}}" {% if people in invitees %} disabled="disabled" {% endif %}>{{people.profile.get_name}} {% if people in invitees %} - invited {% endif %}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div id="people_to_invite">
-
-                </div>
-                <div class="row">
-                    <div class="columns text-right">
-                        <input type="button" value="Cancel" class="button secondary" data-close aria-label="Close modal" />
-                        <input type="button" value="Invite" class="button alert" id="invite_btn" disabled />
+                    <div class="row">
+                        <div class="columns text-right">
+                            <input type="button" value="Cancel" class="button secondary" data-close aria-label="Close modal" />
+                            <input type="submit" value="Invite" class="button alert" id="invite_btn" />
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 
@@ -372,50 +376,6 @@
 {% block extra_footer %}
     <script type="text/javascript" src="{% static 'js/foundation-datepicker.min.js' %}"></script>
     <script type="text/javascript">
-        var peopleAll = [
-        {% for people in nonmembers %}
-            {
-                id: '{{people.pk}}',
-                username: '{{people.profile.get_name}}'
-            },
-        {% endfor %}
-        ];
-        var peopleInvited = [
-        {% for people in invitees %}
-            {{people.pk}},
-        {% endfor %}
-        ];
-        var peopleToInvite = [];
-        function addPeopleToInviteList(people) {
-            if(_.find(peopleToInvite, function(p) { return p.id == people.id; }) == undefined) {
-                peopleToInvite.push(people);
-            }
-            drawInviteList();
-        }
-        function removePeopleFromInviteList(peopleId) {
-            peopleToInvite = _.reject(peopleToInvite, function(p) {
-                return p.id == peopleId;
-            });
-            drawInviteList();
-        }
-        function drawInviteList() {
-            $('#people_to_invite').html('')
-            _.each(peopleToInvite, function(p) {
-                $('#people_to_invite').append(
-                    '<div class="row" style="margin:10px 0px;">'+
-                        '<div class="columns small-6">'+p.username+'</div>'+
-                        '<div class="columns small-6 text-right">'+
-                            '<i class="fa fa-times" onclick="removePeopleFromInviteList('+p.id+'); event.stopPropagation(); return false;" style="cursor:pointer;"></i>'+
-                        '</div>'+
-                    '</div>'
-                );
-            });
-            if(peopleToInvite.length==0) {
-                $('#invite_btn').prop('disabled', true);
-            } else {
-                $('#invite_btn').prop('disabled', false);
-            }
-        }
 
         $(function(){
             $('input[name="start_date"]').fdatepicker({
@@ -450,65 +410,22 @@
                 });
             });
 
-            // $('#edit_role_form').submit(function(){
-            //     $.post($(this).attr('action'), $(this).serialize(), function(response){}, 'json');
-            //     var data = {};
-            //     $(this).serializeArray().map(function(item){
-            //        data[item.name] = item.value;
-            //     });
-            //     $('.role-' + data.id).find('.edit-role-button').data('data', data);
-            //     $('.role-' + data.id).find('.title').text(data.role_title);
-            //     $('.role-' + data.id).find('.description').text(data.role_description);
-            //     $('#edit_role_modal').foundation('close');
-            //     return false;
-            // });
-
-            $("#people_select").autoComplete({
-                minChars: 0,
-                source: function(term, suggest) {
-                    suggest(_.filter(peopleAll, function(p) {
-                        return p.username.toLowerCase().indexOf(term.toLowerCase()) > -1;
-                    }));
-                },
-                renderItem: function (item, search){
-                    search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-                    var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
-                    var invited = (_.find(peopleInvited, function(p){
-                        return p == item.id;
-                    }) != undefined);
-                    return '<div class="autocomplete-suggestion" data-id="'+item.id+'" data-username="'+item.username+'" data-invited='+invited+'>'+item.username.replace(re, "<b>$1</b>")+(invited?' - invited':'')+'</div>';
-                },
-                onSelect: function(e, term, item){
-                    if(!item.data('invited')) {
-                        addPeopleToInviteList({
-                            id: item.data('id'),
-                            username: item.data('username')
-                        });
-                    }
-                    setTimeout(function() {
-                        $('#people_select').trigger('blur');
-                    }, 100);
-                }
+            $('#people-toinvite-select').select2();
+            $('#invite_people_form').submit(function(){
+                $.post($(this).attr('action'), $(this).serialize(), function(response){
+                    $('#invited_modal').foundation('open');
+                    invitees = $('#people-toinvite-select').val();
+                    $('#people-toinvite-select').select2("destroy");
+                    invitees && invitees.forEach(function(invitee) {
+                        option = $('#people-toinvite-select').find('[value="'+invitee+'"]');
+                        option.attr('disabled', 'disabled');
+                        option.removeAttr('selected');
+                        option.text(option.text() + ' - invited');
+                    });
+                    $('#people-toinvite-select').select2();
+                }, 'json');
+                return false;
             });
-
-            $('#invite_btn').click(function() {
-                $.post(
-                    "{% url 'team_invite_people' team.pk %}",
-                    { 
-                        'csrfmiddlewaretoken':$.cookie('csrftoken'),
-                        'invitees': _.map(peopleToInvite, function(p) { return p.id; }).join(',')
-                    },
-                    function(data) {
-                        peopleInvited = _.union(peopleInvited, _.map(peopleToInvite, function(p) { return p.id; }));
-                        peopleToInvite = [];
-                        drawInviteList();
-                        $('#people_select').val('');
-                        jQuery('#invited_modal').foundation('open');
-                    }
-                );
-            });
-
-            
         });
     </script>
 {% endblock %}
