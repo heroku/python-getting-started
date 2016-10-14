@@ -124,6 +124,13 @@ class TeamRolesView(View):
         role.end_date = datetime.datetime.strptime(data.get('end_date'), '%m-%d-%Y %H:%M')
         role.save()
 
+        member_ids = data.get('members_ids')
+        members = Member.objects.filter(team=team)
+        for member in members:
+            member.role.remove(role)
+            if member.user.pk in member_ids:
+                member.role.add(role)
+
         return json_response(role.to_dict())
 
     def delete(self, request, team_id):
@@ -131,6 +138,19 @@ class TeamRolesView(View):
         role = Role.objects.get(pk=role_id)
         role.delete()
         return json_response()
+
+
+class TeamMembersView(View):
+    """
+    TODO: validate user!
+    """
+    def get(self, request, team_id):
+        team = Team.objects.get(pk=team_id)
+        members = [{
+                    'user': member.user.profile.to_dict(),
+                    'roles': member.get_roles_ids(),
+                   } for member in Member.objects.filter(team=team)] # TODO: optimize it
+        return json_response({'entries': members})
 
 
 class TeamView(View):

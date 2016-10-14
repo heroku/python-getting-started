@@ -29,8 +29,8 @@ app.controller('TeamPageController', function ($scope, $http, $modal) {
 
     $scope.team = null;
     $scope.roles = [];
+    $scope.members = [];
     $scope.edited_role = {};
-
 
     $scope.init = function (urls) {
         $scope._urls = urls;
@@ -43,6 +43,10 @@ app.controller('TeamPageController', function ($scope, $http, $modal) {
         $http.get($scope._urls.roles)
             .success(function (data) {
                 $scope.roles = data.entries;
+            });
+        $http.get($scope._urls.members)
+            .success(function (data) {
+                $scope.members = data.entries;
             });
     };
 
@@ -95,7 +99,7 @@ app.controller('TeamPageController', function ($scope, $http, $modal) {
                     $modalInstance.dismiss('cancel');
                 };
                 $scope.save = function () {
-                    $modalInstance.close(role);
+                    $modalInstance.close($scope.role);
                 };
             }
         };
@@ -108,5 +112,54 @@ app.controller('TeamPageController', function ($scope, $http, $modal) {
             console.log('canceled')
         });
     };
+
+    $scope.assignRole = function(index){
+        $scope.edited_role = $scope.roles[index];
+        $scope._openAssignModal();
+    };
+
+    $scope._openAssignModal = function () {
+        var params = {
+            templateUrl: '_assignees_modal.html',
+            resolve: {
+                role: function() {
+                    return angular.copy($scope.edited_role);
+                },
+                members: function(){
+                    return $scope.members;
+                }
+            },
+            controller: function ($scope, $modalInstance, role, members) {
+                $scope.role = role;
+                $scope.members = members;
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+                $scope.save = function () {
+                    $scope.role.members_ids = $scope.members.filter(function(member){
+                        return member.roles.indexOf($scope.role.id) !== -1;
+                    }).map(function(member){
+                        return member.user.id;
+                    });
+                    $modalInstance.close($scope.role);
+                };
+            }
+        };
+        var modalInstance = $modal.open(params);
+        modalInstance.result.then(function (role) {
+            $scope.edited_role = role;
+            $scope.saveRole();
+        }, function () {
+            $scope.edited_role = {};
+            console.log('canceled')
+        });
+    };
+
+    $scope.isAssignedRole = function(index){
+        var role = $scope.roles[index];
+        return $scope.members.filter(function(member){
+                return member.roles.indexOf(role.id) !== -1;
+            }).length > 0;
+    }
 
 });

@@ -79,6 +79,10 @@ class Member(models.Model):
     is_owner = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
+    def get_roles_ids(self):
+        return [item['id'] for item in self.role.values('id')]
+
+
 class Invite(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE, default=None)
     inviter = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='invites')

@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^organization/(?P<org_id>\d+)/invite/$', views.organization_invite, name='organization-invite'),
 
     url(r'^team/(?P<team_id>\d+)/roles/$', views.TeamRolesView.as_view(), name='api-team-roles'),
+    url(r'^team/(?P<team_id>\d+)/members/$', views.TeamMembersView.as_view(), name='api-team-members'),
     url(r'^team/(?P<team_id>\d+)/$', views.TeamView.as_view(), name='api-team'),
 ]
