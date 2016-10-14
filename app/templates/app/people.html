@@ -39,7 +39,6 @@
                 <div class="title-description">SEARCH FOR PEOPLE IN YOUR ORGANIZATION</div>
             </div>
             <div class="columns small-6 medium-4 text-right">
-                <a id="search-btn" class="button button-red" style="float:right;"><i class="fa fa-search" aria-hidden="true"></i></a>
                 <input type="text" id="search-query" name="search-query" placeholder="Search People" class="input-text" style="width:calc(100% - 50px); float:right;" />
             </div>
             <div class="columns small-12 text-right">
@@ -59,7 +58,7 @@
                         </a>
                     </div>
                     <div class="columns small-10 text-left">
-                        <div class="people-name"><a href="{% url 'user-page' people.pk %}">{{ people.profile.get_name }}</a></div>
+                        <div><a href="{% url 'user-page' people.pk %}" class="people-name">{{ people.profile.get_name }}</a></div>
                         <ul class="people-teams">
                             {% for team_membership in people.member_set.all %}
                             <li class="people-team">
@@ -132,18 +131,10 @@
         }
 
         $(document).ready(function () {
-            $('#search-btn').click(function() {
-                searchQuery = $('#searchteams-query').val();
+            $('#search-query').on('input propertychange paste', function() {
+                searchQuery = $('#search-query').val();
                 countDisplayed = countPerOne;
                 search();
-            });
-
-            $('#search-query').keyup(function(e) {
-                if(e.keyCode == 13) {
-                    searchQuery = $('#search-query').val();
-                    countDisplayed = countPerOne;
-                    search();
-                }
             });
 
             $('#search-more-btn').click(function() {
