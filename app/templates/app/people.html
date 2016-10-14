@@ -63,12 +63,14 @@
                         <ul class="people-teams">
                             {% for team_membership in people.member_set.all %}
                             <li class="people-team">
+                                <a href="{% url 'team_detail' team_membership.team.pk %}">
                                 {% thumbnail team_membership.team.image "30x30" crop="center" as avatar %}
                                     <img src="{{ avatar.url }}" width="{{ avatar.width }}" height="{{ avatar.height }}" class="people-team-avatar" />
                                 {% empty %}
                                     <img src="http://placehold.it/30x30&text=TEAM" class="people-team-avatar" />
                                 {% endthumbnail %}
                                 {{ team_membership.team.title }}
+                                </a>
                             </li>
                             {% endfor %}
                         </ul>
