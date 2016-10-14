@@ -50,14 +50,16 @@
             {% for people in peoples %}
                 <div class="row people hide" style="padding:10px 0px;" data-peoplename="{{ people.profile.get_name }}">
                     <div class="columns small-2">
+                        <a href="{% url 'user-page' people.pk %}">
                         {% thumbnail people.profile.userpic "100x100" crop="center" as avatar %}
                             <img src="{{ avatar.url }}" width="{{ avatar.width }}" height="{{ avatar.height }}" class="people-avatar" />
                         {% empty %}
                             <img src="http://placehold.it/100x100&text=MEMBER" class="people-avatar" />
                         {% endthumbnail %}
+                        </a>
                     </div>
                     <div class="columns small-10 text-left">
-                        <div class="people-name">{{ people.profile.get_name }}</div>
+                        <div class="people-name"><a href="{% url 'user-page' people.pk %}">{{ people.profile.get_name }}</a></div>
                         <ul class="people-teams">
                             {% for team_membership in people.member_set.all %}
                             <li class="people-team">
