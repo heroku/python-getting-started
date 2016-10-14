@@ -34,7 +34,7 @@ def team_detail(request, team_id):
     team = Team.objects.get(pk=team_id)
     nonmembers = [membership.user for membership in OrganizationMember.objects.filter(organization=organization) if membership.user not in team.members]
     owners = team.owners
-    invitees = [invite.invitee for invite in request.user.invites.all().filter(status="created")]
+    invitees = [invite.invitee for invite in request.user.invites.all().filter(status="created").filter(team__id=team_id)]
     joinrequest = request.user.team_join_requests.all().filter(team__id=team_id).filter(status="created")
 
     if request.user in [user for user in team.members]:
@@ -122,22 +122,16 @@ def delete_role(request, team):
 
 @login_required
 def invite_people(request, team_id):
-    team = get_object_or_404(Team, pk=team_id)
-    if request.method == 'POST':
-        return _invite_people(request, team)
+    try:
+        team = Team.objects.get(pk=team_id)
+        for invitee_id in request.POST.getlist('people-toinvite'):
+            invitee = User.objects.get(pk=invitee_id)
+            invitation = Invite(team=team, inviter=request.user, invitee=invitee, status='created', expired_at=datetime.now()+timedelta(days=7), read=False)
+            invitation.save()
+    except Team.DoesNotExist:
+        raise Http404
 
-    raise Http404
-
-def _invite_people(request, team):
-    # TODO: optimize it
-    # we can do `invitees = User.objects.filter(pk__in=request.POST.get('invitees').split(","))`
-    # single db query usually works faster due to internal db caching system
-    invitees = [User.objects.get(pk=invitee_id) for invitee_id in request.POST.get('invitees').split(",")]
-    for invitee in invitees:
-        invitation = Invite(team=team, inviter=request.user, invitee=invitee, status='created', expired_at=datetime.now()+timedelta(days=7), read=False)
-        invitation.save()
-
-    return HttpResponse(status=200)
+    return HttpResponse('{}')
 
 @login_required
 def invite_accept(request, invite_id):
@@ -161,7 +155,7 @@ def invite_reject(request, invite_id):
     except Invite.DoesNotExist:
         raise Http404
 
-    return HttpResponse(status=200)   
+    return HttpResponse(status=200)
 
 @login_required
 def request_join(request, team_id):

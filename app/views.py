@@ -166,6 +166,7 @@ def sign_out(request):
 def searchpeople(request):
     organization = Organization.get_single_by_user(request.user)
     peoples = [membership.user for membership in organization.members]
+    teams = organization.team_set.all()
 
     return render(request, 'app/people.html', locals())
 

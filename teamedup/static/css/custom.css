@@ -81,3 +81,7 @@ a {
 .message {
     font-family: 'Montserrat', sans-serif;
 }
+
+.select2-container--default .select2-search--inline .select2-search__field {
+    height: auto;
+}

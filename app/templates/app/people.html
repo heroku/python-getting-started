@@ -11,6 +11,18 @@
 
     .people-name {
         font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+    }
+
+    .people-teams {
+        margin-left: 0px;
+    }
+    
+    .people-team {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        list-style: none;
+        margin: 10px 0px;
     }
 
 </style>
@@ -22,34 +34,44 @@
 
     <div class="container">
         <div class="row" style="margin-top:75px;">
-            <div class="columns small-6 medium-8 text-left">
+            <div class="columns small-12 medium-6 text-left">
                 <div class="title-header">People</div>
                 <div class="title-description">SEARCH FOR PEOPLE IN YOUR ORGANIZATION</div>
             </div>
-            <div class="columns small-6 medium-4 text-right">
-                <a id="search-btn" class="button button-red" style="float:right;"><i class="fa fa-search" aria-hidden="true"></i></a>
-                <input type="text" id="search-query" name="search-query" placeholder="Search People" class="input-text" style="width:calc(100% - 50px); float:right;" />
-            </div>
-            <div class="columns small-12 text-right">
-                <div id="search-message" class="message" style="color: #8a8a8a;"></div>
+            <div class="columns small-12 medium-6 text-right">
+                <input type="text" id="search-query" name="search-query" placeholder="Search By Name" style="float:right;" />
+                <select id="search-teams" multiple="multiple" style="width:100%;">
+                    {% for team in teams %}
+                        <option value="{{team.pk}}" selected>{{team.title}}</option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
         <div style="margin-top:75px; margin-bottom:30px;">
             {% for people in peoples %}
-                <div class="row people hide" style="padding:10px 0px;" data-peoplename="{{ people.profile.get_name }}">
+                <div class="row people hide" style="padding:10px 0px;" data-peoplename="{{ people.profile.get_name }}" data-teampks="{{ people.profile.get_teams_pks }}">
                     <div class="columns small-2">
+                        <a href="{% url 'user-page' people.pk %}">
                         {% thumbnail people.profile.userpic "100x100" crop="center" as avatar %}
                             <img src="{{ avatar.url }}" width="{{ avatar.width }}" height="{{ avatar.height }}" class="people-avatar" />
                         {% empty %}
                             <img src="http://placehold.it/100x100&text=MEMBER" class="people-avatar" />
                         {% endthumbnail %}
+                        </a>
                     </div>
                     <div class="columns small-10 text-left">
-                        <div class="people-name">{{ people.profile.get_name }}</div>
-                        <ul>
+                        <div><a href="{% url 'user-page' people.pk %}" class="people-name">{{ people.profile.get_name }}</a></div>
+                        <ul class="people-teams">
                             {% for team_membership in people.member_set.all %}
-                            <li>
+                            <li class="people-team">
+                                <a href="{% url 'team_detail' team_membership.team.pk %}">
+                                {% thumbnail team_membership.team.image "30x30" crop="center" as avatar %}
+                                    <img src="{{ avatar.url }}" width="{{ avatar.width }}" height="{{ avatar.height }}" class="people-team-avatar" />
+                                {% empty %}
+                                    <img src="http://placehold.it/30x30&text=TEAM" class="people-team-avatar" />
+                                {% endthumbnail %}
                                 {{ team_membership.team.title }}
+                                </a>
                             </li>
                             {% endfor %}
                         </ul>
@@ -76,13 +98,25 @@
         var searchQuery = '';
 
         function search() {
+            var teams=$('#search-teams').val();
+            
             var i = 0;
             $('#search-more-btn-div').addClass('hide');
             $('.people').each(function(index) {
-                if($(this).data('peoplename').toLowerCase().indexOf(searchQuery.toLowerCase())>-1) {
+                var people_name = $(this).data('peoplename');
+                var people_teampks = $(this).data('teampks').toString().split(',');
+                if(people_name.toLowerCase().indexOf(searchQuery.toLowerCase())>-1 && _.intersection(people_teampks, teams).length>0) {
                     i++;
                     if(i<=countDisplayed) {
                         $(this).removeClass('hide');
+
+                        name = $(this).find('.people-name').html();
+                        name = name.replace(new RegExp('<strong>', 'g'),'');
+                        name = name.replace(new RegExp('</strong>', 'g'),'');
+                        if(searchQuery!=='') {
+                            name = name.replace(new RegExp(searchQuery, 'gi'), '<strong>$&</strong>');
+                        }
+                        $(this).find('.people-name').html(name);
                     } else {
                         $(this).addClass('hide');
                         $('#search-more-btn-div').removeClass('hide');
@@ -96,25 +130,19 @@
             } else {
                 $('#search-noresult').addClass('hide');
             }
-            $('#search-message').text('');
-            if(searchQuery!=='') {
-                $('#search-message').text('Displaying people search results for ' + searchQuery);
-            }
         }
 
         $(document).ready(function () {
-            $('#search-btn').click(function() {
-                searchQuery = $('#searchteams-query').val();
-                countDisplayed = countPerOne;
+            $('#search-teams').select2();
+
+            $('#search-teams').on('change', function(e) {
                 search();
             });
 
-            $('#search-query').keyup(function(e) {
-                if(e.keyCode == 13) {
-                    searchQuery = $('#search-query').val();
-                    countDisplayed = countPerOne;
-                    search();
-                }
+            $('#search-query').on('input propertychange paste', function() {
+                searchQuery = $('#search-query').val();
+                countDisplayed = countPerOne;
+                search();
             });
 
             $('#search-more-btn').click(function() {
