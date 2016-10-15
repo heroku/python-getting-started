@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timesince import timeuntil
-
+from django.core.urlresolvers import reverse
 from app.models import Organization
 
 import datetime
@@ -65,6 +65,12 @@ class Role(models.Model):
             'end_date': self.end_date.strftime('%m-%d-%Y %H:%M'),
             'duration': timeuntil(self.end_date, self.start_date),
             'start_date_str': self.start_date.strftime('%d %b').lstrip("0"),
+            'members': [ {
+                'id': member.user.pk,
+                'name': member.user.profile.get_name(),
+                'avatar': member.user.profile.get_userpic_url(),
+                'url': reverse('user-page', kwargs={'user_id': member.user.pk})
+            } for member in self.member_set.all()]
         }
 
     @property

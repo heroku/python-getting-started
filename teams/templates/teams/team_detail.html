@@ -37,11 +37,16 @@
         text-transform: uppercase;
     }
 
+    .role-member-avatar-anchor {
+        display: block;
+    }
+
     .role-member-avatar {
         width: 60px;
         height: 60px;
         border-radius: 50%;
         background-size: cover;
+        background-position: center center;
         display: inline-block;
     }
 
@@ -191,10 +196,12 @@
                             </div>
 
                             <div class="role-member columns small-2 text-center">
-                                <div class="role-member-avatar" style="background-image: url('{% static 'img/person_stock.jpg' %}');"></div>
-
                                 <button class="button tiny" ng-click="assignRole($index)" ng-show="isAssignedRole($index)">Update</button>
                                 <button class="button success tiny" ng-click="assignRole($index)" ng-hide="isAssignedRole($index)">Assign</button>
+                                <a href="[[member.url]]" ng-repeat="member in role.members" class="role-member-avatar-anchor">
+                                    <div ng-if="member.avatar!=''" style="background-image: url('[[member.avatar]]');" class="role-member-avatar"></div>
+                                    <div ng-if="member.avatar==''" style="background-image: url('http://placehold.it/60x60&text=MEMBER');" class="role-member-avatar"></div>
+                                </a>
                             </div>
                         </div>
 

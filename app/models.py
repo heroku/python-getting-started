@@ -125,3 +125,8 @@ class Profile(models.Model):
     def get_teams_pks(self):
         return ','.join([str(team_membership.team.pk) for team_membership in self.user.member_set.all()])
 
+    def get_userpic_url(self):
+        if bool(self.userpic):
+            return self.userpic.url
+        else:
+            return ''
