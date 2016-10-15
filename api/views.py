@@ -125,11 +125,12 @@ class TeamRolesView(View):
         role.save()
 
         member_ids = data.get('members_ids')
-        members = Member.objects.filter(team=team)
-        for member in members:
-            member.role.remove(role)
-            if member.user.pk in member_ids:
-                member.role.add(role)
+        if member_ids is not None:
+            members = Member.objects.filter(team=team)
+            for member in members:
+                member.role.remove(role)
+                if member.user.pk in member_ids:
+                    member.role.add(role)
 
         return json_response(role.to_dict())
 
