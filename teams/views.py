@@ -159,17 +159,13 @@ def invite_reject(request, invite_id):
 
 @login_required
 def request_join(request, team_id):
-    team = get_object_or_404(Team, pk=team_id)
-    if request.method == 'POST':
-        return _request_join(request, team)
-
-    raise Http404
-
-def _request_join(request, team):
-    join_request = JoinRequest(team=team, requester=request.user, status='created', expired_at=datetime.now()+timedelta(days=7), read=False)
-    join_request.save()
-
-    return HttpResponse(status=200)
+    try:
+        team = Team.objects.get(pk=team_id)
+        join_request = JoinRequest(team=team, requester=request.user, status='created', expired_at=datetime.now()+timedelta(days=7), read=False)
+        join_request.save()
+    except Team.DoesNotExist:
+        raise Http404
+    return redirect(reverse('team_detail', kwargs={'team_id': team_id}))
 
 @login_required
 def joinrequest_accept(request, request_id):

@@ -38,8 +38,14 @@
 
         <div class="row" style="margin-top:50px; margin-bottom:50px;">
             <div class="columns small-12 text-center">
-                <button id="joinrequest_btn" class="button button-red hide"><i class="fa fa-user" aria-hidden="true" style="margin-right:10px;"></i>Request to Join</button>
-                <div id="joinrequest_done" class="message hide">Your Join Request is pending now...</div>
+                {% if join_requested == True %}
+                    <div class="message">Your Join Request is pending now...</div>
+                {% else %}
+                    <form action="{% url 'team_request_join' team.pk %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="button button-red"><i class="fa fa-user" aria-hidden="true" style="margin-right:10px;"></i>Request to Join</button>    
+                    </form>
+                {% endif %}
             </div>
         </div>
 
@@ -49,39 +55,7 @@
 {% endblock %}
 
 {% block extra_footer %}
-    <script type="text/javascript" src="{% static 'js/foundation-datepicker.min.js' %}"></script>
     <script type="text/javascript">
 
-        {% if join_requested == True %}
-            var join_requested = true;
-        {% else %}
-            var join_requested = false;
-        {% endif %}
-        
-        function touchJoinRequest() {
-            if(join_requested) {
-                $('#joinrequest_btn').addClass('hide');
-                $('#joinrequest_done').removeClass('hide');
-            } else {
-                $('#joinrequest_btn').removeClass('hide');
-                $('#joinrequest_done').addClass('hide');
-            }
-        }
-
-        $(function(){
-            touchJoinRequest();
-            $('#joinrequest_btn').click(function() {
-                $.post(
-                    "{% url 'team_request_join' team.pk %}",
-                    { 
-                        'csrfmiddlewaretoken':$.cookie('csrftoken')
-                    },
-                    function(data) {
-                        join_requested = true;
-                        touchJoinRequest();
-                    }
-                );
-            });
-        });
     </script>
 {% endblock %}
