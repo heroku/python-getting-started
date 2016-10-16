@@ -170,6 +170,9 @@ def searchpeople(request):
 
     return render(request, 'app/people.html', locals())
 
+def notifications(request):
+    return render(request, 'app/notifications.html', locals())
+
 def getnotifications(request):
     notifications = []
 
