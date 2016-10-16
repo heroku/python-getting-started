@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^signout/$', views.sign_out, name='sign-out'),
     url(r'^activate/(?P<token>\w+)/$', views.activate_account, name='activate-account'),
     url(r'^join/(?P<token>\w+)/$', views.join_organization, name='join-organization'),
-	url(r'^notifications$', views.notifications, name='notifications'),
+	url(r'^getnotifications$', views.getnotifications, name='getnotifications'),
 	url(r'^people$', views.searchpeople, name='search-people'),
     url(r'^member/(?P<user_id>\d+)/$', views.user_page, name='user-page'),
 ]

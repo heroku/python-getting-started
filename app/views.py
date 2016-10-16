@@ -170,7 +170,7 @@ def searchpeople(request):
 
     return render(request, 'app/people.html', locals())
 
-def notifications(request):
+def getnotifications(request):
     notifications = []
 
     team_invites = request.user.inviteds.all().filter(status="created")

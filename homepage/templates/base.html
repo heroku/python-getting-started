@@ -299,7 +299,7 @@
         function getNotifications() {
             notifications = [];
             $.get(
-                    "/app/notifications",
+                    "/app/getnotifications",
                     {
                         'csrfmiddlewaretoken': $.cookie('csrftoken')
                     },
