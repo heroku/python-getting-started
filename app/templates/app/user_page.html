@@ -12,6 +12,47 @@
         .team-member-entry {
             padding: 30px;
         }
+        .role {
+            padding: 1rem 0;
+        }
+
+        .role-date {
+            font-family: 'Montserrat', sans-serif;
+            color: #8a8a8a;
+            text-align: center;
+            font-size: 10px;
+            font-weight: bold;
+            background-color: #e1e8f0;
+            width: 100px;
+            height: 100px;
+            border-radius: 5px;
+            padding: 0px;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .role-date-start {
+            color: black;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .role-date-duration {
+            text-transform: uppercase;
+        }
+
+        .role-member-avatar-anchor {
+            display: block;
+        }
+
+        .role-member-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center center;
+            display: inline-block;
+        }
     </style>
 {% endblock %}
 
@@ -82,22 +123,67 @@
         </div>
 
 
-{#        <div class="row">#}
-{#            <div class="columns">#}
-{#                <h4>Role Memberships</h4>#}
-{#            </div>#}
-{#        </div>#}
-{##}
-{#        <div class="row">#}
-{#            <div class="columns small-12 medium-12 large-6">#}
-{#                <h5>Current</h5>#}
-{##}
-{#            </div>#}
-{#            <div class="columns small-12 medium-12 large-6">#}
-{#                <h5>Past</h5>#}
-{##}
-{#            </div>#}
-{#        </div>#}
+        {% if current_roles or past_roles %}
+
+            <div class="row">
+                <div class="columns">
+                    <h4>Role Memberships</h4>
+                </div>
+            </div>
+
+            <div class="row">
+                {% if current_roles %}
+                    <div class="columns small-12 medium-12 large-6">
+                        <h5>Current</h5>
+                        {% for role in current_roles %}
+                            <div class="row role">
+                                <div class="columns small-3 text-left">
+                                    <div class="role-date">
+                                        <div>STARTS ON</div>
+                                        <div class="role-date-start">{{ role.start_date | date:"j M" | upper }}</div>
+                                        <div class="role-date-duration">FOR {{ role.end_date | timeuntil:role.start_date | upper }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="role-desc columns small-7 text-left">
+                                    <p class="role-desc-header">
+                                        <h6>{{ role.title }}</h6>
+                                        <a href="{% url 'team_detail' role.team.pk %}">{{ role.team.title }}</a>
+                                    </p>
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if past_roles %}
+                    <div class="columns small-12 medium-12 large-6">
+                        <h5>Past</h5>
+                        {% for role in past_roles %}
+                            <div class="row role">
+                                <div class="columns small-3 text-left">
+                                    <div class="role-date">
+                                        <div>STARTS ON</div>
+                                        <div class="role-date-start">{{ role.start_date | date:"j M" | upper }}</div>
+                                        <div class="role-date-duration">FOR {{ role.end_date | timeuntil:role.start_date | upper }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="role-desc columns small-7 text-left">
+                                    <p class="role-desc-header">
+                                        <h6>{{ role.title }}</h6>
+                                        <a href="{% url 'team_detail' role.team.pk %}">{{ role.team.title }}</a>
+                                    </p>
+                                </div>
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+        {% endif %}
 
 
 

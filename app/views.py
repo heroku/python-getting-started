@@ -8,14 +8,15 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from teams.models import Team, JoinRequest
-import json
 from django.core.mail import send_mail
 from .models import Alert
 
 from app.models import Organization, OrganizationMember, Token, Profile, OrganizationInvitation
-from teams.models import Team, Member
+from teams.models import Team, Member, Role
 from app.forms import OrgSignUpForm, SettingsForm, UserSignUpForm, SignInForm
 from teamedup import settings
+
+import json, datetime
 
 
 @login_required
@@ -201,6 +202,12 @@ def getnotifications(request):
 @login_required
 def user_page(request, user_id):
     member = get_object_or_404(User, pk=user_id)
+    memberships = Member.objects.filter(user=member)
+    current_roles = []
+    past_roles = []
+    for ms in memberships:
+        current_roles += ms.role.filter(end_date__gt=datetime.datetime.now())
+        past_roles += ms.role.filter(end_date__lte=datetime.datetime.now())
     # TODO: validation required
     teams = [membership.team for membership in Member.objects.filter(user=member)]
     return render(request, 'app/user_page.html', locals())
