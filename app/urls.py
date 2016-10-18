@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^activate/(?P<token>\w+)/$', views.activate_account, name='activate-account'),
     url(r'^join/(?P<token>\w+)/$', views.join_organization, name='join-organization'),
 	url(r'^getnotifications$', views.getnotifications, name='getnotifications'),
-	url(r'^notifications$', views.notifications, name='notifications'),
+	url(r'^notifications/$', views.notifications_page, name='notifications-page'),
 	url(r'^people$', views.searchpeople, name='search-people'),
     url(r'^member/(?P<user_id>\d+)/$', views.user_page, name='user-page'),
 ]

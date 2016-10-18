@@ -52,6 +52,7 @@
             font-weight: bold;
             padding-bottom: 20px;
             font-size: .875rem;
+            text-transform: uppercase;
         }
 
         .teamedup-form label {
@@ -178,6 +179,7 @@
                 <div class="dropdown-pane bottom right text-left" id="notifications" data-dropdown data-close-on-click="true">
                     <ul>
                     </ul>
+                    <a href="{% url 'notifications-page' %}">View All</a>
                 </div>
                 <a href="{% url 'search-people' %}">People</a>
                 <a href="{% url 'settings' %}">Settings</a>
@@ -280,6 +282,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="{% static 'js/underscore-min.js' %}"></script>
     <script src="{% static 'js/foundation.min.js' %}"></script>
+    <script src="{% static 'js/angular.min.js' %}"></script>
+    <script src="{% static 'js/angular-foundation.min.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
 
 
     <link href="{% static 'select2/css/select2.min.css' %}" rel="stylesheet">

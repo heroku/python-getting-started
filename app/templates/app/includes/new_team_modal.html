@@ -1,0 +1,87 @@
+{% load staticfiles %}
+{% load thumbnail %}
+
+<div id="myModal" class="reveal-modal teamedup-form" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+
+    <div class="row">
+        <a class="close-reveal-modal" style="position:absolute; right:10px; top:6px; font-size:24px;" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></a>
+        <div class="large-6 columns">
+            <h5 class="title">Create New Team</h5>
+            <div class="description">Fill out the fields below.</div>
+        </div>
+    </div>
+
+    <form action="/teams/create_new_team/" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="row" style="margin-top:30px;">
+            <div class="small-12 medium-4 columns text-right">
+                {% thumbnail request.user.profile.userpic "350x350" as userpic %}
+                    <img class="userpic-preview" src="{{ userpic.url }}"/>
+                {% empty %}
+                    <img class="userpic-preview" src="http://placehold.it/350x350&text=Picture"/>
+                {% endthumbnail %}
+                <a href="#" class="button alert round upload-button"><i class="fa fa-upload"></i></a>
+                <input type="file" onchange="previewFile()" name="team_image">
+            </div>
+            <div class="small-12 medium-8 columns">
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label for="title">Title*</label>
+                        <input type="text" id="title" name="title" placeholder="Enter team title" required="required"/>
+                    </div>
+                    <div class="small-12 columns">
+                        <label for="description">Description*</label>
+                        <textarea id="description" name="description" rows="4" placeholder="Enter team description" required="required"></textarea>
+                    </div>
+                    <div class="small-12 columns">
+                    <input type="submit" class="button alert hide-for-small-only" value="Create Team"/>
+                    <input type="submit" class="button alert expanded show-for-small-only" value="Create Team"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script type="text/javascript">
+        function previewFile() {
+            var file = document.querySelector('input[type=file]').files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                $('img.userpic-preview').attr('src', reader.result)
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                $('img.userpic-preview').attr('src', 'http://placehold.it/350x350&text=Picture')
+            }
+        }
+
+        window.onload = function(){
+            $('.upload-button').click(function () {
+                $('input[type="file"]').click();
+                return false;
+            });
+        }
+</script>
+
+<style>
+    #myModal {
+        text-align: left;
+        background: white;
+        width: 75%;
+        max-width: 1040px;
+        color: black;
+        border: none;
+        position: absolute;
+        padding: 20px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        top: 50%;
+    }
+</style>
