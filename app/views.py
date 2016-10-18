@@ -171,8 +171,8 @@ def searchpeople(request):
 
     return render(request, 'app/people.html', locals())
 
+@login_required
 def notifications_page(request):
-    notifications = getnotifications(request)
     return render(request, 'app/notifications.html', locals())
 
 def getnotifications(request):
@@ -197,9 +197,7 @@ def getnotifications(request):
         }
         notifications.append(notification)
 
-    if request.is_ajax():
-        return HttpResponse(json.dumps(notifications), content_type='application/json')
-    return notifications
+    return HttpResponse(json.dumps({'entries': notifications, 'total': 0}), content_type='application/json')
 
 
 @login_required
