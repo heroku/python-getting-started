@@ -1,10 +1,25 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
 {% load thumbnail %}
 
-{% block content %}
+{% block extra_header %}
+    <style type="text/css">
+        .teamedup-form .upload-button {
+            position: relative;
+            bottom: 50px;
+            right: 10px;
+            border-radius: 50%;
+        }
 
-    {% load staticfiles %}
+        input[type=file] {
+            width: 1px;
+            visibility: hidden;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
 
     <div class="container">
         <div class="row small-up-2" style="margin-top:75px;">
@@ -17,7 +32,7 @@
             </div>
         </div>
 
-        {% include "app/new_team_modal.html" %}
+        {% include "app/includes/new_team_modal.html" %}
 
         <div class="row small-up-2 medium-up-4 large-up-4" style="margin-top:60px;">
             {% for team in myteams %}

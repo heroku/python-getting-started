@@ -300,28 +300,38 @@
                         </button>
                     </div>
                 </div>
+
                 <div class="row">
-                    <div class="large-6 small-12 columns">
+                    <div class="large-12 columns">
                         <label>
                             Title*
                             <input type="text" ng-model="role.title" placeholder="Enter role title" required="required" />
                         </label>
+                    </div>
+                    <div class="large-12 columns">
+                        <div class="row">
+                            <div class="large-6 medium-6 small-12 columns">
+                                <label>
+                                    Start Date*
+                                    <input type="text" f-datepicker ng-model="role.start_date" placeholder="Insert Date" required="required">
+                                </label>
+                            </div>
+                            <div class="large-6 medium-6 small-12 columns">
+                                <label>
+                                    End Date*
+                                    <input type="text" f-datepicker ng-model="role.end_date" placeholder="Insert Date" required="required">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="large-12 columns">
                         <label>
                             Description*
-                            <textarea ng-model="role.description" placeholder="Enter role description" required="required"></textarea>
-                        </label>
-                    </div>
-                    <div class="large-6 small-12 columns">
-                        <label>
-                            Start Date*
-                            <input type="text" f-datepicker ng-model="role.start_date" placeholder="Insert Date" required="required">
-                        </label>
-                        <label>
-                            End Date*
-                            <input type="text" f-datepicker ng-model="role.end_date" placeholder="Insert Date" required="required">
+                            <textarea ng-model="role.description" placeholder="Enter role description" rows="3" required="required"></textarea>
                         </label>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="columns">
                         <button type="submit" class="button success">Save</button>
@@ -390,9 +400,7 @@
 
 {% block extra_footer %}
     <script type="text/javascript" src="{% static 'js/foundation-datepicker.min.js' %}"></script>
-    <script src="{% static 'js/angular.min.js' %}"></script>
-    <script src="{% static 'js/angular-foundation.min.js' %}"></script>
-    <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/TeamPageController.js' %}"></script>
 
     <script type="text/javascript">
 

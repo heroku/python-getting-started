@@ -171,7 +171,8 @@ def searchpeople(request):
 
     return render(request, 'app/people.html', locals())
 
-def notifications(request):
+@login_required
+def notifications_page(request):
     return render(request, 'app/notifications.html', locals())
 
 def getnotifications(request):
@@ -196,7 +197,7 @@ def getnotifications(request):
         }
         notifications.append(notification)
 
-    return HttpResponse(json.dumps(notifications), content_type='application/json')
+    return HttpResponse(json.dumps({'entries': notifications, 'total': 0}), content_type='application/json')
 
 
 @login_required
@@ -211,3 +212,4 @@ def user_page(request, user_id):
     # TODO: validation required
     teams = [membership.team for membership in Member.objects.filter(user=member)]
     return render(request, 'app/user_page.html', locals())
+

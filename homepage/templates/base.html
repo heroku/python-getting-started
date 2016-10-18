@@ -52,6 +52,7 @@
             font-weight: bold;
             padding-bottom: 20px;
             font-size: .875rem;
+            text-transform: uppercase;
         }
 
         .teamedup-form label {
@@ -131,6 +132,7 @@
         #notifications ul li {
             float: none;
             padding: 0.5rem 1rem;
+            border-bottom:1px solid whitesmoke;
         }
 
         #notifications ul form {
@@ -178,6 +180,7 @@
                 <div class="dropdown-pane bottom right text-left" id="notifications" data-dropdown data-close-on-click="true">
                     <ul>
                     </ul>
+                    <a href="{% url 'notifications-page' %}" style="display: block;text-align:center;background-color: whitesmoke;">View All</a>
                 </div>
                 <a href="{% url 'search-people' %}">People</a>
                 <a href="{% url 'settings' %}">Settings</a>
@@ -280,6 +283,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="{% static 'js/underscore-min.js' %}"></script>
     <script src="{% static 'js/foundation.min.js' %}"></script>
+    <script src="{% static 'js/angular.min.js' %}"></script>
+    <script src="{% static 'js/angular-foundation.min.js' %}"></script>
+    <script src="{% static 'js/app.js' %}"></script>
 
 
     <link href="{% static 'select2/css/select2.min.css' %}" rel="stylesheet">
@@ -304,7 +310,7 @@
                         'csrfmiddlewaretoken': $.cookie('csrftoken')
                     },
                     function (data) {
-                        notifications = data;
+                        notifications = data.entries;
                         drawNotifications();
                     }
             );
@@ -328,11 +334,11 @@
                             '<div class="text-right">' +
                                 '<form action="/teams/invites/' + notification.object.id + '/accept/" method="POST">' +
                                     "{% csrf_token %}" +
-                                    '<button type="submit" class="button alert"><i class="fa fa-check" aria-hidden="true"></i></button>' +
+                                    '<button type="submit" class="button success"><i class="fa fa-check" aria-hidden="true"></i></button>' +
                                 '</form>' +
                                 '<form action="/teams/invites/' + notification.object.id + '/reject/" method="POST" class="teaminvite_reject_form">' +
                                     "{% csrf_token %}" +
-                                    '<button type="submit" class="button secondary"><i class="fa fa-times" aria-hidden="true"></i></button>' +
+                                    '<button type="submit" class="button alert"><i class="fa fa-times" aria-hidden="true"></i></button>' +
                                 '</form>' +
                             '</div>' +
                         '</li>'
@@ -345,11 +351,11 @@
                             '<div class="text-right">' +
                                 '<form action="/teams/joinrequests/' + notification.object.id + '/accept/" method="POST">' +
                                     "{% csrf_token %}" +
-                                    '<button type="submit" class="button alert"><i class="fa fa-check" aria-hidden="true"></i></button>' +
+                                    '<button type="submit" class="button success"><i class="fa fa-check" aria-hidden="true"></i></button>' +
                                 '</form>' +
                                 '<form action="/teams/joinrequests/' + notification.object.id + '/reject/" method="POST" class="teamjoinrequest_reject_form">' +
                                     "{% csrf_token %}" +
-                                    '<button type="submit" class="button secondary"><i class="fa fa-times" aria-hidden="true"></i></button>' +
+                                    '<button type="submit" class="button alert"><i class="fa fa-times" aria-hidden="true"></i></button>' +
                                 '</form>' +
                             '</div>' +
                         '</li>'

@@ -130,3 +130,10 @@ class Profile(models.Model):
             return self.userpic.url
         else:
             return ''
+
+
+class ActionLog(models.Model):
+    user = models.ForeignKey(User)
+    created_at = models.DateTimeField(auto_now_add=True)
+    action_type = models.CharField(max_length=32, default='')
+    data = models.TextField()

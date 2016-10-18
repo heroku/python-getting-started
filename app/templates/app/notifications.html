@@ -1,24 +1,66 @@
 {% extends 'base.html' %}
 
 {% load thumbnail %}
+{% load staticfiles %}
 
 {% block extra_header %}
-<style>
+    <style type="text/css">
 
-</style>
+        .notifications-page button {
+            border-radius: 50%;
+        }
+
+    </style>
 {% endblock %}
 
 {% block content %}
 
-    {% load staticfiles %}
+    <div class="container teamedup-form notifications-page" ng-controller="NotificationsPageController" ng-init="init({'notifications': '{% url 'getnotifications' %}'})">
+        <div class="row">
+            <div class="columns">
+                <h4 class="title">Pending Notifications</h4>
+                <hr>
+            </div>
+        </div>
 
-    <div class="container">
-        
+        <div class="row" ng-repeat="entry in entries">
+            <div class="large-8 small-8 columns">
+                <h6 ng-show="entry.type == 'team_invite'"><a href="/app/member/[[ entry.object.inviter.id ]]/">[[ entry.object.inviter.name ]]</a> invited you into [[ entry.object.team.title ]]</h6>
+                <h6 ng-show="entry.type == 'team_join'"><a href="/app/member/[[ entry.object.requester.id ]]/">[[ entry.object.requester.name ]]</a> requested to join [[ entry.object.team.title ]]</h6>
+            </div>
+            <div class="large-4 small-4 columns">
+                <button class="button success" ng-click="post('/teams/' + (entry.type === 'team_invite' ? 'invites' : 'joinrequests') + '/' + entry.object.id + '/accept/', $index)"><i class="fa fa-check"></i></button>
+                <button class="button alert" ng-click="post('/teams/' + (entry.type === 'team_invite' ? 'invites' : 'joinrequests') + '/' + entry.object.id + '/reject/', $index)"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="row" ng-show="entries.length === 0">
+            <div class="columns">
+                You don't have any pending notifications
+            </div>
+        </div>
+
+        <div class="row" ng-show="entries.length < total">
+            <div class="columns">
+                <input type="submit" class="button alert hide-for-small-only" value="Load More"/>
+                <input type="submit" class="button alert expanded show-for-small-only" value="Load More"/>
+            </div>
+        </div>
+
+{#        <div class="row">#}
+{#            <div class="columns">#}
+{#                <h4 class="title">Actions Log</h4>#}
+{#                <hr>#}
+{#            </div>#}
+{#        </div>#}
+
+        <div class="row">
+            <div class="columns">&nbsp;</div>
+        </div>
+
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>
-        
-        
-    </script>
+{% endblock %}
+
+{% block extra_footer %}
+    <script src="{% static 'js/NotificationsPageController.js' %}"></script>
 {% endblock %}
