@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+    <div class="container">
+        <form method="POST" class="teamedup-form sign-up-form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="columns">
+                    <h5 class="title">Create New Organization</h5>
+                    <p class="description">COMPLETE THE FIELDS BELOW TO REGISTER</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="columns" style="color:red;">
+                    {{ form.non_field_errors }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-6 medium-12 small-12 columns">
+                    <label>
+                        Organization Name*
+                        {{ form.organization_name }}
+                    </label>
+                </div>
+                <div class="large-6 medium-12 small-12 columns">
+                    <label>
+                        Email*
+                        {{ form.email }}
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-6 medium-12 small-12 columns">
+                    <label>
+                        Password*
+                        {{ form.password }}
+                    </label>
+                </div>
+                <div class="large-6 medium-12 small-12 columns">
+                    <label>
+                        Repeat Password*
+                        {{ form.repeat_password }}
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="columns">
+                    <input type="submit" class="button alert hide-for-small-only" value="Sign Up" />
+                    <input type="submit" class="button alert expanded show-for-small-only" value="Sign Up" />
+                    <i class="fa fa-spinner fa-spin" style="display: none;" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="columns description">
+                    By signing up you are agreeing to our terms of use and privacy policy. Fields marked with * are mandatory.
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+{% endblock %}
+
+
+{% block extra_footer %}
+    <script type="text/javascript">
+        (function($){
+            $('.sign-up-form').submit(function(){
+                $(this).find('input[type="submit"]').hide();
+                $(this).find('.fa-spinner').show();
+                return true;
+            });
+        })(jQuery);
+    </script>
+{% endblock %}

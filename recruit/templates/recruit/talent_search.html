@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="page-header">
+                <h1>Talent search
+                    <small>create a new talent search</small>
+                </h1>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                    and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
+                    leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s
+                    with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                    publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <h2>Create new talent search</h2>
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Position title</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="inputEmail3"
+                                           placeholder="what title can we give this role?">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="roleDescription" class="col-sm-2 control-label">Describe role</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" id="roleDescription" rows="5"
+                                              placeholder="describe who you're looking for"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Skills required</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="inputEmail3"
+                                           placeholder="list the skills required, separated by commas">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-default">Review & start campaign</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,427 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% load thumbnail %}
+
+{% block extra_header %}
+    <link rel="stylesheet" href="{% static 'css/foundation-datepicker.min.css' %}" />
+<style>
+
+    .role {
+        padding: 1rem 0;
+    }
+
+    .role-date {
+        font-family: 'Montserrat', sans-serif;
+        color: #8a8a8a;
+        text-align: center;
+        font-size: 10px;
+        font-weight: bold;
+        background-color: #e1e8f0;
+        width: 100px;
+        height: 100px;
+        border-radius: 5px;
+        padding: 0px;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .role-date-start {
+        color: black;
+        font-size: 14px;
+        text-transform: uppercase;
+    }
+
+    .role-date-duration {
+        text-transform: uppercase;
+    }
+
+    .role-member-avatar-anchor {
+        display: block;
+    }
+
+    .role-member-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center center;
+        display: inline-block;
+    }
+
+    .delete-role-button {
+        margin-left: 5px;
+    }
+
+    .member {
+        margin: 20px 0px;
+    }
+
+    .member-avatar {
+        border-radius: 50%;
+    }
+
+    .member-name {
+        font-family: 'Montserrat', sans-serif;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .modal-box {
+        color: #333;
+        text-align: left;
+        margin: 0 30px;
+    }
+
+    .modal-title {
+        padding-top: 15px;
+        margin-bottom: 0;
+    }
+
+    .modal-description {
+        color: grey;
+        font-weight: bold;
+        padding-bottom: 20px;
+        font-size: .875rem;
+    }
+
+    .modal-box label {
+        color: #333;
+        font-weight: bold;
+    }
+
+    .modal-box input, .modal-box textarea {
+        margin-top: 15px;
+        background-color: whitesmoke;
+        font-weight: normal;
+    }
+
+    @media screen and (min-width: 60em){
+        .reveal {
+            width: 800px;
+            max-width: 62rem;
+        }
+    }
+
+    @media screen and (max-width: 450px){
+        .role-date {
+            width: 80px;
+            height: 80px;
+            font-size: 8px;
+        }
+
+        .role-member-avatar {
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+    {% load staticfiles %}
+
+    <div class="container" ng-controller="TeamPageController"
+         ng-init="init({'team': '{% url 'api-team' team.pk %}',
+         'roles': '{% url 'api-team-roles' team.pk %}',
+         'members': '{% url 'api-team-members' team.pk %}'})">
+
+        <div class="row" style="padding-top: 75px">
+            <div class="columns small-4">
+                {% thumbnail team.image "350x350" crop='center' as img %}
+                    <img src="{{ img.url }}"/>
+                {% empty %}
+                    <img src="http://placehold.it/350x350&text=TEAM"/>
+                {% endthumbnail %}
+            </div>
+            <div class="columns small-8 text-left">
+                <div class="title-header" style="display:inline-block;">{{ team.title }}</div>
+                {% for owner in owners %}
+                    <div class="user-tag-purple" style="display:inline-block; margin-left:10px;">{{ owner.profile.get_name }}</div>
+                {% endfor %}
+                <div class="title-description">
+                    {% if members_count > 1 %}
+                        {{ members_count }} MEMBERS
+                    {% else %}
+                        {{ members_count }} MEMBER
+                    {% endif %}
+                </div>
+                <div class="item-description" style="margin-top:30px;">{{ team.description }}</div>
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 100px">
+            <div class="small-12 medium-8 columns">
+                <div class="row">
+                    <div class="columns small-6 text-left">
+                        <div class="title-header">Roles</div>
+                        <div class="title-description">3 MILESTONES</div>
+                    </div>
+                    <div class="columns small-6 text-right">
+                        {% if request.user in team.owners %}
+                            <button class="button button-red" ng-click="createRole()"><i class="fa fa-plus" style="margin-right:10px;"></i>Team Role</button>
+                        {% endif %}
+                    </div>
+
+                    <div class="columns small-12" style="margin-top:40px;">
+
+                        <div class="message" ng-show="roles.length === 0">No roles have been created yet</div>
+
+                        <div class="row role role-[[ role.id ]]" ng-repeat="role in roles">
+                            <div class="columns small-3 text-left">
+                                <div class="role-date">
+                                    <div>STARTS ON</div>
+                                    <div class="role-date-start">[[ role.start_date_str ]]</div>
+                                    <div class="role-date-duration">FOR [[ role.duration ]]</div>
+                                </div>
+                            </div>
+
+                            <div class="role-desc columns small-7 text-left">
+                                <p class="role-desc-header">
+                                    <span class="title item-title">[[ role.title ]]</span>
+                                    {% if request.user in team.owners %} {# TODO: move this validation to angular #}
+                                        <button class="button secondary tiny delete-role-button float-right" ng-click="deleteRole($index)">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                        <button class="button secondary tiny edit-role-button float-right" ng-click="editRole($index)">
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                    {% endif %}
+                                </p>
+                                <div class="role-desc-detail description item-description">[[ role.description ]]</div>
+                            </div>
+
+                            <div class="role-member columns small-2 text-center">
+                                <button class="button tiny" ng-click="assignRole($index)" ng-show="isAssignedRole($index)">Update</button>
+                                <button class="button success tiny" ng-click="assignRole($index)" ng-hide="isAssignedRole($index)">Assign</button>
+                                <a href="[[member.url]]" ng-repeat="member in role.members" class="role-member-avatar-anchor">
+                                    <div ng-if="member.avatar!=''" style="background-image: url('[[member.avatar]]');" class="role-member-avatar"></div>
+                                    <div ng-if="member.avatar==''" style="background-image: url('http://placehold.it/60x60&text=MEMBER');" class="role-member-avatar"></div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="medium-3 medium-offset-1 small-12 columns">
+                <div class="title-header text-left">Team Members</div>
+                <div class="title-description text-left">
+                    {% if members_count > 1 %}
+                        {{ members_count }} TEAM MEMBERS
+                    {% else %}
+                        {{ members_count }} TEAM MEMBER
+                    {% endif %}
+                </div>
+                <a data-open="invite_people_modal" class="button button-red" style="margin-top:40px; border-radius:50%;"><i class="fa fa-plus"></i></a>
+                <div class="row">
+                    {% for member in members %}
+                        <div class="columns small-6 medium-12 member">
+                            <a href="{% url 'user-page' member.pk %}">
+                            {% thumbnail member.profile.userpic "100x100" crop="center" as avatar %}
+                                <img src="{{ avatar.url }}" width="{{ avatar.width }}" height="{{ avatar.height }}" class="member-avatar" />
+                            {% empty %}
+                                <img src="http://placehold.it/100x100&text=MEMBER" class="member-avatar" />
+                            {% endthumbnail %}
+                            <div class="member-name">{{ member.profile.get_name }}</div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+
+    <script type="text/ng-template" id="_assignees_modal.html">
+        <div class="modal-box">
+            <form ng-submit="save()" onsubmit="return false" method="POST">
+                <div class="row">
+                    <div class="medium-11 small-10 columns">
+                        <h5 class="modal-title">Assign role</h5>
+                        <p class="modal-description">CHOOSE ASSIGNEES BELOW</p>
+                    </div>
+                    <div class="medium-1 small-2 columns">
+                        <button ng-click="cancel()" class="close-button" aria-label="Close reveal" type="button">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="columns" style="overflow:auto;">
+
+                        <div class="row" ng-repeat="member in members" style="margin-bottom:20px;">
+                            <div class="large-3 small-3 columns">
+                                <img ng-src="[[ member.user.userpic ]]" class="image-rounded">
+                            </div>
+                            <div class="large-5 small-5 columns">
+                                <h5>[[ member.user.name ]]</h5>
+                                <div style="color:#ccc;">[[ member.user.location ]]</div>
+                            </div>
+                            <div class="large-4 small-4 columns text-right">
+                                <button class="button success"
+                                        ng-show="member.roles.indexOf(role.id) === -1"
+                                        ng-click="member.roles.push(role.id)" onclick="return false">Assign</button>
+                                <button class="button secondary"
+                                        ng-hide="member.roles.indexOf(role.id) === -1"
+                                        ng-click="member.roles.splice(member.roles.indexOf(role.id), 1)" onclick="return false">Unassign</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="columns text-right">
+                        <button onclick="return false" class="button alert" ng-click="cancel()">Cancel</button>
+                        <button type="submit" class="button warning">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </script>
+
+
+      <script type="text/ng-template" id="_role_modal.html">
+        <div class="modal-box">
+            <form ng-submit="save()" onsubmit="return false" method="POST">
+                <div class="row">
+                    <div class="medium-11 small-10 columns">
+                        <h5 class="modal-title">Create New Role</h5>
+                        <p class="modal-description">FILL OUT THE FIELDS BELOW</p>
+                    </div>
+                    <div class="medium-1 small-2 columns">
+                        <button ng-click="cancel()" class="close-button" aria-label="Close reveal" type="button">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="large-12 columns">
+                        <label>
+                            Title*
+                            <input type="text" ng-model="role.title" placeholder="Enter role title" required="required" />
+                        </label>
+                    </div>
+                    <div class="large-12 columns">
+                        <div class="row">
+                            <div class="large-6 medium-6 small-12 columns">
+                                <label>
+                                    Start Date*
+                                    <input type="text" f-datepicker ng-model="role.start_date" placeholder="Insert Date" required="required">
+                                </label>
+                            </div>
+                            <div class="large-6 medium-6 small-12 columns">
+                                <label>
+                                    End Date*
+                                    <input type="text" f-datepicker ng-model="role.end_date" placeholder="Insert Date" required="required">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="large-12 columns">
+                        <label>
+                            Description*
+                            <textarea ng-model="role.description" placeholder="Enter role description" rows="3" required="required"></textarea>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="columns">
+                        <button type="submit" class="button success">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </script>
+
+
+        <div class="reveal" id="invite_people_modal" data-reveal>
+            <div class="modal-box">
+                <form action="{% url 'team_invite_people' team.pk %}" id="invite_people_form" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <h5 class="modal-title">Invite Users</h5>
+                            <p class="modal-description">SELECT PEOPLE TO INVITE TO THE TEAM</p>
+                            <button class="close-button" data-close aria-label="Close modal" type="button" style="float:right;">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="columns small-12 medium-12">
+                            <select id="people-toinvite-select" name="people-toinvite" multiple="multiple" style="width:100%;">
+                            {% for people in nonmembers %}
+                                <option value="{{people.pk}}" {% if people in invitees %} disabled="disabled" {% endif %}>{{people.profile.get_name}} {% if people in invitees %} - invited {% endif %}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="columns text-right">
+                            <input type="button" value="Cancel" class="button secondary" data-close aria-label="Close modal" />
+                            <input type="submit" value="Invite" class="button alert" id="invite_btn" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="reveal" id="invited_modal" data-reveal>
+            <div class="modal-box">
+                <div class="row">
+                    <div class="small-12 columns text-center">
+                        <h5 class="modal-title">Thanks, Your Invites are on their way</h5>
+                        <p class="modal-description">Your colleagues will receive an invitation to join your team shortly.</p>
+                        <button class="close-button" data-close aria-label="Close modal" type="button" style="float:right;">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="columns text-right">
+                        <input type="button" value="OK" class="button alert" data-close aria-label="Close modal"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+{% block extra_footer %}
+    <script type="text/javascript" src="{% static 'js/foundation-datepicker.min.js' %}"></script>
+    <script src="{% static 'js/TeamPageController.js' %}"></script>
+
+    <script type="text/javascript">
+
+        $(function(){
+
+            $('#people-toinvite-select').select2();
+            $('#invite_people_form').submit(function(){
+                $.post($(this).attr('action'), $(this).serialize(), function(response){
+                    $('#invited_modal').foundation('open');
+                    invitees = $('#people-toinvite-select').val();
+                    $('#people-toinvite-select').select2("destroy");
+                    invitees && invitees.forEach(function(invitee) {
+                        option = $('#people-toinvite-select').find('[value="'+invitee+'"]');
+                        option.attr('disabled', 'disabled');
+                        option.removeAttr('selected');
+                        option.text(option.text() + ' - invited');
+                    });
+                    $('#people-toinvite-select').select2();
+                }, 'json');
+                return false;
+            });
+        });
+    </script>
+{% endblock %}

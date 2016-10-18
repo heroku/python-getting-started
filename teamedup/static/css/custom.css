@@ -1,0 +1,87 @@
+.no-border {
+    border: none;
+}
+
+.button {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.button-red {
+    background-color: #fc0017;
+}
+
+.button-purple {
+	background-color: #9068be;
+}
+
+.button-round {
+	border-radius: 20px;
+}
+
+a {
+    color: #0a0a0a;
+}
+
+.center-button {
+    text-align: center;
+}
+
+.square-image {
+	background-size: cover;
+    background-position: center center;
+    width: 100%;
+    padding-top: 100%;
+}
+
+.title-header {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+}
+
+.title-description {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #8a8a8a;
+}
+
+.item-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+}
+
+.item-description {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    color: #8a8a8a;
+    word-break: break-all;
+}
+
+.user-tag-purple {
+    background-color: #9068be;
+    color: white;
+    display: inline-block;
+    padding: 2px 5px;
+    border-radius: 2px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+}
+
+.input-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #8a8a8a;
+    background-color: #f1f1f1;
+    border-radius: 0px;
+    border: 0px;
+    padding: 10px 15px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.message {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.select2-container--default .select2-search--inline .select2-search__field {
+    height: auto;
+}

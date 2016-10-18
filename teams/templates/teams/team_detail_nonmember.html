@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% load thumbnail %}
+{% load staticfiles %}
+
+{% block extra_header %}
+    <link rel="stylesheet" href="{% static 'css/foundation-datepicker.min.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+    {% load staticfiles %}
+
+    <div class="container">
+        <div class="row" style="margin-top:75px">
+            <div class="columns small-4">
+                {% thumbnail team.image "350x350" crop='center' as img %}
+                    <img src="{{ img.url }}"/>
+                {% empty %}
+                    <img src="http://placehold.it/350x350&text=TEAM"/>
+                {% endthumbnail %}
+            </div>
+            <div class="columns small-8 text-left">
+                <div class="title-header" style="display:inline-block;">{{ team.title }}</div>
+                {% for owner in owners %}
+                    <div class="user-tag-purple" style="display:inline-block; margin-left:10px;">{{ owner.profile.get_name }}</div>
+                {% endfor %}
+                <div class="title-description">
+                    {% if members_count > 1 %}
+                        {{ members_count }} MEMBERS
+                    {% else %}
+                        {{ members_count }} MEMBER
+                    {% endif %}
+                </div>
+                <div class="item-description" style="margin-top:30px;">{{ team.description }}</div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:50px; margin-bottom:50px;">
+            <div class="columns small-12 text-center">
+                {% if join_requested == True %}
+                    <div class="message">Your Join Request is pending now...</div>
+                {% else %}
+                    <form action="{% url 'team_request_join' team.pk %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="button button-red"><i class="fa fa-user" aria-hidden="true" style="margin-right:10px;"></i>Request to Join</button>    
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+{% block extra_footer %}
+    <script type="text/javascript">
+
+    </script>
+{% endblock %}

@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% load thumbnail %}
+
+{% block extra_header %}
+    <style type="text/css">
+        .teamedup-form .upload-button {
+            position: relative;
+            bottom: 50px;
+            right: 10px;
+            border-radius: 50%;
+        }
+
+        input[type=file] {
+            width: 1px;
+            visibility: hidden;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row small-up-2" style="margin-top:75px;">
+            <div class="column text-left">
+                <div class="title-header">Your Teams</div>
+                <div class="title-description">ACTIVE TEAMS / PROJECTS</div>
+            </div>
+            <div class="column text-right">
+                <a href="#" class="button button-red" id="myModalButton"><i class="fa fa-plus" aria-hidden="true"></i><span style="font-size:12px; margin-left:10px;">New Team</span></a>
+            </div>
+        </div>
+
+        {% include "app/includes/new_team_modal.html" %}
+
+        <div class="row small-up-2 medium-up-4 large-up-4" style="margin-top:60px;">
+            {% for team in myteams %}
+                <div class="column">
+                    <a href="/teams/detail/{{ team.pk }}">
+                        {% thumbnail team.image "350x350" crop='center' as img %}
+                            <img src="{{ img.url }}"/>
+                        {% empty %}
+                            <img src="http://placehold.it/350x350&text=TEAM"/>
+                        {% endthumbnail %}
+                    </a>
+                    <div class="item-title" style="margin-top:30px;"><a href="/teams/detail/{{ team.id }}">{{ team.title }}</a></div>
+                    <div class="item-description" style="margin-top:10px; word-break: break-all;">{{ team.description|slice:":45" }}</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row" style="margin-top:75px;">
+            <div class="columns small-6 medium-4 text-left">
+                <div class="title-header">Other Teams</div>
+                <div class="title-description">SEARCH FOR TEAMS</div>
+            </div>
+            <div class="columns small-6 medium-4 medium-offset-4 text-right">
+                <a id="searchteams-btn" class="button button-red" style="float:right;"><i class="fa fa-search" aria-hidden="true"></i></a>
+                <input type="text" id="searchteams-query" name="searchteams-query" placeholder="Search Teams" class="input-text" style="width:calc(100% - 50px); float:right;" />
+            </div>
+            <div class="columns small-12 text-right">
+                <div id="searchteams-message" class="message" style="color: #8a8a8a;"></div>
+            </div>
+        </div>
+
+        <div style="margin-top:60px;">
+            {% for team in otherteams %}
+                <div class="row team-row hide" data-title="{{team.title}}" data-description="{{team.description}}" style="margin-bottom:20px;">
+                    <div class="small-4 medium-3 large-2 columns">
+                        <a href="/teams/detail/{{ team.pk }}">
+                            {% thumbnail team.image "350x350" crop='center' as img %}
+                                <img src="{{ img.url }}"/>
+                            {% empty %}
+                                <img src="http://placehold.it/350x350&text=TEAM"/>
+                            {% endthumbnail %}
+                        </a>
+                    </div>
+                    <div class="small-8 medium-9 large-10 columns text-left">
+                        <div class="team-row-title item-title" style="display:inline-block; margin:10px 0px;">{{ team.title }}</div>
+                        {% for member in team.members %}
+                            <div class="user-tag-purple" style="margin:10px 0px 10px 10px;">{{ member.profile.get_name }}</div>
+                        {% endfor %}
+                        <div class="team-row-description item-description" style="word-break: break-all;">{{ team.description }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center hide" style="margin-top:5px;" id="searchteams-more-btn-div">
+            <a id="searchteams-more-btn" class="button button-purple button-round"><i class="fa fa-repeat" aria-hidden="true" style="margin-right:20px;"></i>Show More</a>
+        </div>
+
+        <div class="text-center hide message" style="margin-bottom:30px;" id="searchteams-noresult">
+            We can't find teams.
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        var searchTeamsPer = 5;
+        var searchTeamsCount = searchTeamsPer;
+        var teamsCount = $('.team-row').length;
+        var searchTeamsQuery = '';
+
+        function search() {
+            var i = 0;
+            $('#searchteams-more-btn-div').addClass('hide');
+            $('.team-row').each(function(index) {
+                if($(this).data('title').toLowerCase().indexOf(searchTeamsQuery.toLowerCase())>-1 ||
+                $(this).data('description').toLowerCase().indexOf(searchTeamsQuery.toLowerCase())>-1) {
+                    i++;
+                    if(i<=searchTeamsCount) {
+                        $(this).removeClass('hide');
+                        title = $(this).find('.team-row-title').html();
+                        title = title.replace(new RegExp('<strong>', 'g'),'');
+                        title = title.replace(new RegExp('</strong>', 'g'),'');
+                        if(searchTeamsQuery!=='') {
+                            title = title.replace(new RegExp(searchTeamsQuery, 'gi'), '<strong>$&</strong>');
+                        }
+                        $(this).find('.team-row-title').html(title);
+                        description = $(this).find('.team-row-description').html();
+                        description = description.replace(new RegExp('<strong>', 'g'),'');
+                        description = description.replace(new RegExp('</strong>', 'g'),'');
+                        if(searchTeamsQuery!=='') {
+                            description = description.replace(new RegExp(searchTeamsQuery, 'gi'), '<strong>$&</strong>');
+                        }
+                        $(this).find('.team-row-description').html(description);
+                    } else {
+                        $(this).addClass('hide');
+                        $('#searchteams-more-btn-div').removeClass('hide');
+                    }
+                } else {
+                    $(this).addClass('hide');
+                }
+            });
+            if(i==0) {
+                $('#searchteams-noresult').removeClass('hide');
+            } else {
+                $('#searchteams-noresult').addClass('hide');
+            }
+            $('#searchteams-message').text('');
+            if(searchTeamsQuery!=='') {
+                $('#searchteams-message').text('displaying team search results for ' + searchTeamsQuery);
+            }
+        }
+
+        $(document).ready(function () {
+            $('.close-reveal-modal').click(function () {
+                jQuery('#myModal').foundation('close');
+            });
+
+            $('#myModalButton').click(function (event) {
+                event.preventDefault();
+                jQuery('#myModal').foundation('open');
+            });
+
+            $('#searchteams-btn').click(function() {
+                searchTeamsQuery = $('#searchteams-query').val();
+                searchTeamsCount = searchTeamsPer;
+                search();
+            });
+
+            $('#searchteams-query').keyup(function(e) {
+                if(e.keyCode == 13) {
+                    searchTeamsQuery = $('#searchteams-query').val();
+                    searchTeamsCount = searchTeamsPer;
+                    search();
+                }
+            });
+
+            $('#searchteams-more-btn').click(function() {
+                searchTeamsCount += searchTeamsPer;
+                search();
+            });
+
+            search();
+        });
+    </script>
+{% endblock %}
