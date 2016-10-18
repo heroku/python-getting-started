@@ -42,7 +42,7 @@
                 <input type="text" id="search-query" name="search-query" placeholder="Search By Name" style="float:right;" />
                 <select id="search-teams" multiple="multiple" style="width:100%;">
                     {% for team in teams %}
-                        <option value="{{team.pk}}" selected>{{team.title}}</option>
+                        <option value="{{team.pk}}">{{team.title}}</option>
                     {% endfor %}
                 </select>
             </div>
