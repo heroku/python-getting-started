@@ -97,31 +97,6 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="columns">
-                <h4>Team Memberships</h4>
-            </div>
-        </div>
-
-        <div class="row small-up-2 medium-up-3 large-up-4">
-            {% for team in teams %}
-                <a href="{% url 'team_detail' team.pk %}" class="columns team-member-entry">
-                    {% thumbnail team.image "350x350" crop='center' as img %}
-                        <img src="{{ img.url }}" />
-                    {% empty %}
-                        <img src="http://placehold.it/350x350&text=Picture" />
-                    {% endthumbnail %}
-                    <h6 class="text-center">{{ team.title }}</h6>
-                </a>
-            {% endfor %}
-        </div>
-
-        <div class="row">
-            <div class="columns">
-                <hr>
-            </div>
-        </div>
-
 
         {% if current_roles or past_roles %}
 
@@ -185,6 +160,30 @@
 
         {% endif %}
 
+        <div class="row">
+            <div class="columns">
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="columns">
+                <h4>Team Memberships</h4>
+            </div>
+        </div>
+
+        <div class="row small-up-2 medium-up-3 large-up-4">
+            {% for team in teams %}
+                <a href="{% url 'team_detail' team.pk %}" class="columns team-member-entry">
+                    {% thumbnail team.image "350x350" crop='center' as img %}
+                        <img src="{{ img.url }}" />
+                    {% empty %}
+                        <img src="http://placehold.it/350x350&text=Picture" />
+                    {% endthumbnail %}
+                    <h6 class="text-center">{{ team.title }}</h6>
+                </a>
+            {% endfor %}
+        </div>
 
 
     </div>
