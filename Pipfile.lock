@@ -1,0 +1,37 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "c48e4947852b09e706177c0432ea536fe7d0f5f293afef2d4e592035f736121f"
+        },
+        "requires": {
+            "python_version": "3.6"
+        },
+        "sources": [
+            {
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "dj-database-url": {
+            "version": "==0.4.2"
+        },
+        "django": {
+            "version": "==1.11.4"
+        },
+        "gunicorn": {
+            "version": "==19.7.1"
+        },
+        "psycopg2": {
+            "version": "==2.7.3.1"
+        },
+        "pytz": {
+            "version": "==2017.2"
+        },
+        "whitenoise": {
+            "version": "==3.3.0"
+        }
+    },
+    "develop": {}
+}
