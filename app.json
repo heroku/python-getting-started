@@ -9,7 +9,8 @@
     "SECRET_KEY": {
       "description": "The secret key for the Django application.",
       "generator": "secret"
-    },
+    }
+  },
   "environments": {
     "test": {
       "scripts": {
