@@ -1,7 +1,9 @@
 #import requests
 import os
+import json
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import JsonResponse
 
 from .models import Greeting
 
@@ -13,9 +15,19 @@ from .models import Greeting
 #    r = requests.get('http://httpbin.org/status/418')
 #    print(r.text)
 #    return HttpResponse('<pre>' + r.text + '</pre>')
+#def index(request):
+#    times = int(os.environ.get('TIMES',3))
+#    return HttpResponse('Hello! ' * times)
 def index(request):
-    times = int(os.environ.get('TIMES',3))
-    return HttpResponse('Hello! ' * times)
+    headers = {"Content-Type" : "application/json"}
+    obj = {
+        "speech": "Barack Hussein Obama II was the 44th and current President of the United States.",
+        "displayText": "Barack Hussein Obama II was the 44th and current President of the United States, and the first African American to hold the office. Born in Honolulu, Hawaii, Obama is a graduate of Columbia University   and Harvard Law School, where ",
+        "data": {"kik": {}},
+        "contextOut": [{"name":"weather", "lifespan":2, "parameters":{"city":"Rome"}}],
+        "source": "DuckDuckGo"
+    }
+    return JsonResponse(obj)
 
 
 def db(request):
