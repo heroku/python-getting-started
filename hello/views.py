@@ -18,6 +18,9 @@ from .models import Greeting
 #def index(request):
 #    times = int(os.environ.get('TIMES',3))
 #    return HttpResponse('Hello! ' * times)
+from bottle import route, run
+
+@route("/")
 def index(request):
     headers = {"Content-Type" : "application/json"}
     obj = {
