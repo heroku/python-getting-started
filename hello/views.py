@@ -19,16 +19,24 @@ from .models import Greeting
 #    times = int(os.environ.get('TIMES',3))
 #    return HttpResponse('Hello! ' * times)
 
+#def index(request):
+#    headers = {"Content-Type" : "application/json"}
+#    obj = {
+#        "speech": "Barack Hussein Obama II was the 44th and current President of the United States.",
+#        "displayText": "Barack Hussein Obama II was the 44th and current President of the United States, and the first African American to hold the office. Born in Honolulu, Hawaii, Obama is a graduate of Columbia University   and Harvard Law School, where ",
+#        "data": {"kik": {}},
+#        "contextOut": [{"name":"weather", "lifespan":2, "parameters":{"city":"Rome"}}],
+#        "source": "DuckDuckGo"
+#    }
+#    return JsonResponse(obj)
 def index(request):
-    headers = {"Content-Type" : "application/json"}
-    obj = {
-        "speech": "Barack Hussein Obama II was the 44th and current President of the United States.",
-        "displayText": "Barack Hussein Obama II was the 44th and current President of the United States, and the first African American to hold the office. Born in Honolulu, Hawaii, Obama is a graduate of Columbia University   and Harvard Law School, where ",
-        "data": {"kik": {}},
-        "contextOut": [{"name":"weather", "lifespan":2, "parameters":{"city":"Rome"}}],
-        "source": "DuckDuckGo"
+    data = {
+        'name': 'Vitor',
+        'location': 'Finland',
+        'is_active': True,
+        'count': 28
     }
-    return JsonResponse(obj)
+    return JsonResponse(data)
 
 
 def db(request):
