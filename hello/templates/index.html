@@ -3,6 +3,13 @@
 
 {% block content %}
 
+<style>
+	.miEstilo {
+		background-color: magenta;
+		color: #23F;
+	}
+</style>
+
 <div class="jumbotron text-center">
   <div class="container">
     <a href="/" class="lang-logo">
@@ -10,28 +17,35 @@
     </a>
     <h1>Comenzando con Python en Heroku</h1>
     <h2>Por Luis Javier Fernández Centenera</h2>
+    <h2>Por Sergio L. Rey Vazquez</h2>
     <p>Esta es una aplicación de ejemplo de Python implementada en Heroku. Es una aplicación razonablemente simple, pero una buena base para comprender cómo sacar el máximo provecho de la plataforma Heroku.</p>
     <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-python"><span class="glyphicon glyphicon-flash"></span> Getting Started with Python</a>
     <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/python-getting-started"><span class="glyphicon glyphicon-download"></span> Source on GitHub</a>
+	<h4>Colaborador. Ariem Umpierrez Padrón</h4>
   </div>
 </div>
 <div class="container">
+	<div class="miEstilo">
+		Este es un parrafo bonito
+	</div>
   <div class="alert alert-info text-center" role="alert">
-    To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to the <a href="https://devcenter.heroku.com/articles/getting-started-with-python" class="alert-link">Getting Started with Python on Heroku</a> tutorial.
+    Cambiado por Patricia of the Heroku platform, head over to the <a href="https://devcenter.heroku.com/articles/getting-started-with-python" class="alert-link">Getting Started with Python on Heroku</a> tutorial.
   </div>
   <div class="alert alert-info text-center" role="alert">
-    Incluida modificación para el examen del curso GIT by jcalavia
+    Incluida modificación para el examen del curso GIT by jcalavia, alumno Sixto Vargas S
   </div>
   <hr>
   <div class="row">
     <div class="col-md-6">
       <h3><span class="glyphicon glyphicon-info-sign"></span> How this sample app works</h3>
-      <ul>
-        <li>Esta aplicaci�n se implement� en Heroku usando <a href="https://github.com/heroku/python-getting-started">Heroku Button</a> on the repository.</li>
+       <ul>
+        <li>Esta aplicaci&oacute;n fue desplegada en Heroku, usando Git o usando el <a href="https://github.com/heroku/python-getting-started">Bot&oacute;n Heroku</a> situado en el repositorio.</li>
+        <li>Con esto se finaliza los cambios para el pull request <a href="https://github.com/heroku/python-getting-started">Heroku Button</a> on the repository.</li>
 
-        <li>When Heroku received the source code, it fetched all the dependencies in the <a href="https://github.com/heroku/python-getting-started/blob/master/Pipfile">Pipfile</a>, creating a deployable slug.</li>
+        <li>Cuando heroku recibi� el c�digo fuente, it fetched all the dependencies in the <a href="https://github.com/heroku/python-getting-started/blob/master/Pipfile">Pipfile</a>, creating a deployable slug.</li>
         <li>The platform then spins up a dyno, a lightweight container that provides an isolated environment in which the slug can be mounted and executed.</li>
         <li>You can scale your app, manage it, and deploy over <a href="https://addons.heroku.com/">150 add-on services</a>, from the Dashboard or CLI.</li>
+        <li> Traducido por Cesar. Puedes escalar tu aplicacion, administrarla y desplegarla <a href="https://addons.heroku.com/">150 add-on services</a>, Desde el Dashboard o CLI.</li>
       </ul>
     </div>
     <div class="col-md-6">
@@ -50,8 +64,12 @@
       <ul>
         <li><a href="https://www.heroku.com/home">Heroku</a></li>
         <li><a href="https://devcenter.heroku.com/">Heroku Dev Center</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python">Getting Started with Python on Heroku</a></li>
+        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python">Empezando con Pyton en Heroku</a></li>
         <li><a href="https://devcenter.heroku.com/articles/django-app-configuration">Configuring Django Apps for Heroku</a></li>
+      </ul>
+	  <h3><span class="glyphicon glyphicon-link"></span> Texto práctica</h3>
+      <ul>
+        <li>Este es el texto añadido para la práctica de la formación</li>
       </ul>
     </div>
   </div> <!-- row -->
