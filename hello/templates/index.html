@@ -3,35 +3,72 @@
 
 {% block content %}
 
+<style>
+	.miEstilo {
+		background-color: magenta;
+		color: #23F;
+	}
+</style>
+
 <div class="jumbotron text-center">
   <div class="container">
     <a href="/" class="lang-logo">
       <img src="{% static 'lang-logo.png'%}">
     </a>
-    <h1>Getting Started with Python on Heroku</h1>
-    <p>This is a sample Python application deployed to Heroku. It's a reasonably simple app - but a good foundation for understanding how to get the most out of the Heroku platform.</p>
+    <h1>Comenzando con Python en Heroku</h1>
+    <h1>Esto es el titulo de la practica de mi curso de GIT</h1> 
+    <h2>Por Luis Javier Fernández Centenera</h2>
+	<h2>Modificaciones Vanesa Gallardo Benítez</h2>
+	  <p>Estoy cambiando el contenido de este archivo .html</p>
+	 <h2>Por Javier Ortega Ubago</h2>
+    <p>AXPE consulting es una consultora tecnológica que participa en desarrollos para múltiples sectores.
+	Proyectos tales como TELCO, que se desarrolló junto a Telefónica para renovar todos sus sistemas de gestión.</p>
+    <h2>Por Sergio L. Rey Vazquez</h2>
+    <h2>Por Alfredo Aguado</h2>
+    <h2>Practica del examen de GIT Corina</h2>
+    <h2>Por Luis Javier FernÃ¡ndez Centenera</h2>
+	<h2>Juani Ramos</h2>
+	
+    <p>Esta es una aplicación de ejemplo de Python implementada en Heroku. Es una aplicación razonablemente simple, pero una buena base para comprender cómo sacar el máximo provecho de la plataforma Heroku.</p>
+    <p>añado una linea mas para el ejercicio de GIT. Hago merge con lo que habia en el upstream e indico el usuario utilizado: mruiz1</p>
+
     <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-python"><span class="glyphicon glyphicon-flash"></span> Getting Started with Python</a>
+    <h3> NOTE: This article had been witten by multiple authors.</h3>    <h4> like Luis, Sergio, and others. <h4>
+    <p>Heroku es propiedad de Salesforce.com Heroku, es una de las primeras plataformas de computaciÃ³n en la nube, que fue desarrollada desde junio de 2007, con el objetivo de soportar solamente el lenguaje de programaciÃ³n Ruby, pero posteriormente se ha extendido el soporte a Java, Node.js, Scala, Clojure y Python y (no documentado) PHP. La base del sistema operativo es Debian o, en la nueva plataforma, el sistema basado en Debian Ubuntu.</p>
+    <p> CVS Incluyo comentario dentro de parrafo  para resolver conflicto Esta es una aplicaciÃ³n de ejemplo de Python implementada en Heroku. Es una aplicaciÃ³n razonablemente simple, pero una buena base para comprender cÃ³mo sacar el mÃ¡ximo provecho de la plataforma Heroku.</p>
+    <p>Intentando resolver conflictos en la página</p>   
+   <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-python"><span class="glyphicon glyphicon-flash"></span> Getting Started with Python</a>
     <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/python-getting-started"><span class="glyphicon glyphicon-download"></span> Source on GitHub</a>
+	<h4>Colaborador. Ariem Umpierrez PadrÃ³n</h4>   
+	<h4>Colaborador. Javier Ortega Ubago</h4>
+  <h4>Colaborador. Ricardo</h4>
   </div>
 </div>
 <div class="container">
+	<div class="miEstilo">
+		Este es un parrafo bonito
+	</div>
   <div class="alert alert-info text-center" role="alert">
-    To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to the <a href="https://devcenter.heroku.com/articles/getting-started-with-python" class="alert-link">Getting Started with Python on Heroku</a> tutorial.
+    Cambiado por Patricia of the Heroku platform, head over to the <a href="https://devcenter.heroku.com/articles/getting-started-with-python" class="alert-link">Getting Started with Python on Heroku</a> tutorial.
+  </div>
+  <div class="alert alert-info text-center" role="alert">
+    Incluida modificaciÃ³n para el examen del curso GIT by jcalavia, alumno Sixto Vargas S
   </div>
   <hr>
   <div class="row">
     <div class="col-md-6">
       <h3><span class="glyphicon glyphicon-info-sign"></span> How this sample app works</h3>
-      <ul>
-        <li>This app was deployed to Heroku, either using Git or by using <a href="https://github.com/heroku/python-getting-started">Heroku Button</a> on the repository.</li>
-
-        <li>When Heroku received the source code, it fetched all the dependencies in the <a href="https://github.com/heroku/python-getting-started/blob/master/Pipfile">Pipfile</a>, creating a deployable slug.</li>
+       <ul>
+        <li>Esta aplicaci&oacute;n fue desplegada en Heroku, usando Git o usando el <a href="https://github.com/heroku/python-getting-started">Bot&oacute;n Heroku</a> situado en el repositorio.</li>
+        <li>Con esto se finaliza los cambios para el pull request <a href="https://github.com/heroku/python-getting-started">Heroku Button</a> on the repository.</li>
         <li>The platform then spins up a dyno, a lightweight container that provides an isolated environment in which the slug can be mounted and executed.</li>
         <li>You can scale your app, manage it, and deploy over <a href="https://addons.heroku.com/">150 add-on services</a>, from the Dashboard or CLI.</li>
+        <li> Traducido por Cesar. Puedes escalar tu aplicacion, administrarla y desplegarla <a href="https://addons.heroku.com/">150 add-on services</a>, Desde el Dashboard o CLI.</li>
       </ul>
     </div>
     <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
+      <h3><span class="glyphicon glyphicon-link"></span> Pasos</h3>
+	  <p>Con esta aplicación aprenderemos Heroku.By Vanesa. Aprendiendo GIT</p>
       <ul>
         <li>If you are following the <a href="https://devcenter.heroku.com/articles/getting-started-with-python">Getting Started</a> guide, then please head back to the tutorial and follow the next steps!</li>
         <li>If you deployed this app by deploying the Heroku Button, then in a command line shell, run:</li>
@@ -42,18 +79,26 @@
           <li>You'll now be set up to run the app locally, or <a href="https://devcenter.heroku.com/articles/getting-started-with-python#push-local-changes">deploy changes</a> to Heroku</li>
         </ul>
       </ul>
-      <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
+      <h3><span class="glyphicon glyphicon-link"></span> Enlaces de ayuda</h3>
       <ul>
         <li><a href="https://www.heroku.com/home">Heroku</a></li>
         <li><a href="https://devcenter.heroku.com/">Heroku Dev Center</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python">Getting Started with Python on Heroku</a></li>
+        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python">Empezando con Pyton en Heroku</a></li>
         <li><a href="https://devcenter.heroku.com/articles/django-app-configuration">Configuring Django Apps for Heroku</a></li>
       </ul>
+	  <h3><span class="glyphicon glyphicon-link"></span> Texto prÃ¡ctica</h3>
+      <ul>
+        <li>Este es el texto aÃ±adido para la prÃ¡ctica de la formaciÃ³n</li>
+      </ul>
     </div>
-  </div> <!-- row -->
+    <h4><span class="glyphicon glyphicon-link"></span> Notas a considerar</h4>
+	</div> <!-- row -->
    <div class="alert alert-info text-center" role="alert">
-    Please do work through the Getting Started guide, even if you do know how to build such an application.  The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
-    Castellano: Por favor, trabaje a trav�s de la gu�a Getting Started, incluso si sabe c�mo crear dicha aplicaci�n. La gu�a cubre los aspectos b�sicos del trabajo con Heroku y lo familiarizar� con todos los conceptos que necesita para construir y desplegar sus propias aplicaciones.
+
+  Por favor, trabaje a través de la guía Getting Started, incluso si sabe cómo crear dicha aplicación.
+  ación. La guía cubre los aspectos básicos del trabajo con Heroku, y lo familiarizará con todas las estafas
+  los conceptos que necesita para construir e implementar sus propias aplicaciones.
+
   </div>
 </div>
 {% endblock %}
