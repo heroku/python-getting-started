@@ -1,0 +1,25 @@
+{# User page template. #}
+
+{% extends "base.html" %}
+
+{% block content %}
+  <form class="ui form" method="POST">
+    <h1>{{ object.username }}</h1>
+    <div class="field">
+      <label>Имя</label>
+      <input type="text" name="first_name" value="{{ object.first_name }}">
+    </div>
+    <div class="field">
+      <label>Фамилия</label>
+      <input type="text" name="first_name" value="{{ object.last_name }}">
+    </div>
+    <div class="field">
+      <label>Миниатюра</label>
+      <input type="text" name="avatar" value="{{ object.avatar }}">
+    </div>
+    <div class="ui center">
+      <button class="ui red button">Сбросить</button>
+      <submit class="ui green button">Сохранить</submit>
+    </div>
+  </form>
+{% endblock %}

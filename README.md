@@ -1,44 +1,30 @@
-# Python: Getting Started
+# Тестовое задание для HoReKa
 
-A barebones Django app, which can easily be deployed to Heroku.
+Необходимо создать приложение, написанное на языке python v 3.+ с помощью Django-framework оптимизированное для PaaS-сервиса Heroku и Amazon AWS. Оно должно включать:
 
-This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
+1. Регистрация / Авторизация пользователей в системе.
 
-## Running Locally
+2. Страница профиля пользователя с формой редактирования информации
+* Имя
+* Фамилия
+* Аватар
 
-Make sure you have Python [installed properly](http://install.python-guide.org). Also, install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) and [Postgres](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup).
+3. Модуль задач пользователя
+* Страница списка задач (с реализацией серверной пагинацией)
+* Создание задачи с полями
+    - Заголовок задачи
+    - Описание задачи
+    - Время выполнения
+    - Ответственный (Прикрепление пользователя к задаче)
+    - Статус задачи. При создании задачи к ней автоматически прикрепляется начальный статус (Статус, у которого нет ссылки на предыдущий статус)
+    - флаг “Прошла модерацию”
+* Добавление / редактирование задачи в django – admin
+* Фильтр списка задач по статусу.
 
-```sh
-$ git clone git@github.com:heroku/python-getting-started.git
-$ cd python-getting-started
+4. Модуль статус задачи. Необходимо создать динамический связанный список статусов задач. В django-admin необходимо добавить функционал управления моделью  TaskStatus, в котором можно сформировать список задач.
 
-$ pipenv install
-
-$ createdb python_getting_started
-
-$ python manage.py migrate
-$ python manage.py collectstatic
-
-$ heroku local
-```
-
-Your app should now be running on [localhost:5000](http://localhost:5000/).
-
-## Deploying to Heroku
-
-```sh
-$ heroku create
-$ git push heroku master
-
-$ heroku run python manage.py migrate
-$ heroku open
-```
-or
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
-
-## Documentation
-
-For more information about using Python on Heroku, see these Dev Center articles:
-
-- [Python on Heroku](https://devcenter.heroku.com/categories/python)
+5. Деплой на Heroku. Необходимо настроить приложение для деплоя кода на хероку при помощи инстурментов командной строки heroku toolbelt.
+* Подготовить приложение к деплою, внести минимально необходимые настройки
+* Медиа-файлы приложения должны размещаться на Amazon S3
+* Задеплоить приложение на бесплатный аккаунт Heroku
+* Приложить ссылку на приложение к выполненному заданию
