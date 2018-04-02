@@ -14,3 +14,13 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'пользователь'
         verbose_name_plural = 'пользователи'
+
+    @property
+    def full_name(self):
+        """Guaranteed user name."""
+        if self.first_name and self.last_name:
+            return '{0.first_name} {0.last_name}'.format(self)
+        elif self.first_name or self.last_name:
+            return self.first_name or self.last_name
+        else:
+            return self.username

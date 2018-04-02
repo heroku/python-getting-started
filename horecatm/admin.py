@@ -7,7 +7,7 @@ from horecatm.models import User
 
 
 class UserAdmin(BaseUserAdmin):
-    pass
+    """Extending HoReKa user admin model with Django base."""
 
 
 admin.site.register(User, UserAdmin)
