@@ -1,3 +1,4 @@
-django-admin-json-editor==0.1.5
+pytz==2018.3
+-e git+https://github.com/jhilgar/django-admin-json-editor.git
 psycopg2==2.7.1
 pybtex==0.21
