@@ -1,0 +1,7 @@
+dj-database-url==0.5.0
+Django==2.1
+django-heroku==0.3.1
+gunicorn==19.9.0
+psycopg2==2.7.5
+pytz==2018.5
+whitenoise==4.0
