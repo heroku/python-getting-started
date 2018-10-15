@@ -78,11 +78,7 @@ WSGI_APPLICATION = 'gettingstarted.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 import dj_database_url
-DATABASES = {'default': dj_database_url.config(
-    engine='django.contrib.gis.db.backends.postgis',
-    conn_max_age=500,
-    require_ssl=True
-)}
+DATABASES = {'default': dj_database_url.config(engine='django.contrib.gis.db.backends.postgis')}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
