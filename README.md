@@ -19,6 +19,8 @@ $ createdb python_getting_started
 $ python manage.py migrate
 $ python manage.py collectstatic
 
+$ pipenv shell
+
 $ heroku local
 ```
 
