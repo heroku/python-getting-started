@@ -10,7 +10,10 @@ from .models import Greeting
 def index(request):
     times = int(os.environ.get('TIMES', 3))
     return HttpResponse('''<script type="text/javascript" async src="https://d335luupugsy2.cloudfront.net/js/loader-scripts/40552c01-2431-44a2-9bb6-ead4fbb70f44-loader.js" ></script>
-                        <h1>Helloo!</h1>''')
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/7226535.js"></script>
+<!-- End of HubSpot Embed Code -->
+<h1>Hello!</h1>''')
 
 
 def db(request):
