@@ -75,6 +75,37 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "gettingstarted.wsgi.application"
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '[{levelname}] {message}',
+            'style': '{',
+        },
+        'standard': {
+            'format': '[{levelname}] {asctime} [{module}] {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard',
+        },
+    },
+    'loggers': {
+        'smartteams': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+    },
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
