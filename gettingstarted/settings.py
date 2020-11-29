@@ -24,6 +24,9 @@ SECRET_KEY = SECRET_KEY = os.environ.get('SECRET_KEY', 'secret_dev')
 DEBUG = (os.environ.get('ENV') != 'PRODUCTION')
 
 ALLOWED_HOSTS = []
+host_name = os.environ.get('HOST_NAME')
+if host_name:
+    ALLOWED_HOSTS.append(host_name)
 
 
 # Application definition
