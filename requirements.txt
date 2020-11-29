@@ -1,3 +1,2 @@
 django
 gunicorn
-django-heroku
