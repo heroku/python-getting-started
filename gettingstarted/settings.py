@@ -27,6 +27,8 @@ ALLOWED_HOSTS = []
 host_name = os.environ.get('HOST_NAME')
 if host_name:
     ALLOWED_HOSTS.append(host_name)
+if DEBUG:
+    ALLOWED_HOSTS.append('*')
 
 
 # Application definition
