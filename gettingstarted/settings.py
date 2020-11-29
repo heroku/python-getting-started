@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 import os
 
+import dj_database_url
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -77,11 +79,17 @@ WSGI_APPLICATION = "gettingstarted.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+db_from_env = {
+    'ENGINE': 'django.db.backends.postgresql',
+
+    # The following settings are local-only:
+    # they will be overriden when deploying on Heroku
+    'NAME': 'python_getting_started',
+}
+db_from_env.update(dj_database_url.config(conn_max_age=500))
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3")
-    }
+    "default": db_from_env,
 }
 
 # Password validation
