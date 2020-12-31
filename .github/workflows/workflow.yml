@@ -13,12 +13,8 @@ jobs:
         heroku_app_name: "python-heroku-estudo"
         heroku_email: "disalles222@hotmail.com"
         usedocker: true
-      run: heroku container:login 
+    - run: heroku auth:whoami
     - name: Build and push
-      env:
-        HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
       run: heroku container:push -a ${{secrets.HEROKU_APP_NAME}} web 
     - name: Release
-      env:
-        HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
       run: heroku container:release -a ${{secrets.HEROKU_APP_NAME}} web 
