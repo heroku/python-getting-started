@@ -12,8 +12,8 @@ jobs:
         heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
         heroku_app_name: "python-heroku-estudo"
         heroku_email: "disalles222@hotmail.com"
-        usedocker: true
-    - run: echo ${{ secrets.HEROKU_API_KEY }}
+#         usedocker: true
+    
     - run: heroku auth:whoami
     - name: Build and push
       run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} web 
