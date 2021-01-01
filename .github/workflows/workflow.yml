@@ -12,7 +12,7 @@ jobs:
         heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
         heroku_app_name: "python-heroku-estudo"
         heroku_email: "disalles222@hotmail.com"
-#         usedocker: true
+        usedocker: false
     
     - run: heroku auth:whoami
     - name: Build and push
