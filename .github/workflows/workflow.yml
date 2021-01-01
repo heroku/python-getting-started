@@ -7,12 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-#     - uses: akhileshns/heroku-deploy@v3.8.8
-#       with: 
-#         heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-#         heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-#         heroku_email: "disalles222@hotmail.com"
-#         usedocker: true
+    - uses: akhileshns/heroku-deploy@v3.8.8
+      with: 
+        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+        heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+        heroku_email: "disalles222@hotmail.com"
+        usedocker: true
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
