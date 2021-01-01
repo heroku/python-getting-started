@@ -7,18 +7,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: set env
+      env: 
+        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
  
     - uses: akhileshns/heroku-deploy@v3.8.8
       with: 
         heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-        heroku_app_name: "python-heroku-estudo"
+        heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
         heroku_email: "disalles222@hotmail.com"
         usedocker: false
-      env: 
-        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
-  
+     
     - run: heroku auth:whoami
     - name: Build and push
-      run: heroku container:push -a $HEROKU_APP_NAME web 
+      run: heroku container:push -a ${{ env.HEROKU_APP_NAME }} web 
     - name: Release
       run: heroku container:release -a ${{ env.HEROKU_APP_NAME }} web 
