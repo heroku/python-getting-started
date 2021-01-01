@@ -6,10 +6,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - run: echo ${{secrets.HEROKU_API_KEY}}
     - uses: actions/checkout@v2
     - uses: akhileshns/heroku-deploy@v3.8.8
       with: 
-        heroku_api_key: ${secrets.HEROKU_API_KEY}
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "python-heroku-estudo"
         heroku_email: "disalles222@hotmail.com"
         usedocker: true
