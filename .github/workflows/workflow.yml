@@ -17,6 +17,6 @@ jobs:
         HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
     - run: heroku auth:whoami
     - name: Build and push
-      run: heroku container:push web 
+      run: heroku container:push -a python-heroku-estudo web 
     - name: Release
-      run: heroku container:release web 
+      run: heroku container:release -a python-heroku-estudo web 
