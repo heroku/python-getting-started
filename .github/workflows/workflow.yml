@@ -19,6 +19,6 @@ jobs:
   
     - run: heroku auth:whoami
     - name: Build and push
-      run: heroku container:push -a ${{ env.HEROKU_APP_NAME }} web 
+      run: heroku container:push -a $HEROKU_APP_NAME web 
     - name: Release
       run: heroku container:release -a ${{ env.HEROKU_APP_NAME }} web 
