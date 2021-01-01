@@ -1,0 +1,19 @@
+version: "3"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web
+    restart: unless-stopped
+    environment:
+      APP_ENV: "PROD"
+      FLASK_DEBUG: "false"
+      APP_PORT: 8000
+    volumes:
+      - appdata:/var/www
+    ports:
+      - "8000:8000"
+volumes:
+  appdata:
+    driver: local
