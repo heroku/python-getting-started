@@ -10,14 +10,9 @@ jobs:
     - uses: akhileshns/heroku-deploy@v3.8.8
       with: 
         heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-        heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-        heroku_email: "disalles222@hotmail.com"
+        heroku_app_name: python-heroku-estudo
         usedocker: true
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
     - run: echo ${{ secrets.HEROKU_API_KEY }}
-    - run: echo ${{ secrets.HEROKU_APP_NAME }}
     - run: heroku auth:whoami
     - name: Build and push
       run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} web 
