@@ -2,7 +2,7 @@
 
 A barebones Django app, which can easily be deployed to Heroku.
 
-This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.
+This application supports the [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/getting-started-with-python) article - check it out.  I am editing here for pipeline test
 
 ## Running Locally
 
