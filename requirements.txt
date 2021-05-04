@@ -1,3 +1,5 @@
 django
+dj-database-url
+psycopg2-binary
 gunicorn
-django-heroku
+whitenoise

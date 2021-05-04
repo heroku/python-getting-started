@@ -9,9 +9,9 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
-
 import os
-import django_heroku
+
+import dj_database_url
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -21,13 +21,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "CHANGE_ME!!!! (P.S. the SECRET_KEY environment variable will be used, if set, instead)."
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# SECURITY WARNING: update environment variables in production
+SECRET_KEY = SECRET_KEY = os.environ.get('SECRET_KEY', 'secret_dev')
+DEBUG = (os.environ.get('ENV') != 'PRODUCTION')
 
 ALLOWED_HOSTS = []
+host_name = os.environ.get('HOST_NAME')
+if host_name:
+    ALLOWED_HOSTS.append(host_name)
+if DEBUG:
+    ALLOWED_HOSTS.append('*')
 
 
 # Application definition
@@ -50,6 +53,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "gettingstarted.urls"
@@ -72,15 +76,52 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "gettingstarted.wsgi.application"
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '[{levelname}] {message}',
+            'style': '{',
+        },
+        'standard': {
+            'format': '[{levelname}] {asctime} [{module}] {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard',
+        },
+    },
+    'loggers': {
+        'smartteams': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+    },
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+db_from_env = {
+    'ENGINE': 'django.db.backends.postgresql',
+
+    # The following settings are local-only:
+    # they will be overriden when deploying on Heroku
+    'NAME': 'python_getting_started',
+}
+db_from_env.update(dj_database_url.config(conn_max_age=500))
+
 DATABASES = {
-    "default": {
-        "ENGINE" : "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3")
-    }
+    "default": db_from_env,
 }
 
 # Password validation
@@ -100,20 +141,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "/static/"
-
-django_heroku.settings(locals())
