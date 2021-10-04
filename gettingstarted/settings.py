@@ -118,7 +118,7 @@ db_from_env = {
     # they will be overriden when deploying on Heroku
     'NAME': 'python_getting_started',
 }
-db_from_env.update(dj_database_url.config(conn_max_age=500))
+# db_from_env.update(dj_database_url.config(conn_max_age=500))
 
 DATABASES = {
     "default": db_from_env,
