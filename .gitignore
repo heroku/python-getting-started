@@ -2,4 +2,4 @@ venv
 *.pyc
 staticfiles
 .env
-getting-started/*
+local_settings.py
