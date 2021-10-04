@@ -118,10 +118,9 @@ db_from_env = {
     # they will be overriden when deploying on Heroku
     'NAME': 'python_getting_started',
 }
-# db_from_env.update(dj_database_url.config(conn_max_age=500))
 
 DATABASES = {
-    "default": db_from_env,
+    "default": dj_database_url.config(conn_max_age=500),
 }
 
 # Password validation
@@ -151,3 +150,9 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "/static/"
+
+# Local settings
+try:
+    from .local_settings import *
+except ImportError:
+    pass
