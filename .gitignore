@@ -1,5 +1,8 @@
-venv
 *.pyc
-staticfiles
+.DS_Store
+
 .env
+venv
+
+staticfiles
 local_settings.py
