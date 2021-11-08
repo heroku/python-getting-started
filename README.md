@@ -1,3 +1,17 @@
+# Wichteln
+This project is aiming to make a wichteln draw.
+
+## Dev
+Local development can be done in gitpod. To start the app use 
+
+```bash
+heroku local
+```
+It will show a local preview in the sidewindow. To deploy on heroku you can commit all your changes and then
+```bash
+git push heroku main
+```
+
 # Python: Getting Started
 
 A barebones Django app, which can easily be deployed to Heroku.
