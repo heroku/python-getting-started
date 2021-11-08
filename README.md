@@ -16,14 +16,15 @@ heroku login
 heroku git:remote -a sardinen-panda-wichteln
 git push heroku main
 ```
-*There is also this deploy button but I don't know how it works*
+*There is also this deploy button but that can only make a new deploy*
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 
 
 
 
-# ------------------------ Documentation from forked project -------------------
+# ---- Documentation from forked project ----
 # Python: Getting Started
 
 A barebones Django app, which can easily be deployed to Heroku.
