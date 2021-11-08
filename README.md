@@ -1,5 +1,6 @@
 # Wichteln
 This project is aiming to make a wichteln draw.
+Current version available under https://sardinen-panda-wichteln.herokuapp.com/
 
 ## Dev
 Local development can be done in gitpod. To start the app use 
@@ -16,14 +17,15 @@ heroku login
 heroku git:remote -a sardinen-panda-wichteln
 git push heroku main
 ```
-*There is also this deploy button but I don't know how it works*
+*There is also this deploy button but that can only make a new deploy*
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 
+**Note: the local development connects to a local database**
 
 
-
-# ------------------------ Documentation from forked project -------------------
+# ---- Documentation from forked project ----
 # Python: Getting Started
 
 A barebones Django app, which can easily be deployed to Heroku.
