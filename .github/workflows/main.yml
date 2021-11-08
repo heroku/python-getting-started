@@ -6,12 +6,16 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: CDNievas/heroku-action@v1.0 # This is the action
-        with:
-          heroku_email: "adrianlubitz@gmail.com"
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "sardinen-panda-wichteln"
+  heroku_git_deploy_job:
+      runs-on: ubuntu-latest
+      name: Git Deploy job- A job to deploy django app to heroku using git
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+        - name: Deploy django to heroku
+          uses: nyakaz73/heroku-django-deploy@v0.68 
+          with: 
+            heroku_app_name : sardinen-panda-wichteln
+            heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+            heroku_email_address: 'adrianlubitz@gmail.com'
+            use_git: true
