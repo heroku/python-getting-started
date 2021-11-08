@@ -5,13 +5,25 @@ This project is aiming to make a wichteln draw.
 Local development can be done in gitpod. To start the app use 
 
 ```bash
-heroku local
-```
-It will show a local preview in the sidewindow. To deploy on heroku you can commit all your changes and then
-```bash
-git push heroku main
+python manage.py migrate && heroku local
 ```
 
+It will show a local preview in the sidewindow. 
+Deploy does not work from the gitpod right now. But you can clone the repo and use the following on your local machine:
+
+```bash
+heroku login
+heroku git:remote -a sardinen-panda-wichteln
+git push heroku main
+```
+*There is also this deploy button but I don't know how it works*
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+
+
+
+
+# ------------------------ Documentation from forked project -------------------
 # Python: Getting Started
 
 A barebones Django app, which can easily be deployed to Heroku.
