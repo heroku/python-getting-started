@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <p>Hallo, {{ user.get_username }}. Gib bitte hier deine Vorschläge ab:</p>
+    <form method="post" action="{% url 'suggest' %}">
+        <table>
+          <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+          </tr>
+          <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+          </tr>
+        </table>
+        <input type="submit" value="abschicken" />
+        <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+{% else %}
+    <p>Einloggen, dann gehts los.</p>
+{% endif %}
+
+{% endblock %}

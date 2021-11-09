@@ -10,14 +10,16 @@ python manage.py migrate && heroku local
 ```
 
 It will show a local preview in the sidewindow. 
-Deploy does not work from the gitpod right now. But you can clone the repo and use the following on your local machine:
+
+A push on the **main** branch will cause a [GitHub Action](https://github.com/marketplace/actions/deploy-to-heroku) to deploy the App to Heroku.
+<!-- Deploy does not work from the gitpod right now. But you can clone the repo and use the following on your local machine:
 
 ```bash
 heroku login
 heroku git:remote -a sardinen-panda-wichteln
 git push heroku main
 ```
-*There is also this deploy button but that can only make a new deploy*
+*There is also this deploy button but that can only make a new deploy* -->
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
