@@ -13,6 +13,7 @@ $ git clone https://github.com/heroku/python-getting-started.git
 $ cd python-getting-started
 
 $ python3 -m venv getting-started
+$ source getting-started/bin/activate	
 $ pip install -r requirements.txt
 
 $ createdb python_getting_started
