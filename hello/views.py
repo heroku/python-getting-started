@@ -9,6 +9,12 @@ def index(request):
     return render(request, "index.html")
 
 
+def councilors(request):
+    context = {
+        "1" : "Don Ness"
+    }
+    return render(request, "index.html", context)
+
 def db(request):
 
     greeting = Greeting()
