@@ -1,6 +1,6 @@
+from multiprocessing import context
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.template import Context
 
 from .models import Greeting
 
@@ -8,8 +8,9 @@ from .models import Greeting
 def index(request):
     # return HttpResponse('Hello from Python!')
     context = {
-        '1' : "Don Ness"
-        }
+        "test": "Don Ness"
+        
+    }
     return render(request, "index.html", context)
 
 
