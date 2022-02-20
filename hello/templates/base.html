@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>{{ title }}</title>
+<title>
+  {% block title %}
+
+  {% endblock %}
+</title>
 {% load static %}
   <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="{% static 'styles/base.css' %}">
