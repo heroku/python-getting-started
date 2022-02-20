@@ -7,7 +7,7 @@ from .models import Greeting
 def index(request):
     # return HttpResponse('Hello from Python!')
     context = {
-        "1" : "Don Ness"
+        '1' : "Don Ness"
         }
     return render(request, "index.html", context)
 
