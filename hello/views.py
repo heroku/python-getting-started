@@ -8,8 +8,15 @@ from .models import Greeting
 def index(request):
     # return HttpResponse('Hello from Python!')
     context = {
-        "test": "Don Ness"
-        
+        "firstDistrict": "Gary Anderson",
+        "secondDistrict": "Mike Mayou",
+        "thirdDistrict": "Roz Randorf",
+        "fourthDistrict": "Renee Van Nett",
+        "fifthDistrict": "Janet Kennedy",
+        "councilor1": "Arik Forsman",
+        "councilor2": "Azrin Awal",
+        "councilor3": "Derek Medved",
+        "councilor4": "Terese Tomanek"    
     }
     return render(request, "index.html", context)
 
