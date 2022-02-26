@@ -20,6 +20,9 @@ def index(request):
     }
     return render(request, "index.html", context)
 
+def city(request):
+    
+    return render(request, "city.html")
 
 def db(request):
 
