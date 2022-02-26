@@ -27,7 +27,7 @@ def city(request):
  
 
 
-def County(request):
+def county(request):
     
     return render(request, "county.html")
 
