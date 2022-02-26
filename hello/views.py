@@ -22,11 +22,9 @@ def index(request):
     return render(request, "index.html", context)
 
 def city(request):
-    if (URLField == r'(?!)city') {
-            return render(request, "city.html")
-    } else {
-        return render(request)
-    }
+    
+    return render(request, "city.html")
+ 
 
 
 def County(request):
