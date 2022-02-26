@@ -1,6 +1,6 @@
 from multiprocessing import context
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from .models import Greeting
 
@@ -21,8 +21,10 @@ def index(request):
     return render(request, "index.html", context)
 
 def city(request):
-    
-    return render(request, "city.html")
+
+    #return render(request, "city.html")
+    return HttpResponseRedirect(request.path)
+
 
 def County(request):
     
