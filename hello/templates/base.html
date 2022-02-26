@@ -57,12 +57,18 @@
 </nav>
 
 {% block content %}{% endblock %}
-<div class="container body-content">
-  <hr />
-  <footer>
-      <p>&copy; {{ year }} - My Flask Application</p>
-  </footer>
-</div>
+<footer>
+  <div class="navbar navbar-inverse navbar-static-bottom">
+    <div class="navbar-text pull-left">
+    </div>
+      <!-- Add in your social media / github links here -->
+      <hr />
+      <div class="navbar-text pull-left">
+        &copy; VoteDuluth 2022
+      </div>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
