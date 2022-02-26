@@ -24,6 +24,14 @@ def city(request):
     
     return render(request, "city.html")
 
+def County(request):
+    
+    return render(request, "county.html")
+
+def state(request):
+    
+    return render(request, "state.html")
+
 def db(request):
 
     greeting = Greeting()
