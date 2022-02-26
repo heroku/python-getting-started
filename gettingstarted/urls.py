@@ -20,6 +20,9 @@ urlpatterns = [
     
     path("city/", hello.views.city, name="city"),
     path("City/", hello.views.city, name="City"),
+    
+    path(r'^(?!)(county/)', hello.views.county, name="county"),
+    path("state/", hello.views.state, name="state"),
 
 
     
