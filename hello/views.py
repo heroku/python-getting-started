@@ -22,8 +22,10 @@ def index(request):
     return render(request, "index.html", context)
 
 def city(request):
-    
-    return render(request, "city.html")
+    if 'city' in request.GET:
+        return render(request, "index.html")
+    else:
+        return render(request, "city.html")
  
 
 
