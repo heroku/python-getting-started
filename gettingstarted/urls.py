@@ -17,7 +17,7 @@ import hello.views
 urlpatterns = [
     path("", hello.views.index, name="index"),
     path("db/", hello.views.db, name="db"),
-    path(r'^(?!)city/$', hello.views.city), #, name="city"),
+    path(r'^(?!)city/', hello.views.city), #, name="city"),
 
     
     path("admin/", admin.site.urls),
