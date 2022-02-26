@@ -1,6 +1,7 @@
 from multiprocessing import context
+from django.forms import URLField, URLInput
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 
 from .models import Greeting
 
@@ -21,9 +22,11 @@ def index(request):
     return render(request, "index.html", context)
 
 def city(request):
-
-    #return render(request, "city.html")
-    return HttpResponseRedirect(request.path)
+    if (URLField == r'(?!)city)' {
+            return render(request, "city.html")
+    } else {
+        return render(request)
+    }
 
 
 def County(request):
