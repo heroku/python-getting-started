@@ -15,9 +15,7 @@
     max-width: 75%;
     margin: 1em auto 2em
 }
-.navbar+.jumbotron {
-    margin-top: -20px
-}
+
 .jumbotron .lang-logo {
     display: block;
     background: #b01302;
@@ -31,3 +29,24 @@
 .jumbotron .lang-logo img {
     max-width: 100%
 }
+
+
+@media all and (max-width: 950px) {
+    .container-fluid {
+        margin-left: 0%;
+    }
+}
+
+@media all and (min-width: 960px) {
+    .container-fluid {
+        margin-left: 15%;
+    }
+}
+
+/* DISABLE AOS DELAY ON MOBILE */
+@media screen and (max-width: 768px) {
+    [data-aos-delay] {
+      transition-delay: 0 !important;
+    }
+  }
+  

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/officials.css' %}">
+
 
 {% block title %}
 City - Vote Duluth
@@ -11,113 +13,121 @@ City - Vote Duluth
     <div class="container" data-aos="fade-up">
       <!-- ======= Mayor ======= -->
       <div class="mayor">
-        <div class="row">
+        <div class="d-flex justify-content-evenly flex-wrap">
           <div class="col-lg-3 col-md-6">
-            <a href="mayor.html">
-              <div class="box">
-              <h3>Emily Larson</h3>
-              <h6>Mayor</h6>
-              <img src="{% static '\images\officials\EmilyLarson.webp' %}" alt="Emily Larson"  class="img-thumbnail">
-              </div>
-            </a>
-          </div>       
-        </div>
+            <div class="box" style="text-align: center;">
+              <a href="mayor.html">
+                <h3>Emily Larson</h3>
+                <h6>Mayor</h6>
+                <img src="{% static '\images\officials\EmilyLarson.webp' %}" alt="Emily Larson"  class="img-thumbnail">
+              </a>
+            </div>
+          </div>
+        </div>       
       </div>
       
       <!-- ======= Council District ======= -->
-      <div class="row">
-        <h4>City Councilors</h4>
+      <div class="label">
+        <h3>City Councilors</h3>
+      </div>      
+      
+      <div class="d-flex justify-content-evenly flex-wrap">
         <div class="col-lg-2 col-md-5">
-          <a href="councildistrict1.html">
-            <div class="box">
-            <h3>Gary Anderson</h3>
-            <h6>First Council District</h6>
-            <img src="{% static '\images\officials\GaryAnderson.webp' %}" alt="Gary Anderson" class="img-thumbnail" width="160" height="225">
-          </a>
+          <div class="box">
+            <a href="councildistrict1.html">
+              <h3>Gary Anderson</h3>
+              <h6>First Council District</h6>
+              <img src="{% static '\images\officials\GaryAnderson.webp' %}" alt="Gary Anderson" class="img-thumbnail img-council">
+            </a>
           </div>
-        </div>       
+        </div>
 
         <div class="col-lg-2 col-md-5">
-          <a href="councildistrict2.html">
           <div class="box">
-            <h3>Joel Sipress</h3>
-            <h6>Second Council District</h6>
-            <img src="{% static '\images\officials\JoelSipress.webp' %}" alt="Joel Sipress" class="img-thumbnail" width="160" height="225">
+            <a href="councildistrict2.html">
+              <h3>Joel Sipress</h3>
+              <h6>Second Council District</h6>
+              <img src="{% static '\images\officials\JoelSipress.webp' %}" alt="Joel Sipress" class="img-thumbnail img-council">
+            </a>
           </div>
-          </a>
-        </div>  
-        
+        </div>
+          
         <div class="col-lg-2 col-md-5">
-          <a href="councildistrict3.html">
-            <div class="box">
+          <div class="box">
+            <a href="councildistrict3.html">
               <h3>Roz Randorf</h3>
               <h6>Third Council District</h6>
-              <img src="{% static '\images\officials\RozRandorf.webp' %}" alt="Roz Randorf" class="img-thumbnail" width="160" height="225">
-            </div>
-          </a>
+              <img src="{% static '\images\officials\RozRandorf.webp' %}" alt="Roz Randorf" class="img-thumbnail img-council">
+            </a>
+          </div>
         </div>  
 
         <div class="col-lg-2 col-md-5">
-          <a href="councildistrict4.html">
-            <div class="box">
-              <h3>Renee Van Nett</h3>
-              <h6>Fourth Council District</h6>
-              <img src="{% static '\images\officials\ReneeVanNett.webp' %}" alt="Renee Van Nett" class="img-thumbnail" width="160" height="225">
-            </div>
-          </a>
+          <div class="box">
+            <a href="councildistrict4.html">
+                <h3>Renee Van Nett</h3>
+                <h6>Fourth Council District</h6>
+                <img src="{% static '\images\officials\ReneeVanNett.webp' %}" alt="Renee Van Nett" class="img-thumbnail img-council">
+            </a>
+          </div>
         </div>  
 
         <div class="col-lg-2 col-md-5">
+          <div class="box">
           <a href="councildistrict5.html">
-            <div class="box">
               <h3>Janet Kennedy</h3>
               <h6>Fith Council District</h6>
-              <img src="{% static '\images\officials\JanetKennedy.webp' %}" alt="Janet Kennedy" class="img-thumbnail" width="160" height="225">
-            </div>
-          </a>
+              <img src="{% static '\images\officials\JanetKennedy.webp' %}" alt="Janet Kennedy" class="img-thumbnail img-council">
+            </a>
+          </div>
         </div>
       </div>
 
       <!-- ======= Councilor At Large ======= -->
-      <div class="row">
+  
+      <div class="label">
+        <h3>Councilors At Large</h3>
+      </div>
+
+      <div class="d-flex justify-content-evenly flex-wrap">
         <div class="col-lg-3 col-md-6">
+          <div class="box">
           <a href="counciloratlarge1.html">
-            <div class="box">
               <h3>Zach Flipovich</h3>
               <h6>Coucilor At Large</h6>
               <img src="{% static '\images\officials\ZachFlipovich.webp' %}" alt="Zach Flipovich" class="img-thumbnail" width="193" height="269">
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
 
         <div class="col-lg-3 col-md-6">
+          <div class="box">
           <a href="counciloratlarge2.html">
-            <div class="box">
               <h3>Arik Forsman</h3>
               <h6>Coucilor At Large</h6>
               <img src="{% static '\images\officials\ArikForsman.webp' %}" alt="Arik Forsman" class="img-thumbnail" width="193" height="269">
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
 
         <div class="col-lg-3 col-md-6">
+          <div class="box">
           <a href="counciloratlarge3.html">
-            <div class="box">
               <h3>Derek Medved</h3>
               <h6>Coucilor At Large</h6>
               <img src="{% static '\images\officials\DerekMedved.webp' %}" alt="Derek Medved" class="img-thumbnail" width="193" height="269">
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
 
         <div class="col-lg-3 col-md-6">
+          <div class="box">
           <a href="counciloratlarge4.html">
-            <div class="box">
               <h3>Terese Tomanek</h3>
               <h6>Coucilor At Large</h6>
               <img src="{% static '\images\officials\TereseTomanek.webp' %}" alt="Terese Tomanek" class="img-thumbnail" width="193" height="269">
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
 
       </div>

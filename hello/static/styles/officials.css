@@ -1,9 +1,70 @@
-.city .container .mayor .row {
+.label {
     text-align: center;
-    background-color: red;
+    color: black;
 }
 
-#city {
+.row {
     text-align: center;
-    background-color: red;
 }
+
+.col-lg-3 {
+    text-align: center;
+}
+
+.col-lg-2 {
+    align-self: center;
+}
+
+.mayor {
+    text-align: center;
+}
+
+.h3 {
+font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.h6 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.img-council {
+    height: 225px;
+    width: 160px;
+}
+
+.city a {
+    color: black;
+    text-decoration-line: none;
+}
+
+.city a:hover {
+    text-decoration: underline;
+}
+
+.box {
+    text-align: center;
+}
+
+.d-flex {
+    padding: 10px 0 10px 0;
+}
+
+/* GENERAL */
+body {
+    font-family: "Open Sans", sans-serif;
+    color: #4d4643;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #004b8d;
+    text-decoration: none;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Roboto", sans-serif;
+  }
