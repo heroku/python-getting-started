@@ -12,7 +12,7 @@ def index(request):
     #print(r.text)
 
     d = '{"fulfillmentMessages": [{"card": {"title": "card title","subtitle": "card text","imageUri": "https://example.com/images/example.png","buttons": [{"text": "button text","postback": "https://example.com/path/for/end-user/to/follow"}]}}]}'
-    return HttpResponse('<pre>' + d + '</pre>')
+    return HttpResponse(d)
 
 
 
