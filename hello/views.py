@@ -11,7 +11,7 @@ def index(request):
     #r = requests.get('https://httpbin.org/status/418')
     #print(r.text)
 
-    d = '{"fulfillmentMessages": [{"card": {"title": "card title","subtitle": "card text","imageUri": "https://example.com/images/example.png","buttons": [{"text": "button text","postback": "https://example.com/path/for/end-user/to/follow"}]}}]}'
+    d = '{"richContent":[[{"type":"info","title":"Exit to Dialogflow","subtitle":"Dialogflow is Googles natural language understanding tool for ...","image":{"src":{"rawUrl":"https://i.ytimg.com/vi/yT58gTXdQb8/maxres3.jpg"}},"actionLink":"https://www.youtube.com/watch?v=yT58gTXdQb8"}]]}'
     return HttpResponse(d)
 
 
