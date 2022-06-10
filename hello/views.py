@@ -6,11 +6,11 @@ import requests
 
 # Create your views here.
 def index(request):
-    r = requests.get('https://httpbin.org/status/418')
-    print(r.text)
+    #r = requests.get('https://httpbin.org/status/418')
+    #print(r.text)
 
     d = '{"fulfillmentMessages": [{"card": {"title": "card title","subtitle": "card text","imageUri": "https://example.com/images/example.png","buttons": [{"text": "button text","postback": "https://example.com/path/for/end-user/to/follow"}]}}]}'
-    return HttpResponse('<pre>' + r.text + '</pre>')
+    return HttpResponse('<pre>' + d + '</pre>')
 
 
 def db(request):
