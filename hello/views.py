@@ -8,7 +8,9 @@ import requests
 def index(request):
     r = requests.get('https://httpbin.org/status/418')
     print(r.text)
-    return HttpResponse('<pre>' + r.text + '</pre>')
+
+    d = '{"richContent":[[{"type":"description","title":"Description title","text":["This is text line 1.","This is text line 2."]}]]}'
+    return HttpResponse('<pre>' + d + '</pre>')
 
 
 def db(request):
