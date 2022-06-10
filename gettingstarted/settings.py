@@ -30,7 +30,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-CSRF_TRUSTED_ORIGINS = ['https://web.postman.co']
+CSRF_TRUSTED_ORIGINS = ['https://web.postman.co','https://dialogflow.cloud.google.com/']
 
 
 # Application definition
