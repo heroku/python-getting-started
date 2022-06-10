@@ -9,8 +9,8 @@ def index(request):
     r = requests.get('https://httpbin.org/status/418')
     print(r.text)
 
-    d = '{"richContent":[[{"type":"description","title":"Description title","text":["This is text line 1.","This is text line 2."]}]]}'
-    return HttpResponse('<pre>' + d + '</pre>')
+    d = '{"fulfillmentMessages": [{"card": {"title": "card title","subtitle": "card text","imageUri": "https://example.com/images/example.png","buttons": [{"text": "button text","postback": "https://example.com/path/for/end-user/to/follow"}]}}]}'
+    return HttpResponse('<pre>' + r.text + '</pre>')
 
 
 def db(request):
