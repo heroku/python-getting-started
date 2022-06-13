@@ -11,10 +11,41 @@ def index(request):
     #r = requests.get('https://httpbin.org/status/418')
     #print(r.text)
 
-    d = '{"richContent":[[{"type":"info","title":"Exit to Dialogflow","subtitle":"Dialogflow is Googles natural language understanding tool for ...","image":{"src":{"rawUrl":"https://i.ytimg.com/vi/yT58gTXdQb8/maxres3.jpg"}},"actionLink":"https://www.youtube.com/watch?v=yT58gTXdQb8"}]]}'
+    d = """{
+        "payload": {
+            "google": {
+            "expectUserResponse": true,
+            "richResponse": {
+                "items": [
+                {
+                    "simpleResponse": {
+                    "textToSpeech": "This is a Basic Card:"
+                    }
+                },
+                {
+                    "basicCard": {
+                    "title": "Card Title",
+                    "image": {
+                        "url": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
+                        "accessibilityText": "Google Logo"
+                    },
+                    "buttons": [
+                        {
+                        "title": "Button Title",
+                        "openUrlAction": {
+                            "url": "https://www.google.com"
+                        }
+                        }
+                    ],
+                    "imageDisplayOptions": "WHITE"
+                    }
+                }
+                ]
+            }
+            }
+        }
+        }"""
     return HttpResponse(d)
-
-
 
 
 def db(request):
