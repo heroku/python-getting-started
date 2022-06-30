@@ -1,3 +1,13 @@
 django
 gunicorn
-django-heroku
+pytest
+<<<<<<< HEAD
+=======
+django
+>>>>>>> 3f4a4ae (change psycopg verison)
+dj-database-url>=0.5.0
+whitenoise
+gunicorn
+twine
+requests
+psycopg>=3.0
