@@ -6,4 +6,4 @@ whitenoise
 gunicorn
 twine
 requests
-psycopg>=3.0
+psycopg2
