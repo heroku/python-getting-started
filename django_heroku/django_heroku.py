@@ -1,9 +1,48 @@
 import logging
 import os
+
 import dj_database_url
+from django.test.runner import DiscoverRunner
 
 MAX_CONN_AGE = 600
+
 logger = logging.getLogger(__name__)
+
+
+class HerokuDiscoverRunner(DiscoverRunner):
+    """Test Runner for Heroku CI, which provides a database for you.
+    This requires you to set the TEST database (done for you by settings().)"""
+
+    def setup_databases(self, **kwargs):
+        if not os.environ.get('CI'):
+            raise ValueError(
+                "The CI env variable must be set to enable this functionality.  WARNING:  "
+                "This test runner will wipe all tables in the 'public' schema "
+                "of the database it targets!"
+            )
+        self.keepdb = True
+        return super(HerokuDiscoverRunner, self).setup_databases(**kwargs)
+
+    def _wipe_tables(self, connection):
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                    DROP SCHEMA public CASCADE;
+                    CREATE SCHEMA public;
+                    GRANT ALL ON SCHEMA public TO postgres;
+                    GRANT ALL ON SCHEMA public TO public;
+                    COMMENT ON SCHEMA public IS 'standard public schema'; 
+                """
+            )
+        pass
+
+    def teardown_databases(self, old_config, **kwargs):
+        self.keepdb = True
+        for connection, old_name, destroy in old_config:
+            if destroy:
+                self._wipe_tables(connection)
+        super(HerokuDiscoverRunner, self).teardown_databases(old_config, **kwargs)
+
 
 def settings(config, *, db_colors=False, databases=True, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
 
