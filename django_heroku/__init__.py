@@ -1,0 +1,1 @@
+from .django_heroku import *
