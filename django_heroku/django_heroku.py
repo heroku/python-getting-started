@@ -27,11 +27,14 @@ class HerokuDiscoverRunner(DiscoverRunner):
         with connection.cursor() as cursor:
             cursor.execute(
                 """
-                    DROP SCHEMA public CASCADE;
-                    CREATE SCHEMA public;
-                    GRANT ALL ON SCHEMA public TO postgres;
-                    GRANT ALL ON SCHEMA public TO public;
-                    COMMENT ON SCHEMA public IS 'standard public schema'; 
+                    DROP TABLE (
+                        SELECT
+                            table_name
+                        FROM
+                            information_schema.tables
+                        WHERE
+                            table_schema = 'public'
+                    ) CASCADE;
                 """
             )
         pass
