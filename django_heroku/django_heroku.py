@@ -151,4 +151,3 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
             logger.info('Adding $SECRET_KEY to SECRET_KEY Django setting.')
             # Set the Django setting from the environment variable.
             config['SECRET_KEY'] = os.environ['SECRET_KEY']
-
