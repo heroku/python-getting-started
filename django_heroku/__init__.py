@@ -1,1 +1,1 @@
-from .core import *
+from .django_heroku import *
