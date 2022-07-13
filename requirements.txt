@@ -1,4 +1,4 @@
-django
+django>=4.0, <5.0
 gunicorn
 pytest
 dj-database-url>=0.5.0
