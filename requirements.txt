@@ -3,7 +3,4 @@ gunicorn
 pytest
 dj-database-url>=0.5.0
 whitenoise
-gunicorn
-twine
-requests
 psycopg2
