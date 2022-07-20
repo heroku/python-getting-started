@@ -43,21 +43,16 @@ class HerokuDiscoverRunner(DiscoverRunner):
             old_config, **kwargs)
 
 
-def settings(config, *, db_colors=False, databases=True, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
+def settings(config, *, databases=True, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
 
     # Database configuration.
-    # TODO: support other database (e.g. TEAL, AMBER, etc, automatically.)
     if databases:
         # Integrity check.
-        if 'DATABASES' not in config:
-            config['DATABASES'] = {'default': None}
-
-        conn_max_age = config.get('CONN_MAX_AGE', MAX_CONN_AGE)
-
+        config['DATABASES'] = {'default': None}
         if 'DATABASE_URL' in os.environ:
             # Configure Django for DATABASE_URL environment variable.
             config['DATABASES']['default'] = dj_database_url.config(
-                conn_max_age=conn_max_age, ssl_require=True)
+                conn_max_age=config.get('CONN_MAX_AGE', MAX_CONN_AGE), ssl_require=True)
 
             # Enable test database if found in CI environment.
             if 'CI' in os.environ:
@@ -87,7 +82,8 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
         # Enable GZip.
         config['STATICFILES_STORAGE'] = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-    if allowed_hosts:
+    # Generally avoid wildcards(*). However since Heroku router provides hostname validation it is ok
+    if 'DYNO' in os.environ:
         config['ALLOWED_HOSTS'] = ['*']
 
         config['LOGGING'] = {
