@@ -46,7 +46,9 @@ def settings(config, *, databases=True, test_runner=True, staticfiles=True, allo
     # Database configuration.
     if databases:
         # Integrity check.
-        config['DATABASES'] = {'default': None}
+        if 'DATABASES' not in config:
+            config['DATABASES'] = {'default': None}
+
         if 'DATABASE_URL' in os.environ:
             # Configure Django for DATABASE_URL environment variable.
             config['DATABASES']['default'] = dj_database_url.config(
