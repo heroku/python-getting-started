@@ -1,4 +1,3 @@
-import logging
 import os
 
 import dj_database_url
@@ -44,7 +43,6 @@ class HerokuDiscoverRunner(DiscoverRunner):
 
 
 def settings(config, *, databases=True, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
-
     # Database configuration.
     if databases:
         # Integrity check.
@@ -86,38 +84,38 @@ def settings(config, *, databases=True, test_runner=True, staticfiles=True, allo
     if 'DYNO' in os.environ:
         config['ALLOWED_HOSTS'] = ['*']
 
-        config['LOGGING'] = {
-            'version': 1,
-            'disable_existing_loggers': False,
-            'formatters': {
-                'verbose': {
-                    'format': ('%(asctime)s [%(process)d] [%(levelname)s] ' +
-                               'pathname=%(pathname)s lineno=%(lineno)s ' +
-                               'funcname=%(funcName)s %(message)s'),
-                    'datefmt': '%Y-%m-%d %H:%M:%S'
-                },
-                'simple': {
-                    'format': '%(levelname)s %(message)s'
-                }
+    config['LOGGING'] = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'verbose': {
+                'format': ('%(asctime)s [%(process)d] [%(levelname)s] ' +
+                           'pathname=%(pathname)s lineno=%(lineno)s ' +
+                           'funcname=%(funcName)s %(message)s'),
+                'datefmt': '%Y-%m-%d %H:%M:%S'
             },
-            'handlers': {
-                'null': {
-                    'level': 'DEBUG',
-                    'class': 'logging.NullHandler',
-                },
-                'console': {
-                    'level': 'DEBUG',
-                    'class': 'logging.StreamHandler',
-                    'formatter': 'verbose'
-                }
+            'simple': {
+                'format': '%(levelname)s %(message)s'
+            }
+        },
+        'handlers': {
+            'null': {
+                'level': 'DEBUG',
+                'class': 'logging.NullHandler',
             },
-            'loggers': {
-                'testlogger': {
-                    'handlers': ['console'],
-                    'level': 'INFO',
-                }
+            'console': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+                'formatter': 'verbose'
+            }
+        },
+        'loggers': {
+            'testlogger': {
+                'handlers': ['console'],
+                'level': 'INFO',
             }
         }
+    }
 
     # SECRET_KEY configuration.
     if secret_key:
