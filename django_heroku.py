@@ -23,7 +23,7 @@ def settings(config, *, databases=True, test_runner=True, staticfiles=True, allo
                 config['DATABASES']['default']['TEST'] = config['DATABASES']['default']
 
     if 'CI' in os.environ:
-        config['TEST_RUNNER'] = 'DiscoverRunner'
+        config['TEST_RUNNER'] = 'django.test.runner.DiscoverRunner'
 
     # Staticfiles configuration.
     if staticfiles:
