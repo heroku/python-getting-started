@@ -58,10 +58,8 @@ def settings(config, *, databases=True, test_runner=True, staticfiles=True, allo
             if 'CI' in os.environ:
                 config['DATABASES']['default']['TEST'] = config['DATABASES']['default']
 
-    if test_runner:
-        # Enable test runner if found in CI environment.
-        if 'CI' in os.environ:
-            config['TEST_RUNNER'] = 'django_heroku.HerokuDiscoverRunner'
+    if 'CI' in os.environ:
+        config['TEST_RUNNER'] = 'django_heroku.HerokuDiscoverRunner'
 
     # Staticfiles configuration.
     if staticfiles:
