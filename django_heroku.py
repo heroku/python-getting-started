@@ -9,7 +9,10 @@ MAX_CONN_AGE = 600
 class HerokuDiscoverRunner(DiscoverRunner):
     """Test Runner for Heroku CI, which provides a database for you.
     This requires you to set the TEST database (done for you by settings().)"""
-    keepdb = True
+
+    def setup_databases(self, **kwargs):
+        self.keepdb = True
+        return super(HerokuDiscoverRunner, self).setup_databases(**kwargs)
 
 
 def settings(config, *, databases=True, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
