@@ -20,27 +20,6 @@ class HerokuDiscoverRunner(DiscoverRunner):
         self.keepdb = True
         return super(HerokuDiscoverRunner, self).setup_databases(**kwargs)
 
-    def _wipe_tables(self, connection):
-        with connection.cursor() as cursor:
-            cursor.execute(
-                """
-                    DROP SCHEMA public CASCADE;
-                    CREATE SCHEMA public;
-                    GRANT ALL ON SCHEMA public TO postgres;
-                    GRANT ALL ON SCHEMA public TO public;
-                    COMMENT ON SCHEMA public IS 'standard public schema'; 
-                """
-            )
-        pass
-
-    def teardown_databases(self, old_config, **kwargs):
-        self.keepdb = True
-        for connection, old_name, destroy in old_config:
-            if destroy:
-                self._wipe_tables(connection)
-        super(HerokuDiscoverRunner, self).teardown_databases(
-            old_config, **kwargs)
-
 
 def settings(config, *, databases=True, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
     # Database configuration.
