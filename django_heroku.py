@@ -17,7 +17,7 @@ class HerokuDiscoverRunner(DiscoverRunner):
                 "This test runner will wipe all tables in the 'public' schema "
                 "of the database it targets!"
             )
-        self.keepdb = False
+        self.keepdb = True
         return super(HerokuDiscoverRunner, self).setup_databases(**kwargs)
 
 
