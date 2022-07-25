@@ -11,6 +11,7 @@ class HerokuDiscoverRunner(DiscoverRunner):
     This requires you to set the TEST database (done for you by settings().)"""
 
     def setup_databases(self, **kwargs):
+        self.keepdb = True
         return super(HerokuDiscoverRunner, self).setup_databases(**kwargs)
 
 
