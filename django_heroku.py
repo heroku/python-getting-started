@@ -6,6 +6,11 @@ from django.test.runner import DiscoverRunner
 MAX_CONN_AGE = 600
 
 
+class HerokuDiscoverRunner(DiscoverRunner):
+    """Test Runner for Heroku CI, which provides a database for you.
+    This requires you to set the TEST database (done for you by settings().)"""
+
+
 def settings(config, *, databases=True, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
     # Database configuration.
     if databases:
@@ -23,7 +28,7 @@ def settings(config, *, databases=True, test_runner=True, staticfiles=True, allo
                 config['DATABASES']['default']['TEST'] = config['DATABASES']['default']
 
     if 'CI' in os.environ:
-        config['TEST_RUNNER'] = 'django.test.runner.DiscoverRunner'
+        config['TEST_RUNNER'] = 'django_heroku.HerokuDiscoverRunner'
 
     # Staticfiles configuration.
     if staticfiles:
