@@ -147,7 +147,7 @@ if 'DATABASE_URL' in os.environ:
         config['DATABASES']['default']['TEST'] = config['DATABASES']['default']
 
 # if 'CI' in os.environ:
-config['TEST_RUNNER'] = 'settings.HerokuDiscoverRunner'
+config['TEST_RUNNER'] = 'gettingstarted.settings.HerokuDiscoverRunner'
 
 # Staticfiles configuration.
 config['STATIC_ROOT'] = os.path.join(config['BASE_DIR'], 'staticfiles')
