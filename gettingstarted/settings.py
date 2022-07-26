@@ -117,6 +117,12 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "/static/"
 
+# Ensure STATIC_ROOT exists.
+os.makedirs(STATIC_ROOT, exist_ok=True)
+
+# Enable GZip.
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 MAX_CONN_AGE = 600
 
@@ -146,15 +152,9 @@ if 'DATABASE_URL' in os.environ:
     if 'CI' in os.environ:
         config['DATABASES']['default']['TEST'] = config['DATABASES']['default']
 
-# if 'CI' in os.environ:
-config['TEST_RUNNER'] = 'gettingstarted.settings.HerokuDiscoverRunner'
+if 'CI' in os.environ:
+    TEST_RUNNER = 'gettingstarted.settings.HerokuDiscoverRunner'
 
-# Staticfiles configuration.
-config['STATIC_ROOT'] = os.path.join(config['BASE_DIR'], 'staticfiles')
-config['STATIC_URL'] = '/static/'
-
-# Ensure STATIC_ROOT exists.
-os.makedirs(config['STATIC_ROOT'], exist_ok=True)
 
 # Insert Whitenoise Middleware.
 try:
@@ -164,8 +164,6 @@ except KeyError:
     config['MIDDLEWARE'] = tuple(
         ['whitenoise.middleware.WhiteNoiseMiddleware'] + list(config['MIDDLEWARE']))
 
-# Enable GZip.
-config['STATICFILES_STORAGE'] = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Generally avoid wildcards(*). However since Heroku router provides hostname validation it is ok
 if 'DYNO' in os.environ:
