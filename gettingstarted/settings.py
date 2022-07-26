@@ -76,6 +76,7 @@ WSGI_APPLICATION = "gettingstarted.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+MAX_CONN_AGE = 600
 
 DATABASES = {
     "default": {
@@ -83,6 +84,16 @@ DATABASES = {
         "NAME": os.path.join(BASE_DIR, "db.sqlite3")
     }
 }
+
+if 'DATABASE_URL' in os.environ:
+    # Configure Django for DATABASE_URL environment variable.
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=MAX_CONN_AGE, ssl_require=True)
+
+    # Enable test database if found in CI environment.
+    if 'CI' in os.environ:
+        DATABASES['default']['TEST'] = DATABASES['default']
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -124,9 +135,6 @@ os.makedirs(STATIC_ROOT, exist_ok=True)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-MAX_CONN_AGE = 600
-
-
 class HerokuDiscoverRunner(DiscoverRunner):
     """Test Runner for Heroku CI, which provides a database for you.
     This requires you to set the TEST database (done for you by settings().)"""
@@ -136,24 +144,11 @@ class HerokuDiscoverRunner(DiscoverRunner):
         return super(HerokuDiscoverRunner, self).setup_databases(**kwargs)
 
 
-config = locals()
-
-# Database configuration.
-# Integrity check.
-if 'DATABASES' not in config:
-    config['DATABASES'] = {'default': None}
-
-if 'DATABASE_URL' in os.environ:
-    # Configure Django for DATABASE_URL environment variable.
-    config['DATABASES']['default'] = dj_database_url.config(
-        conn_max_age=config.get('CONN_MAX_AGE', MAX_CONN_AGE), ssl_require=True)
-
-    # Enable test database if found in CI environment.
-    if 'CI' in os.environ:
-        config['DATABASES']['default']['TEST'] = config['DATABASES']['default']
-
 if 'CI' in os.environ:
     TEST_RUNNER = 'gettingstarted.settings.HerokuDiscoverRunner'
+
+
+config = locals()
 
 
 # Insert Whitenoise Middleware.
