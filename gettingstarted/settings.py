@@ -23,14 +23,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 # Generally avoid wildcards(*). However since Heroku router provides hostname validation it is ok
-if 'DYNO' in os.environ:
-    ALLOWED_HOSTS = ['*']
+if "DYNO" in os.environ:
+    ALLOWED_HOSTS = ["*"]
 else:
     ALLOWED_HOSTS = []
 
@@ -55,6 +55,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "gettingstarted.urls"
@@ -88,14 +89,14 @@ DATABASES = {
         "NAME": os.path.join(BASE_DIR, "db.sqlite3")
     }
 }
-if 'DATABASE_URL' in os.environ:
+if "DATABASE_URL" in os.environ:
     # Configure Django for DATABASE_URL environment variable.
-    DATABASES['default'] = dj_database_url.config(
+    DATABASES["default"] = dj_database_url.config(
         conn_max_age=MAX_CONN_AGE, ssl_require=True)
 
     # Enable test database if found in CI environment.
-    if 'CI' in os.environ:
-        DATABASES['default']['TEST'] = DATABASES['default']
+    if "CI" in os.environ:
+        DATABASES["default"]["TEST"] = DATABASES["default"]
 
 
 # Password validation
@@ -128,14 +129,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
 
 # Ensure STATIC_ROOT exists.
 os.makedirs(STATIC_ROOT, exist_ok=True)
 
 # Enable GZip.
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # Test Runner Config
@@ -149,16 +150,5 @@ class HerokuDiscoverRunner(DiscoverRunner):
 
 
 # Use HerokuDiscoverRunner as defined above if CI
-if 'CI' in os.environ:
-    TEST_RUNNER = 'gettingstarted.settings.HerokuDiscoverRunner'
-
-
-config = locals()
-
-# Insert Whitenoise Middleware.
-try:
-    config['MIDDLEWARE_CLASSES'] = tuple(
-        ['whitenoise.middleware.WhiteNoiseMiddleware'] + list(config['MIDDLEWARE_CLASSES']))
-except KeyError:
-    config['MIDDLEWARE'] = tuple(
-        ['whitenoise.middleware.WhiteNoiseMiddleware'] + list(config['MIDDLEWARE']))
+if "CI" in os.environ:
+    TEST_RUNNER = "gettingstarted.settings.HerokuDiscoverRunner"
