@@ -84,7 +84,6 @@ DATABASES = {
         "NAME": os.path.join(BASE_DIR, "db.sqlite3")
     }
 }
-
 if 'DATABASE_URL' in os.environ:
     # Configure Django for DATABASE_URL environment variable.
     DATABASES['default'] = dj_database_url.config(
@@ -135,6 +134,7 @@ os.makedirs(STATIC_ROOT, exist_ok=True)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
+# Test Runner Config
 class HerokuDiscoverRunner(DiscoverRunner):
     """Test Runner for Heroku CI, which provides a database for you.
     This requires you to set the TEST database (done for you by settings().)"""
@@ -144,12 +144,21 @@ class HerokuDiscoverRunner(DiscoverRunner):
         return super(HerokuDiscoverRunner, self).setup_databases(**kwargs)
 
 
+# Use HerokuDiscoverRunner as defined above if CI
 if 'CI' in os.environ:
     TEST_RUNNER = 'gettingstarted.settings.HerokuDiscoverRunner'
 
 
-config = locals()
+# Generally avoid wildcards(*). However since Heroku router provides hostname validation it is ok
+if 'DYNO' in os.environ:
+    ALLOWED_HOSTS = ['*']
 
+
+# SECRET_KEY configuration.
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
+
+config = locals()
 
 # Insert Whitenoise Middleware.
 try:
@@ -159,10 +168,6 @@ except KeyError:
     config['MIDDLEWARE'] = tuple(
         ['whitenoise.middleware.WhiteNoiseMiddleware'] + list(config['MIDDLEWARE']))
 
-
-# Generally avoid wildcards(*). However since Heroku router provides hostname validation it is ok
-if 'DYNO' in os.environ:
-    config['ALLOWED_HOSTS'] = ['*']
 
 config['LOGGING'] = {
     'version': 1,
@@ -196,8 +201,3 @@ config['LOGGING'] = {
         }
     }
 }
-
-# SECRET_KEY configuration.
-if 'SECRET_KEY' in os.environ:
-    # Set the Django setting from the environment variable.
-    config['SECRET_KEY'] = os.environ['SECRET_KEY']
