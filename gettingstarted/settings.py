@@ -26,8 +26,7 @@ IS_HEROKU = "DYNO" in os.environ
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-if not IS_HEROKU:
-    SECRET_KEY = "THIS NEEDS TO BE REPLACED"
+SECRET_KEY = "THIS NEEDS TO BE REPLACED"
 
 if 'SECRET_KEY' in os.environ:
     SECRET_KEY = os.environ["SECRET_KEY"]
