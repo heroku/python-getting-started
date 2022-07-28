@@ -26,7 +26,7 @@ IS_HEROKU = "DYNO" in os.environ
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "THIS NEEDS TO BE REPLACED"
+SECRET_KEY = "CHANGE_ME!!!! (P.S. the SECRET_KEY environment variable will be used, if set, instead)."
 
 if 'SECRET_KEY' in os.environ:
     SECRET_KEY = os.environ["SECRET_KEY"]
@@ -136,11 +136,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_ROOT = STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = "static/"
 
 # Enable WhiteNoise's GZip compression of static assets.
-
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
@@ -154,8 +153,7 @@ class HerokuDiscoverRunner(DiscoverRunner):
         return super(HerokuDiscoverRunner, self).setup_databases(**kwargs)
 
 
-# Use HerokuDiscoverRunner as defined above if CI
-
+# Use HerokuDiscoverRunner on Heroku CI
 if "CI" in os.environ:
     TEST_RUNNER = "gettingstarted.settings.HerokuDiscoverRunner"
 
