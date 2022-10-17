@@ -1,0 +1,35 @@
+name: Production Deployment
+
+on:
+  push:
+    branches: [ main ]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout source code
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Install VPN
+      - name: Install VPN
+        run: |
+          sudo apt update
+          sudo apt install -y openvpn openvpn-systemd-resolved
+
+      # Connect VPN
+      - name: Connect to VPN
+        uses: kota65535/github-openvpn-connect-action@v1
+        with:
+          config_file: .github/workflows/client.ovpn
+          username: ${{ secrets.OVPN_USERNAME }}
+          password: ${{ secrets.OVPN_PASSWORD }}
+
+      # Deploy to production
+      - name: deploy to production
+        uses: idoberko2/dokku-deploy-github-action@v1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          dokku-host: 'sgt-dev.space'
+          app-name: 'python-getting-started'
