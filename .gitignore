@@ -1,6 +1,11 @@
-venv
-*.pyc
-staticfiles
-.env
+# Python files
+__pycache__/
+.venv/
+venv/
+
+# Django files
+staticfiles/
 db.sqlite3
-getting-started/*
+
+# macOS files
+.DS_Store
