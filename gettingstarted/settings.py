@@ -15,13 +15,10 @@ import secrets
 from pathlib import Path
 
 import dj_database_url
-from django.test.runner import DiscoverRunner
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-IS_HEROKU = "DYNO" in os.environ
 
 # Before using your Heroku app in production, make sure to review Django's deployment checklist:
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -40,15 +37,20 @@ SECRET_KEY = os.environ.get(
     default=secrets.token_urlsafe(nbytes=64),
 )
 
+# The `DYNO` env var is set on Heroku CI, but it's not a real Heroku app, so we have to
+# also explicitly exclude CI:
+# https://devcenter.heroku.com/articles/heroku-ci#immutable-environment-variables
+IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
+
 # SECURITY WARNING: don't run with debug turned on in production!
-if not IS_HEROKU:
+if not IS_HEROKU_APP:
     DEBUG = True
 
 # On Heroku, it's safe to use a wildcard for `ALLOWED_HOSTS``, since the Heroku router performs
 # validation of the Host header in the incoming HTTP request. On other platforms you may need
 # to list the expected hostnames explicitly to prevent HTTP Host header attacks. See:
 # https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-ALLOWED_HOSTS
-if IS_HEROKU:
+if IS_HEROKU_APP:
     ALLOWED_HOSTS = ["*"]
 else:
     ALLOWED_HOSTS = []
@@ -109,25 +111,28 @@ WSGI_APPLICATION = "gettingstarted.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-MAX_CONN_AGE = 600
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if IS_HEROKU_APP:
+    # In production on Heroku the database configuration is derived from the `DATABASE_URL`
+    # environment variable by the dj-database-url package. `DATABASE_URL` will be set
+    # automatically by Heroku when a database addon is attached to your Heroku app. See:
+    # https://devcenter.heroku.com/articles/provisioning-heroku-postgres
+    # https://github.com/jazzband/dj-database-url
+    DATABASES = {
+        "default": dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=True,
+        ),
     }
-}
-
-if "DATABASE_URL" in os.environ:
-    # Configure Django for DATABASE_URL environment variable.
-    DATABASES["default"] = dj_database_url.config(
-        conn_max_age=MAX_CONN_AGE,
-        ssl_require=True,
-    )
-
-    # Enable test database if found in CI environment.
-    if "CI" in os.environ:
-        DATABASES["default"]["TEST"] = DATABASES["default"]
+else:
+    # When running locally in development or in CI, a sqlite database file will be used instead
+    # to simplify initial setup. Longer term it's recommended to use Postgres locally too.
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 # Password validation
@@ -178,21 +183,6 @@ STORAGES = {
 # Don't store the original (un-hashed filename) version of static files, to reduce slug size:
 # https://whitenoise.readthedocs.io/en/latest/django.html#WHITENOISE_KEEP_ONLY_HASHED_FILES
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
-
-
-# Test Runner Config
-class HerokuDiscoverRunner(DiscoverRunner):
-    """Test Runner for Heroku CI, which provides a database for you.
-    This requires you to set the TEST database (done for you by settings().)"""
-
-    def setup_databases(self, **kwargs):
-        self.keepdb = True
-        return super(HerokuDiscoverRunner, self).setup_databases(**kwargs)
-
-
-# Use HerokuDiscoverRunner on Heroku CI
-if "CI" in os.environ:
-    TEST_RUNNER = "gettingstarted.settings.HerokuDiscoverRunner"
 
 
 # Default primary key field type
