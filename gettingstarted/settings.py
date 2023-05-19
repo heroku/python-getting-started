@@ -44,6 +44,8 @@ else:
 # Application definition
 
 INSTALLED_APPS = [
+    # Use WhiteNoise's runserver implementation instead of the Django default, for dev-prod parity.
+    "whitenoise.runserver_nostatic",
     # Uncomment this and the entry in `urls.py` if you wish to use the Django admin feature:
     # https://docs.djangoproject.com/en/4.2/ref/contrib/admin/
     # "django.contrib.admin",
@@ -57,6 +59,10 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    # Django doesn't support serving static assets in a production-ready way, so we use the
+    # excellent WhiteNoise package to do so instead. The WhiteNoise middleware must be listed
+    # after Django's `SecurityMiddleware` so that security redirects are still performed.
+    # See: https://whitenoise.readthedocs.io
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -148,8 +154,17 @@ USE_TZ = True
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = "static/"
 
-# Enable WhiteNoise's GZip compression of static assets.
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STORAGES = {
+    # Enable WhiteNoise's GZip and Brotli compression of static assets:
+    # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+# Don't store the original (un-hashed filename) version of static files, to reduce slug size:
+# https://whitenoise.readthedocs.io/en/latest/django.html#WHITENOISE_KEEP_ONLY_HASHED_FILES
+WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
 
 # Test Runner Config
