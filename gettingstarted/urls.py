@@ -14,7 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
+# from django.contrib import admin
 from django.urls import path
 
 import hello.views
@@ -22,5 +22,7 @@ import hello.views
 urlpatterns = [
     path("", hello.views.index, name="index"),
     path("db/", hello.views.db, name="db"),
-    path("admin/", admin.site.urls),
+    # Uncomment this and the entry in `INSTALLED_APPS` if you wish to use the Django admin feature:
+    # https://docs.djangoproject.com/en/4.2/ref/contrib/admin/
+    # path("admin/", admin.site.urls),
 ]

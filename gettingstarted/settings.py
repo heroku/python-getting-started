@@ -44,7 +44,9 @@ else:
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
+    # Uncomment this and the entry in `urls.py` if you wish to use the Django admin feature:
+    # https://docs.djangoproject.com/en/4.2/ref/contrib/admin/
+    # "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
