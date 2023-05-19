@@ -10,10 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-import dj_database_url
 import os
-from django.test.runner import DiscoverRunner
+import secrets
 from pathlib import Path
+
+import dj_database_url
+from django.test.runner import DiscoverRunner
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,14 +23,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 IS_HEROKU = "DYNO" in os.environ
 
-# Quick-start development settings - unsuitable for production
+# Before using your Heroku app in production, make sure to review Django's deployment checklist:
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+# Django requires a unique secret key for each Django app, that is used by several of its
+# security features. To simplify initial setup (without hardcoding the secret in the source
+# code) we set this to a random value every time the app starts. However, this will mean many
+# Django features break whenever an app restarts (for example, sessions will be logged out).
+# In your production Heroku apps you should set the `DJANGO_SECRET_KEY` config var explicitly.
+# Make sure to use a long unique value, like you would for a password. See:
+# https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-SECRET_KEY
+# https://devcenter.heroku.com/articles/config-vars
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "CHANGE_ME!!!! (P.S. the SECRET_KEY environment variable will be used, if set, instead)."
-
-if "SECRET_KEY" in os.environ:
-    SECRET_KEY = os.environ["SECRET_KEY"]
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    default=secrets.token_urlsafe(nbytes=64),
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if not IS_HEROKU:

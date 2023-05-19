@@ -6,7 +6,7 @@
   "keywords": ["python", "django"],
   "addons": ["heroku-postgresql"],
   "env": {
-    "SECRET_KEY": {
+    "DJANGO_SECRET_KEY": {
       "description": "The secret key for the Django application.",
       "generator": "secret"
     }
