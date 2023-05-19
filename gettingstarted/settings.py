@@ -44,7 +44,10 @@ SECRET_KEY = os.environ.get(
 if not IS_HEROKU:
     DEBUG = True
 
-# Generally avoid wildcards(*). However since Heroku router provides hostname validation it is ok
+# On Heroku, it's safe to use a wildcard for `ALLOWED_HOSTS``, since the Heroku router performs
+# validation of the Host header in the incoming HTTP request. On other platforms you may need
+# to list the expected hostnames explicitly to prevent HTTP Host header attacks. See:
+# https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-ALLOWED_HOSTS
 if IS_HEROKU:
     ALLOWED_HOSTS = ["*"]
 else:
