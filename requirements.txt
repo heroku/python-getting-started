@@ -2,6 +2,8 @@ django>=4.2,<5.0
 gunicorn>=21.2,<22.0
 dj-database-url>=2.0,<3.0
 whitenoise[brotli]>=6.0,<7.0
+python-dotenv==1.0.0
+sentry-sdk[django]==1.38.0
 
 # Uncomment these lines to use a Postgres database. Both are needed, since in production
 # (which uses Linux) we want to install from source, so that security updates from the

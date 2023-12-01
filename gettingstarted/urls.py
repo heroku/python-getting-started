@@ -15,12 +15,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 # from django.contrib import admin
+from django.shortcuts import render
 from django.urls import path
+from django.conf import settings
 
 import hello.views
 
+def error(request):
+    if settings.SHOULD_ERROR:
+        division_by_zero = 1 / 0
+    else:
+        return render(request, "fixed.html")
+
 urlpatterns = [
     path("", hello.views.index, name="index"),
+    path("error/", error, name="error"),
     path("db/", hello.views.db, name="db"),
     # Uncomment this and the entry in `INSTALLED_APPS` if you wish to use the Django admin feature:
     # https://docs.djangoproject.com/en/4.2/ref/contrib/admin/

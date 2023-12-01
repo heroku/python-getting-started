@@ -13,8 +13,14 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 import secrets
 from pathlib import Path
-
+import sentry_sdk
 import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
+from dotenv import load_dotenv
+from distutils.util import strtobool
+from sentry_sdk.integrations.django import DjangoIntegration
+
+load_dotenv() 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,6 +51,37 @@ IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
 # SECURITY WARNING: don't run with debug turned on in production!
 if not IS_HEROKU_APP:
     DEBUG = True
+
+
+# StatupOS configuration
+STUDENT_NAME = os.environ.get("STUDENT_NAME")
+
+if not STUDENT_NAME:
+    raise ImproperlyConfigured("STUDENT_NAME env variable must be set")
+
+
+SHOULD_ERROR = strtobool(os.environ.get("SHOULD_ERROR", "true"))
+
+def student_name(request):
+    return {'STUDENT_NAME': STUDENT_NAME}
+
+# Configure Sentry for error reporting
+SENTRY_DSN = os.environ.get("SENTRY_DSN")
+
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        enable_tracing=True,
+        integrations=[
+            DjangoIntegration(
+                transaction_style='url',
+                middleware_spans=True,
+                signals_spans=False,
+                cache_spans=False,
+            ),
+        ]
+    )
+
 
 # On Heroku, it's safe to use a wildcard for `ALLOWED_HOSTS``, since the Heroku router performs
 # validation of the Host header in the incoming HTTP request. On other platforms you may need
@@ -100,6 +137,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "gettingstarted.settings.student_name",
             ],
         },
     },
