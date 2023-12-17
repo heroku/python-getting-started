@@ -28,7 +28,7 @@ def car_list(request):
 
     return render(
         request,
-        "carshop/car_type_list.html",
+        "car_type_list.html",
         {
             "dealership_cars_data": dealership_cars_data,
             "order_id": request.session.get("order_id", 0),
@@ -45,7 +45,7 @@ def create_car_type(request):
     else:
         form = CarTypeForm()
 
-    return render(request, "carshop/create_car_type.html", {"form": form})
+    return render(request, "create_car_type.html", {"form": form})
 
 
 def create_dealership(request):
@@ -57,7 +57,7 @@ def create_dealership(request):
     else:
         form = DealershipForm()
 
-    return render(request, "carshop/create_dealership.html", {"form": form})
+    return render(request, "create_dealership.html", {"form": form})
 
 
 def create_car(request):
@@ -69,7 +69,7 @@ def create_car(request):
     else:
         form = CarForm()
 
-    return render(request, "carshop/create_car.html", {"form": form})
+    return render(request, "create_car.html", {"form": form})
 
 
 def create_client(request):
@@ -81,7 +81,7 @@ def create_client(request):
     else:
         form = ClientForm()
 
-    return render(request, "carshop/create_client.html", {"form": form})
+    return render(request, "create_client.html", {"form": form})
 
 
 def payment(request, order_id):
@@ -96,11 +96,11 @@ def payment(request, order_id):
 
     return render(
         request,
-        "carshop/payment.html",
+        "payment.html",
         {"order": order, "order_quantities": order_quantities},
     )
 
 
 def payment_success(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
-    return render(request, "carshop/payment_success.html", {"order": order})
+    return render(request, "payment_success.html", {"order": order})

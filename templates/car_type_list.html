@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Покупка машин</title>
+</head>
+<body>
+<h1>Покупка машин</h1>
+ <a href="{% url 'payment' order_id %}">Оплатить</a>
+{% for dealership, cartypes in dealership_cars_data.items %}
+    <h2>{{ dealership.name }}</h2>
+    <ul>
+        {% for cartype in cartypes %}
+            <li> {{ cartype.brand }} {{ cartype.name }}: {{ cartype.price }} денег
+                <form method="post" action="{% url 'car_list' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="car_type_id" value="{{ cartype.id }}">
+                    <input type="number" name="quantity" value="1" min="1">
+                    <input type="submit" value="Добавить в заказ">
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% endfor %}
+</body>
+</html>

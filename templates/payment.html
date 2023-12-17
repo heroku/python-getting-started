@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Оплата заказа</title>
+</head>
+<body>
+<h1>Оплата заказа</h1>
+<h2>Детали заказа</h2>
+<p>Номер заказа: {{ order.id }}</p>
+<ul>
+    {% for order_quantitie in order_quantities %}
+        <li> {{ order_quantitie.car_type.brand }} {{ order_quantitie.car_type.name }} {{ order_quantitie.quantity }} шт.
+    {% endfor %}
+</ul>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Завершить оплату">
+</form>
+</body>
+</html>
