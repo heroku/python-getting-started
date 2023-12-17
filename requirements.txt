@@ -3,6 +3,9 @@ gunicorn>=21.2,<22.0
 dj-database-url>=2.0,<3.0
 whitenoise[brotli]>=6.0,<7.0
 
+django-allauth
+django-crispy-forms
+
 # Uncomment these lines to use a Postgres database. Both are needed, since in production
 # (which uses Linux) we want to install from source, so that security updates from the
 # underlying Heroku stack image are picked up automatically, thanks to dynamic linking.
