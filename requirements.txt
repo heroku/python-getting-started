@@ -5,6 +5,8 @@ whitenoise[brotli]>=6.0,<7.0
 pytest-django
 django-allauth
 django-crispy-forms
+djangorestframework
+drf-yasg
 
 # Uncomment these lines to use a Postgres database. Both are needed, since in production
 # (which uses Linux) we want to install from source, so that security updates from the

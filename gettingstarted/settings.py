@@ -77,6 +77,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'crispy_forms',
+    "rest_framework",
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -231,4 +233,11 @@ SOCIALACCOUNT_PROVIDERS = {
         },
         'OAUTH_PKCE_ENABLED': True,
     }
+}
+
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+    'api_version': '1.0',
+    'doc_expansion': 'none',
+    'permission_denied_handler': 'rest_framework.permissions.DjangoModelPermissions',
 }
