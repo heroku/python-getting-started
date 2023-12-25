@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "hello",
 
     "carsshop.apps.CarsshopConfig",
+    "api.apps.ApiConfig",
 
     'allauth',
     'allauth.account',

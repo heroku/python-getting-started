@@ -24,5 +24,6 @@ urlpatterns = [
     path("db/", hello.views.db, name="db"),
 
     path("", include("carsshop.urls")),
-    path('accounts/', include('allauth.urls')),
+    path('api/', include('api.urls')),
+    path('accounts/', include('allauth.urls'))
 ]
