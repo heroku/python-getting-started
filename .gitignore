@@ -9,3 +9,5 @@ db.sqlite3
 
 # macOS files
 .DS_Store
+.idea/
+/.idea
