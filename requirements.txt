@@ -5,6 +5,8 @@ whitenoise[brotli]>=6.0,<7.0
 pytest-django
 django-allauth
 django-crispy-forms
+django-redis
+redis
 djangorestframework
 drf-yasg
 
