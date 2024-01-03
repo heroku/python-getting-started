@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -27,7 +28,7 @@ class Car(models.Model):
         "Order", on_delete=models.SET_NULL, null=True, related_name="reserved_cars"
     )
     owner = models.ForeignKey(
-        Client, on_delete=models.SET_NULL, null=True, related_name="cars"
+        User, on_delete=models.SET_NULL, null=True, related_name="cars"
     )
 
     def block(self, order):
@@ -67,14 +68,14 @@ class Licence(models.Model):
 class Dealership(models.Model):
     name = models.CharField(max_length=50)
     available_car_types = models.ManyToManyField(CarType, related_name="dealerships")
-    clients = models.ManyToManyField(Client, related_name="dealerships")
+    clients = models.ManyToManyField(User, related_name="dealerships")
 
     def __str__(self):
         return self.name
 
 
 class Order(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="orders")
+    client = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders")
     is_paid = models.BooleanField(default=False)
 
     def add_car_type_to_order(self, car_type, quantity):

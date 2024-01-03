@@ -40,7 +40,7 @@ urlpatterns = [
     path("", include("carsshop.urls")),
     
     path("db/", hello.views.db, name="db"),
-    path('api/', include('api.urls')),
+    path('api/', include('carshop_api.urls')),
     path('api/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
     path('accounts/', include('allauth.urls')),
