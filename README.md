@@ -14,7 +14,7 @@ This application supports the [Getting Started with Python on Heroku](https://de
 
 Alternatively, you can deploy it using this Heroku Button:
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/heroku/python-getting-started)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy?template=https://github.com/heroku/python-getting-started)
 
 For more information about using Python on Heroku, see these Dev Center articles:
 
