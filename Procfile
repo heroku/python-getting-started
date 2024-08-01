@@ -1,1 +1,3 @@
-web: paython althkmabod.py
+
+web: gunicorn myproject.wsgi --log-file -
+
