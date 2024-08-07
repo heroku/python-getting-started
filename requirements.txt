@@ -1,4 +1,4 @@
-django>=5.0,<5.1
+django>=5.0,<5.2
 gunicorn>=22,<23
 dj-database-url>=2,<3
 whitenoise[brotli]>=6,<7
