@@ -1,5 +1,5 @@
 django>=5.1,<5.2
-gunicorn>=22,<23
+gunicorn>=23,<24
 dj-database-url>=2,<3
 whitenoise[brotli]>=6,<7
 
