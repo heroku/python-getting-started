@@ -58,16 +58,22 @@ else:
 
 # Application definition
 
+# Several optional Django features that are present in the default `startproject` template have
+# been disabled since they are not used by this example app. To use them, uncomment the relevant
+# entries in `INSTALLED_APPS`, `MIDDLEWARE`, `TEMPLATES` and `urls.py`. See:
+# https://docs.djangoproject.com/en/5.1/ref/contrib/admin/
+# https://docs.djangoproject.com/en/5.1/topics/auth/
+# https://docs.djangoproject.com/en/5.1/ref/contrib/contenttypes/
+# https://docs.djangoproject.com/en/5.1/topics/http/sessions/
+# https://docs.djangoproject.com/en/5.1/ref/contrib/messages/
 INSTALLED_APPS = [
     # Use WhiteNoise's runserver implementation instead of the Django default, for dev-prod parity.
     "whitenoise.runserver_nostatic",
-    # Uncomment this and the entry in `urls.py` if you wish to use the Django admin feature:
-    # https://docs.djangoproject.com/en/5.1/ref/contrib/admin/
     # "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
+    # "django.contrib.auth",
+    # "django.contrib.contenttypes",
+    # "django.contrib.sessions",
+    # "django.contrib.messages",
     "django.contrib.staticfiles",
     "hello",
 ]
@@ -79,11 +85,11 @@ MIDDLEWARE = [
     # after Django's `SecurityMiddleware` so that security redirects are still performed.
     # See: https://whitenoise.readthedocs.io
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
+    # "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
+    # "django.contrib.auth.middleware.AuthenticationMiddleware",
+    # "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -98,8 +104,8 @@ TEMPLATES = [
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
+                # "django.contrib.auth.context_processors.auth",
+                # "django.contrib.messages.context_processors.messages",
             ],
         },
     },
