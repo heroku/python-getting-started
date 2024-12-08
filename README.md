@@ -19,7 +19,7 @@ Eligible students can apply for platform credits through our new [Heroku for Git
 
 ```text
 $ git clone https://github.com/heroku/python-getting-started
-$ cd gradle-getting-started
+$ cd python-getting-started
 $ heroku create
 $ git push heroku main
 $ heroku open
@@ -33,7 +33,7 @@ first.
 
 ```text
 $ git clone https://github.com/heroku/python-getting-started
-$ cd gradle-getting-started
+$ cd python-getting-started
 $ heroku create --space <space-name>
 $ git push heroku main
 $ heroku ps:wait
