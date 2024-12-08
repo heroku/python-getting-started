@@ -50,3 +50,11 @@ timeout = 20
 # This should be set to a value less than the 30 second Heroku dyno shutdown timeout:
 # https://devcenter.heroku.com/articles/dyno-shutdown-behavior
 graceful_timeout = 20
+
+# Enable logging of incoming requests to stdout.
+accesslog = "-"
+
+# Adjust which fields are included in the access log, and make it use the Heroku logfmt
+# style. The `X-Request-Id` and `X-Forwarded-For` headers are set by the Heroku Router:
+# https://devcenter.heroku.com/articles/http-routing#heroku-headers
+access_log_format = 'gunicorn method=%(m)s path="%(U)s" status=%(s)s duration=%(M)sms request_id=%({x-request-id}i)s fwd="%({x-forwarded-for}i)s" user_agent="%(a)s"'
