@@ -62,3 +62,10 @@ access_log_format = 'gunicorn method=%(m)s path="%(U)s" status=%(s)s duration=%(
 if os.environ.get("ENVIRONMENT") == "development":
     # Automatically restart gunicorn when the app source changes in development.
     reload = True
+else:
+    # Use `SO_REUSEPORT` on the listening socket, which allows for more even request
+    # distribution between workers. See: https://lwn.net/Articles/542629/
+    # We don't enable this in development, since it makes it harder to notice when
+    # duplicate gunicorn processes have accidentally been launched (eg in different
+    # terminals), since the "address already in use" error no longer occurs.
+    reuse_port = True
