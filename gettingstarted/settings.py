@@ -31,22 +31,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Make sure to use a long unique value, like you would for a password. See:
 # https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-SECRET_KEY
 # https://devcenter.heroku.com/articles/config-vars
-# SECURITY WARNING: keep the secret key used in production secret!
+# SECURITY WARNING: Keep the secret key used in production secret!
 SECRET_KEY = os.environ.get(
     "DJANGO_SECRET_KEY",
     default=secrets.token_urlsafe(nbytes=64),
 )
+
+# Django has a debug mode which shows more detailed error messages and also means static assets
+# can be served without having to run the production `collectstatic` command. However, this
+# debug mode *must only be enabled in development* for security and performance reasons:
+# https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-DEBUG
+# Debug mode will be automatically enabled when the project is run via `heroku local` (which
+# loads the environment variables set in the `.env` file, where `ENVIRONMENT=development`).
+# SECURITY WARNING: Don't run with debug turned on in production!
+DEBUG = os.environ.get("ENVIRONMENT") == "development"
 
 # The `DYNO` env var is set on Heroku CI, but it's not a real Heroku app, so we have to
 # also explicitly exclude CI:
 # https://devcenter.heroku.com/articles/heroku-ci#immutable-environment-variables
 IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
 
-# SECURITY WARNING: don't run with debug turned on in production!
-if not IS_HEROKU_APP:
-    DEBUG = True
-
-# On Heroku, it's safe to use a wildcard for `ALLOWED_HOSTS``, since the Heroku router performs
+# On Heroku, it's safe to use a wildcard for `ALLOWED_HOSTS`, since the Heroku router performs
 # validation of the Host header in the incoming HTTP request. On other platforms you may need to
 # list the expected hostnames explicitly in production to prevent HTTP Host header attacks. See:
 # https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-ALLOWED_HOSTS
