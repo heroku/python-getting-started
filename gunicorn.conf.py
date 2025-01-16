@@ -38,9 +38,6 @@ workers = os.environ.get("WEB_CONCURRENCY", 1)
 # Each `gthread` worker process will use a pool of this many threads.
 threads = 5
 
-# Load the app before the worker processes are forked, to reduce memory usage and boot times.
-preload_app = True
-
 # Workers silent for more than this many seconds are killed and restarted.
 # Note: This only affects the maximum request time when using the `sync` worker.
 # For all other worker types it acts only as a worker heartbeat timeout.
@@ -63,6 +60,10 @@ if os.environ.get("ENVIRONMENT") == "development":
     # Automatically restart gunicorn when the app source changes in development.
     reload = True
 else:
+    # Load the app before the worker processes are forked, to reduce memory usage and boot times.
+    # We don't enable this in development, since it's incompatible with `reload = True`.
+    preload_app = True
+
     # Use `SO_REUSEPORT` on the listening socket, which allows for more even request
     # distribution between workers. See: https://lwn.net/Articles/542629/
     # We don't enable this in development, since it makes it harder to notice when
