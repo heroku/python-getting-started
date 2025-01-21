@@ -1,6 +1,7 @@
 # Gunicorn configuration file:
 # https://docs.gunicorn.org/en/stable/configure.html
 # https://docs.gunicorn.org/en/stable/settings.html
+#
 # Note: The classic Python buildpack currently sets a few gunicorn settings automatically via
 # the `GUNICORN_CMD_ARGS` env var (which take priority over the settings in this file):
 # https://github.com/heroku/heroku-buildpack-python/blob/main/vendor/python.gunicorn.sh
@@ -70,3 +71,9 @@ else:
     # duplicate gunicorn processes have accidentally been launched (eg in different
     # terminals), since the "address already in use" error no longer occurs.
     reuse_port = True
+
+    # Trust the `X-Forwarded-Proto` header set by the Heroku Router during TLS termination,
+    # (https://devcenter.heroku.com/articles/http-routing#heroku-headers) so that HTTPS requests
+    # are correctly marked as secure. This allows the WSGI app (in our case, Django) to distinguish
+    # between HTTP and HTTPS requests for features like HTTP->HTTPS URL redirection.
+    forwarded_allow_ips = "*"
