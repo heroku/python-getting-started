@@ -2,7 +2,7 @@
 URL configuration for gettingstarted project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
+    https://docs.djangoproject.com/en/5.2/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -24,6 +24,6 @@ urlpatterns = [
     path("", hello.views.index, name="index"),
     path("db/", hello.views.db, name="db"),
     # Uncomment this and the entry in `INSTALLED_APPS` if you wish to use the Django admin feature:
-    # https://docs.djangoproject.com/en/5.1/ref/contrib/admin/
+    # https://docs.djangoproject.com/en/5.2/ref/contrib/admin/
     # path("admin/", admin.site.urls),
 ]
