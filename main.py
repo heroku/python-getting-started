@@ -34,14 +34,23 @@ d = gender.Detector()
 
 
 def load_spacy_model():
-    print("Loading spaCy model...")
+    """
+    Loads the spaCy NLP model for text processing.
+    
+    :return: Loaded spaCy NLP model.
+    """
     try:
-        return spacy.load("en_core_web_md")
-        print("spaCy model loaded.")
+        nlp = spacy.load("en_core_web_md")
+        print("spaCy model loaded successfully.")
+        return nlp
     except OSError:
-        print("SpaCy model 'en_core_web_md' not found. Please install it by running:")
-        print("python -m spacy download en_core_web_md")
-        exit()
+        print("spaCy model not found. Downloading...")
+        spacy.cli.download("en_core_web_md")
+        nlp = spacy.load("en_core_web_md")
+        print("spaCy model downloaded and loaded successfully.")
+        return nlp
+
+
 
 NLP_MODEL = load_spacy_model()
 EXAMPLE_STRESSORS = ['lack of communication', 'managerial conflict', 'heavy workload', 'job insecurity', 'burnout']
