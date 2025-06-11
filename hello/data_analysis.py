@@ -175,8 +175,6 @@ def get_nationality(name):
         return None
 
 
-
-
 def check_for_year_in_string(s):
     """
     Checks if a string contains a year within the range of 1900 to the current year, using Regex.

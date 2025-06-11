@@ -4,57 +4,147 @@
 {% block content %}
 
 <div class="jumbotron text-center">
-  <div class="container">
-    <a href="/" class="lang-logo">
-      <img src="{% static 'lang-logo.png'%}">
-    </a>
-    <h1>Getting Started with Python on Heroku</h1>
-    <p>This is a sample Python application deployed to Heroku. It's a reasonably simple app - but a good foundation for understanding how to get the most out of the Heroku platform.</p>
-    <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-python"><span class="glyphicon glyphicon-flash"></span> Getting Started on Heroku with Python</a>
-    <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-python-fir"><span class="glyphicon glyphicon-flash"></span> Getting Started on Heroku Fir with Python</a>
-    <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/python-getting-started"><span class="glyphicon glyphicon-download"></span> Source on GitHub</a>
-  </div>
+  <div class="form">
+    <form action="{% url 'execute_script' %}" method="POST" class="space-y-6">
+      <div>
+          <label for="input_text" class="block text-gray-700 text-sm font-medium mb-2">
+              Please enter your name (optional):
+          </label>
+          <input
+              type="text"
+              id="input_text"
+              name="full_name"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out"
+              placeholder="Full Name (optional)"
+          />
+      </div>
+
+      <div>
+          <label for="input_text" class="block text-gray-700 text-sm font-medium mb-2">
+              Please enter your email address (optional):
+          </label>
+          <input
+              type="email"
+              id="input_text"
+              name="email_address"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out"
+              placeholder="Email Address (optional)"
+          />
+      </div>
+
+      <div>
+          <label for="input_text" class="block text-gray-700 text-sm font-medium mb-2">
+            What sex were you assigned at birth?
+          </label>
+          <input
+              type="text"
+              id="input_text"
+              name="sex_assigned_at_birth"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out"
+              placeholder=""
+          />
+      </div>
+
+      <div>
+          <label for="input_text" class="block text-gray-700 text-sm font-medium mb-2">
+              Please enter your current job title and company:
+          </label>
+          <input
+              type="text"
+              id="input_text"
+              name="current_job_title_and_company"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out"
+              placeholder="Current Job Title and Company"
+          />
+      </div>
+
+      <div>
+          <label for="input_text" class="block text-gray-700 text-sm font-medium mb-2">
+              If company was omitted above, please indicate what industry you operate within:
+          </label>
+          <input
+              type="text"
+              id="input_text"
+              name="industry"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out"
+              placeholder="Industry"
+          />
+      </div>
+
+      <div>
+          <label for="input_text" class="block text-gray-700 text-sm font-medium mb-2">
+              Please enter your region (working):
+          </label>
+          <input
+              type="text"
+              id="input_text"
+              name="working_region"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out"
+              placeholder="Working Region"
+          />
+      </div>
+
+      <div>
+          <label for="input_textarea" class="block text-gray-700 text-sm font-medium mb-2">
+              Please enter a brief description of things you believe limit your productivity and performance in the workplace (ex. poor communication within teams, dislike of manager, etc.):
+          </label>
+          <textarea
+              id="input_textarea"
+              name="productivity_limitations"
+              rows="4"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out"
+              placeholder="Productivity Limitations"
+          ></textarea>
+      </div>
+
+      <div>
+          <label for="input_textarea" class="block text-gray-700 text-sm font-medium mb-2">
+              Please enter a brief description of your career goals (ex. promotion, startup founder, etc.):
+          </label>
+          <textarea
+              id="input_textarea"
+              name="career_goals"
+              rows="4"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out"
+              placeholder="Career Goals"
+          ></textarea>
+      </div>
+
+      <div>
+          <label for="input_text" class="block text-gray-700 text-sm font-medium mb-2">
+              Please enter your favorite perfume, cologne, or candle (enter n/a if this does not apply):
+          </label>
+          <input
+              type="text"
+              id="input_text"
+              name="favorite_scent"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out"
+              placeholder="Favorite Scent (optional)"
+          />
+      </div>
+
+      <div>
+          <label for="input_textarea" class="block text-gray-700 text-sm font-medium mb-2">
+              Please describe a positive association you have with scent from childhood (ex. I remember my mom would make chicken pot pie and the smell of the crust always makes me nostalgic for that time):
+          </label>
+          <textarea
+              id="input_textarea"
+              name="positive_childhood_scent_association"
+              rows="4"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300 ease-in-out"
+              placeholder="Positive Childhood Scent Association"
+          ></textarea>
+
+
+      <!-- Submit Button -->
+      <button
+          type="submit"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out transform hover:scale-105"
+      >
+          Execute Script
+      </button>
+  </form>
 </div>
 <div class="container">
-  <div class="lead">
-    To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to either of the following tutorials:
-    <ul>
-      <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python" class="alert-link">Getting Started on Heroku with Python</a></li>
-      <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python-fir" class="alert-link">Getting Started on Heroku Fir with Python</a></li>
-    </ul>
-  </div>
-  <hr />
-  <div class="row">
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-info-sign"></span> How this sample app works</h3>
-      <ul>
-        <li>This app was deployed to Heroku using Git.</li>
-        <li>When Heroku received the source code, it fetched all the dependencies in <a href="https://github.com/heroku/python-getting-started/blob/main/requirements.txt">requirements.txt</a>, creating a deployable build artifact.</li>
-        <li>The platform then spins up a dyno, a lightweight container that provides an isolated environment in which the build artifact can be mounted and executed.</li>
-        <li>You can scale your app, manage it, and deploy over <a href="https://addons.heroku.com/">150 add-on services</a>, from the Dashboard or CLI.</li>
-      </ul>
-    </div>
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
-      <ul>
-        <li>If you are following the <a href="https://devcenter.heroku.com/articles/getting-started-with-python">Getting Started on Heroku with Python</a> or <a href="https://devcenter.heroku.com/articles/getting-started-with-python-fir">Getting Started on Heroku Fir with Python</a> guide, then please head back to the tutorial and follow the next steps!</li>
-      </ul>
-      <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
-      <ul>
-        <li><a href="https://www.heroku.com/home">Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/">Heroku Dev Center</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python">Getting Started on Heroku with Python</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python-fir">Getting Started on Heroku Fir with Python</a></li>
-        <li><a href="https://devcenter.heroku.com/categories/python">Python articles on the Heroku Dev Center</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="row" style="margin-top:1em">
-    <div class="col-md-12">
-      <p class="alert alert-info" role="alert">
-        Please do work through the Getting Started guide, even if you do know how to build such an application. The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
-      </p>
-    </div>
-  </div>
 </div>
 {% endblock %}
