@@ -4,7 +4,7 @@ dj-database-url>=2,<3
 whitenoise[brotli]>=6,<7
 numpy>=1.26,<2
 pandas>=2.1,<3
-spacy>=3.6,<4
+spacy==3.8.2
 gender_guesser>=0.4.0,<0.5
 
 # Uncomment these lines to use a Postgres database. Both are needed, since in production
