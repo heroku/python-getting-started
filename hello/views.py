@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from data_analysis import process_data_from_form
 
 from .models import Greeting
 
@@ -11,15 +12,15 @@ def index(request):
 
 @csrf_exempt
 def execute_script(request):
-    print("MADE IT TO THE SCRIPT EXECUTION VIEW")
     """
     A view to execute a script from the request body.
     This is a placeholder for any script execution logic you want to implement.
     """
     if request.method == "POST":
+        result = process_data_from_form(request.POST)
         # Here you would execute the script, but be careful with security implications!
         # For demonstration purposes, we just return the script.
-        return render(request, "script_result.html", {"result": "ooga booga dooga"})
+        return render(request, "script_result.html", {"result": result})
     else:
         return render(request, "script_result.html", {"result": "Please send a POST request with a script."})
 
