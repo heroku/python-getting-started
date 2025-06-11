@@ -1,2 +1,1 @@
-# Note: This is so we get a spacy wheel, allowing heroku to deploy
 python-3.12
