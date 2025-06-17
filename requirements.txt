@@ -1,7 +1,7 @@
 django>=5.2,<5.3
 gunicorn>=23,<24
 dj-database-url>=2,<3
-whitenoise[brotli]>=6,<7
+whitenoise>=6,<7
 
 # Uncomment these lines to use a Postgres database. Both are needed, since in production
 # (which uses Linux) we want to install from source, so that security updates from the
