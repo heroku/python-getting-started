@@ -1,0 +1,12 @@
+[project]
+name = "python-getting-started"
+version = "0.0.0"
+requires-python = "==3.13.*"
+dependencies = [
+    "dj-database-url>=2,<3",
+    "django>=5.2,<5.3",
+    "gunicorn>=23,<24",
+    "whitenoise>=6,<7",
+    # Uncomment this line and run `uv sync` to use a Postgres database with the app.
+    # "psycopg[binary]",
+]
