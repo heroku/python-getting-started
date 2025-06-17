@@ -1,0 +1,19 @@
+[_]
+schema-version = "0.2"
+
+[io.buildpacks]
+# Exclude files from local Pack CLI builds, where .gitignore doesn't apply.
+# TODO: Add trailing slash to entries that are directories, once this issue is fixed:
+# https://github.com/buildpacks/pack/issues/2402
+exclude = [
+    "__pycache__",
+    ".git",
+    ".gitignore",
+    ".github",
+    ".venv",
+    ".DS_Store",
+    ".env",
+    "staticfiles",
+    "db.sqlite3",
+    "venv",
+]
