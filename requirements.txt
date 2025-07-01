@@ -1,6 +1,6 @@
 django>=5.2,<5.3
 gunicorn>=23,<24
-dj-database-url>=2,<3
+dj-database-url>=3,<4
 whitenoise>=6,<7
 
 # Uncomment these lines to use a Postgres database. Both are needed, since in production
