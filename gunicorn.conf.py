@@ -49,6 +49,13 @@ timeout = 20
 # https://devcenter.heroku.com/articles/dyno-shutdown-behavior
 graceful_timeout = 20
 
+# The number of seconds an idle Keep-Alive connection is kept open. This should be greater than
+# the Heroku Router's Keep-Alive idle timeout of 90 seconds, to ensure that the closing of idle
+# connections is always initiated by the router and not gunicorn, to prevent a race condition
+# if the router sends a request to the app just as gunicorn is closing the connection:
+# https://devcenter.heroku.com/articles/http-routing#keepalives
+keepalive = 100
+
 # Enable logging of incoming requests to stdout.
 accesslog = "-"
 
