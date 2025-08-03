@@ -54,7 +54,7 @@ graceful_timeout = 20
 # connections is always initiated by the router and not gunicorn, to prevent a race condition
 # if the router sends a request to the app just as gunicorn is closing the connection:
 # https://devcenter.heroku.com/articles/http-routing#keepalives
-keepalive = 100
+keepalive = 95
 
 # Enable logging of incoming requests to stdout.
 accesslog = "-"
