@@ -1,0 +1,16 @@
+[project]
+name = "python-getting-started"
+version = "0.0.0"
+# This will need to be compatible with the Python version in the `.python-version` file.
+requires-python = ">=3.14"
+# Remember to regenerate the `uv.lock` lockfile any time you update this list of
+# dependencies, by running any of `uv lock`, `uv sync` or `uv run`. See:
+# https://docs.astral.sh/uv/concepts/projects/sync/
+dependencies = [
+    "dj-database-url>=3,<4",
+    "django>=6.0,<6.1",
+    "gunicorn>=23,<24",
+    "whitenoise>=6,<7",
+    # Uncomment this line to use a Postgres database with the app.
+    # "psycopg[binary]",
+]

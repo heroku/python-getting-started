@@ -1,2 +1,3 @@
 # The Python version to use for the project.
+# This will need to be compatible with the `requires-python` version in pyproject.toml.
 3.14

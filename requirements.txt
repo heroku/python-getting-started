@@ -1,7 +1,0 @@
-django>=6.0,<6.1
-gunicorn>=23,<24
-dj-database-url>=3,<4
-whitenoise>=6,<7
-
-# Uncomment to use a Postgres database.
-#psycopg[binary]
