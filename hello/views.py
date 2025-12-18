@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from .models import Greeting, Visit
 from .models import Greeting
 
 # Create your views here.
@@ -26,3 +26,9 @@ def db(request):
     greetings = Greeting.objects.all()
 
     return render(request, "db.html", {"greetings": greetings})
+
+def index(request):
+    # Zapis każdej wizyty w bazie
+    Visit.objects.create() #<-dodanie linii
+    visits = Visit.objects.count() #<-dodanie linii
+    return render(request, "index.html", {"visits": visits}) #<-dodanie {.....}W
