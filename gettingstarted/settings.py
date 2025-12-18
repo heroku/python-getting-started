@@ -51,7 +51,7 @@ DEBUG = True
 # https://devcenter.heroku.com/articles/heroku-ci#immutable-environment-variables
 IS_HEROKU_APP = "DYNO" in os.environ and "CI" not in os.environ
 # Zawsze bazowa lista hostów (lokalnie + Render)
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'https://python-getting-started-lab1-lk4l.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'python-getting-started-lab1-lk4l.onrender.com' , 'https://python-getting-started-lab1-lk4l.onrender.com/']
 # Jeśli używasz Heroku i chcesz wildcard, możesz opcjonalnie rozszerzyć:
 if os.environ.get('IS_HEROKU_APP') == '1':
     ALLOWED_HOSTS.append('*')
