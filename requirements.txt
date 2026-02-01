@@ -1,5 +1,5 @@
 django>=6.0,<6.1
-gunicorn>=23,<24
+gunicorn>=23,<25
 dj-database-url>=3,<4
 whitenoise>=6,<7
 
