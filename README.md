@@ -6,8 +6,7 @@ You can fork this simple Flask app:
 
 OR (simpler demo app):
 
-👉 https://github.com/heroku/python-getting-started
-
+👉 [https://github.com/bindu818309-bit/FlaskCI-CDPipeline.git]
 ✅ 2. Jenkinsfile (Place in Root of Repo)
 pipeline {
     agent any
@@ -110,7 +109,7 @@ This project demonstrates a CI/CD pipeline using Jenkins for a Python web applic
 
  Clone the repository:
    ```bash
-   git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
+   https://github.com/bindu818309-bit/FlaskCI-CDPipeline.git
 🔄 Jenkins Pipeline Stages
 1. Build
 Creates virtual environment
