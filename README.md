@@ -1,45 +1,143 @@
-# Python Getting Started
+✅ 1. Sample Python Web Application Repository
 
-A barebones Django app, which can easily be deployed to Heroku.
+You can fork this simple Flask app:
 
-This application supports the tutorials for both the [Cedar and Fir generations](https://devcenter.heroku.com/articles/generations) of the Heroku platform. You can check them out here:
+👉 https://github.com/pallets/flask/tree/main/examples/tutorial
 
-- [Getting Started on Heroku with Python](https://devcenter.heroku.com/articles/getting-started-with-python)
-- [Getting Started on Heroku Fir with Python](https://devcenter.heroku.com/articles/getting-started-with-python-fir)
+OR (simpler demo app):
 
-## Deploying to Heroku
+👉 https://github.com/heroku/python-getting-started
 
-Using resources for this example app counts towards your usage. [Delete your app](https://devcenter.heroku.com/articles/heroku-cli-commands#heroku-apps-destroy) and [database](https://devcenter.heroku.com/articles/heroku-postgresql#removing-the-add-on) as soon as you are done experimenting to control costs.
+✅ 2. Jenkinsfile (Place in Root of Repo)
+pipeline {
+    agent any
 
-### Deploy on Heroku [Cedar](https://devcenter.heroku.com/articles/generations#cedar)
+    environment {
+        VENV = "venv"
+    }
 
-By default, apps use Eco dynos if you are subscribed to Eco. Otherwise, it defaults to Basic dynos. The Eco dynos plan is shared across all Eco dynos in your account and is recommended if you plan on deploying many small apps to Heroku. Learn more about our low-cost plans [here](https://blog.heroku.com/new-low-cost-plans).
+    stages {
 
-Eligible students can apply for platform credits through our new [Heroku for GitHub Students program](https://blog.heroku.com/github-student-developer-program).
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/YOUR-USERNAME/YOUR-REPO.git'
+            }
+        }
 
-```term
-$ git clone https://github.com/heroku/python-getting-started
-$ cd python-getting-started
-$ heroku create
-$ git push heroku main
-$ heroku open
-```
+        stage('Build') {
+            steps {
+                sh '''
+                python3 -m venv $VENV
+                . $VENV/bin/activate
+                pip install --upgrade pip
+                pip install -r requirements.txt
+                '''
+            }
+        }
 
-### Deploy on Heroku [Fir](https://devcenter.heroku.com/articles/generations#fir)
+        stage('Test') {
+            steps {
+                sh '''
+                . $VENV/bin/activate
+                pip install pytest
+                pytest
+                '''
+            }
+        }
 
-By default, apps on [Fir](https://devcenter.heroku.com/articles/generations#fir) use 1X-Classic dynos. To create an app on [Fir](https://devcenter.heroku.com/articles/generations#fir) you'll need to
-[create a private space](https://devcenter.heroku.com/articles/working-with-private-spaces#create-a-private-space)
-first.
+        stage('Deploy') {
+            when {
+                expression { currentBuild.result == null || currentBuild.result == 'SUCCESS' }
+            }
+            steps {
+                sh '''
+                echo "Deploying application..."
+                # Example deployment (local run)
+                nohup python app.py &
+                '''
+            }
+        }
+    }
 
-```term
-$ git clone https://github.com/heroku/python-getting-started
-$ cd python-getting-started
-$ heroku create --space <space-name>
-$ git push heroku main
-$ heroku ps:wait
-$ heroku open
-```
+    post {
+        success {
+            mail to: 'your-email@example.com',
+                 subject: "SUCCESS: Jenkins Build #${BUILD_NUMBER}",
+                 body: "Build succeeded!"
+        }
+        failure {
+            mail to: 'your-email@example.com',
+                 subject: "FAILURE: Jenkins Build #${BUILD_NUMBER}",
+                 body: "Build failed!"
+        }
+    }
+}
+✅ 3. Webhook Trigger Setup
+In Jenkins:
+Go to Job → Configure
+Enable:
+✅ GitHub hook trigger for GITScm polling
+In GitHub:
+Repo → Settings → Webhooks
+Add webhook:
 
-For more information about using Python on Heroku, see these Dev Center articles:
+Payload URL:
 
-- [Python on Heroku](https://devcenter.heroku.com/categories/python)
+http://<your-jenkins-ip>:8080/github-webhook/
+Content type: application/json
+Event: Push
+✅ 4. README.md (Use This Directly)
+# 🚀 Jenkins CI/CD Pipeline for Python Web Application
+
+## 📌 Overview
+This project demonstrates a CI/CD pipeline using Jenkins for a Python web application.
+
+---
+
+## ⚙️ Prerequisites
+
+- Jenkins installed (VM or Cloud)
+- Python 3 installed
+- Git installed
+- Required Jenkins plugins:
+  - Git Plugin
+  - Pipeline Plugin
+  - Email Extension Plugin
+
+---
+
+## 📂 Project Setup
+
+ Clone the repository:
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
+🔄 Jenkins Pipeline Stages
+1. Build
+Creates virtual environment
+Installs dependencies using pip
+2. Test
+Runs unit tests using pytest
+3. Deploy
+Deploys application if tests pass
+🔔 Triggers
+Pipeline automatically triggers on push to main branch using GitHub Webhooks.
+📧 Notifications
+Email notifications configured:
+Success → Build completed
+Failure → Build failed
+📸 Screenshots
+
+Add your screenshots here:
+
+Build Stage
+Test Stage
+Deploy Stage
+🛠️ Technologies Used
+Python
+Flask
+Jenkins
+GitHub
+Pytest
+📎 Repository Link
+
+👉 https://github.com/YOUR-USERNAME/YOUR-REPO
