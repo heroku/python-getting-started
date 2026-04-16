@@ -78,7 +78,7 @@ Enable:
 ✅ GitHub hook trigger for GITScm polling
 In GitHub:
 Repo → Settings → Webhooks
-Add webhook:
+Add the webhook:
 
 Payload URL:
 
