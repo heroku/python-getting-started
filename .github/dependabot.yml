@@ -4,4 +4,7 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    allow:
+      # Update transitive dependencies too.
+      - dependency-type: "all"
     versioning-strategy: increase-if-necessary
