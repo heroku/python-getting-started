@@ -7,4 +7,5 @@
 
 # However, request review from the Heroku language owner for files that are updated
 # by Dependabot, to reduce team review request noise.
-requirements.txt @edmorley
+pyproject.toml @edmorley
+uv.lock @edmorley

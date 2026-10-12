@@ -1,0 +1,19 @@
+[project]
+name = "python-getting-started"
+version = "0.0.0"
+# This will need to be compatible with the Python version in the `.python-version` file.
+requires-python = ">=3.15"
+
+# The easiest way to manage your project's dependencies is via `uv add` and `uv remove`, which
+# with a single command will update this file and the lockfile, then sync the environment:
+# https://docs.astral.sh/uv/concepts/projects/dependencies/
+#
+# If you instead edit this list of dependencies manually, remember to also regenerate the
+# `uv.lock` lockfile by running any of `uv lock`, `uv sync` or `uv run`. See:
+# https://docs.astral.sh/uv/concepts/projects/sync/
+dependencies = [
+    "django>=6.1,<6.2",
+    "gunicorn>=26,<27",
+    "dj-database-url>=3,<4",
+    "whitenoise>=6,<7",
+]
